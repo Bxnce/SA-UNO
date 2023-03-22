@@ -1,0 +1,11 @@
+ignore:
+  - "**/aview/GUI/*"
+  - "**/Uno.scala"
+  - "**/resources/"
+  - "**/UnoModel.scala"
+
+coverage:
+  status:
+    patch:
+      default:
+        target: 90%
