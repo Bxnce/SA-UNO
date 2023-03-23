@@ -195,12 +195,8 @@ case class Game(
     )
 
   def playerFill(count: Int): Game =
-    var tmp = this
-    for (i <- 1 to count) {
-      tmp = tmp.take("P1")
-      tmp = tmp.take("P2")
-    }
-    tmp
+    val finalGame = (1 to count).foldLeft(this)((game, _) => game.take("P1").take("P2"))
+    finalGame
 
   def getNext(game: gameInterface, player: Int, state: State): Game =
     if (player == -1) {
