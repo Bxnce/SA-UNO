@@ -147,12 +147,12 @@ case class Game(
     }
 
   def takeCards(g: Game, num: Int, pn: String): Game =
-    var tmp = g
-    for (i <- 1 to num) {
-      tmp = tmp.take(pn)
+    if (num == 0) {
+      g
+    } else {
+      val updatedGame = g.take(pn)
+      takeCards(updatedGame, num - 1, pn)
     }
-    tmp
-  //tmp.copy(tmp.pList.updated(p, tmp.pList(p).setTrue()))    //falls man den Spieler nach dem Ziehen sperren möchte(offizielle Regeln)
 
   def chooseColor(color: String): Game =
     print("Farbe:" + "'" + color + "'" + "\n")
