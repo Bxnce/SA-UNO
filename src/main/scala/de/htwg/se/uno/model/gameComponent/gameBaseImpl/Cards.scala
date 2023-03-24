@@ -8,7 +8,7 @@ enum CardValue:
 enum CardColor:
   case Red, Blue, Green, Yellow, Black, ErrorC
 
-enum Card(color: CardColor, value: CardValue, id: String):
+enum Card(val color: CardColor, val value: CardValue, val id: String):
   case R0 extends Card(CardColor.Red, CardValue.Zero, "R0")
   case R1 extends Card(CardColor.Red, CardValue.One, "R1")
   case R2 extends Card(CardColor.Red, CardValue.Two, "R2")
@@ -70,15 +70,13 @@ enum Card(color: CardColor, value: CardValue, id: String):
 
   case XX extends Card(CardColor.ErrorC, CardValue.Error, "XX")
 
-  def getColor: CardColor = color
-  def getValue: CardValue = value
   override def toString: String = id
 
 object toCard:
   def getCard(search: String): Card =
     val index = Card.values.map(x => x.toString).indexOf(search)
     if (index < 0) {
-      return Card.XX
+      Card.XX
     } else {
-      return Card.values(index)
+      Card.values(index)
     }
