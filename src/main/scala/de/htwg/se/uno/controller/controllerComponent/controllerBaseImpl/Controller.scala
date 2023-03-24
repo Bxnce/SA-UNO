@@ -94,7 +94,7 @@ case class Controller @Inject() (var game: gameInterface)
     for(c <- player.karten){
       var color = ""
       var value = ""
-      c.getColor match {
+      c.color match {
         case CardColor.Red      => color = "red"
         case CardColor.Blue     => color = "blue"
         case CardColor.Green    => color = "green"
@@ -102,7 +102,7 @@ case class Controller @Inject() (var game: gameInterface)
         case CardColor.Black    => color = "black"
         case CardColor.ErrorC   => color = ""
       }
-      c.getValue match {
+      c.value match {
         case CardValue.Zero     => value = "_0"
         case CardValue.One      => value = "_1"
         case CardValue.Two      => value = "_2"

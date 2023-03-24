@@ -92,11 +92,11 @@ case class Game(
     Try {
       (midCard
         .karten(0)
-        .getColor == pList(player).karten(ind).getColor) || (midCard
+        .color == pList(player).karten(ind).color) || (midCard
         .karten(0)
-        .getValue == pList(player).karten(ind).getValue || pList(player)
+        .value == pList(player).karten(ind).value || pList(player)
         .karten(ind)
-        .getColor == CardColor.Black)
+        .color == CardColor.Black)
     } match {
       case Success(x) => x
       case Failure(y) => false
@@ -104,8 +104,8 @@ case class Game(
 
   def place(ind: Int, player: Int): Game =
     if (checkPlace(ind, player) && !pList(player).placed) {
-      val tmpVal = pList(player).karten(ind).getValue
-      var tmp: Game = copy(
+      val tmpVal = pList(player).karten(ind).value
+      val tmp: Game = copy(
         pList.updated(player, pList(player).removeInd(ind)),
         currentstate,
         0,

@@ -74,9 +74,9 @@ class TUI(controller: controllerInterface) extends Observer:
             if (
               controller.game.midCard
                 .karten(0)
-                .getValue == CardValue.Wildcard || controller.game.midCard
+                .value == CardValue.Wildcard || controller.game.midCard
                 .karten(0)
-                .getValue == CardValue.Take4
+                .value == CardValue.Take4
             ) {
               var check = true
               var color = ""

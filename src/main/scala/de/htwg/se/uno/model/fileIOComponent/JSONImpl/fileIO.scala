@@ -31,9 +31,9 @@ class fileIO extends FileIOInterface {
     val p1n = (p1 \ "name").get.as[String]
     val p1ktmp = (p1 \ "kartenzahl").get.as[Int]
     val p1k: Vector[Card] =
-      (for (i <- 0 until p1ktmp) yield {
-        getCard((p1 \\ "cardv") (i).as[String])
-      }).toVector
+      (0 until p1ktmp).map { i =>
+        getCard((p1 \ "cardv") (i).as[String])
+      }.toVector
     val p1p = (p1 \ "placed").get.as[Boolean]
     val player1 = new Player(p1n, p1k, p1p)
 
@@ -42,9 +42,9 @@ class fileIO extends FileIOInterface {
     val p2ktmp =
       (p2 \ "kartenzahl").get.as[Int]
     val p2k: Vector[Card] =
-      (for (i <- 0 until p2ktmp) yield {
-        getCard((p2 \\ "cardv") (i).as[String])
-      }).toVector
+      (0 until p2ktmp).map { i =>
+        getCard((p2 \ "cardv") (i).as[String])
+      }.toVector
     val p2p = (p2 \ "placed").get.as[Boolean]
     val player2 = new Player(p2n, p2k, p2p)
 
@@ -146,7 +146,7 @@ class fileIO extends FileIOInterface {
 
   def create_per_player(player: Player): List[(String, Int)] =
     player.karten.zipWithIndex.map { (c, ind) =>
-      val color = c.getColor match {
+      val color = c.color match {
         case CardColor.Red => "red"
         case CardColor.Blue => "blue"
         case CardColor.Green => "green"
@@ -154,7 +154,7 @@ class fileIO extends FileIOInterface {
         case CardColor.Black => "black"
         case CardColor.ErrorC => ""
       }
-      val value = c.getValue match {
+      val value = c.value match {
         case CardValue.Zero => "_0"
         case CardValue.One => "_1"
         case CardValue.Two => "_2"
