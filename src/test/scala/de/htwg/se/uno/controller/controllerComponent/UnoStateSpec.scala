@@ -11,7 +11,7 @@ import model.gameComponent.gameBaseImpl.CardLayout.eol
 class UnoStateSpec extends AnyWordSpec {
   "UnoState" should {
     var game = new Game("p1", "p2", between21State)
-    game = game.addTest("midstack", R0)
+    game = game.addTest(R0)
     game = game.add("p1", B0)
     game = game.add("p1", R7)
     game = game.add("p2", G0)
@@ -75,7 +75,7 @@ class UnoStateSpec extends AnyWordSpec {
 
     //let player 1 win as well
     var game1 = new Game("p1", "p2", between12State)
-    game1 = game1.addTest("midstack", R0)
+    game1 = game1.addTest(R0)
     game1 = game1.add("p1", B0)
     game1 = game1.add("p2", G0)
     game1 = game1.add("p2", R7)

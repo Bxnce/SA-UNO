@@ -15,7 +15,7 @@ import controller.controllerComponent.controllerBaseImpl._
 class TUISpec extends AnyWordSpec {
   "TUI" when {
     var game = new Game("Bence", "Timo", between21State)
-    game = game.addTest("midStack", Y0)
+    game = game.addTest(Y0)
     game = game.add("P1", R0)
     game = game.add("P1", R1)
     game = game.add("P1", R2)
