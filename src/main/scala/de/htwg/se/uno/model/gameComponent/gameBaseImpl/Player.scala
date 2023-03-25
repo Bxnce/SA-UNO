@@ -6,7 +6,7 @@ import CardLayout._
 case class Player(name: String, karten: Vector[Card], placed: Boolean) {
 
   def print(): String =
-    if (karten.size == 0) {
+    if (karten.isEmpty) {
       udRow(1) + "|  |" + eol + udRow(1)
     } else {
       val midLine =
@@ -23,7 +23,7 @@ case class Player(name: String, karten: Vector[Card], placed: Boolean) {
 
   def removeInd(ind: Int): Player =
     val (tmp1, tmp2) = karten.splitAt(ind)
-    copy(name, tmp1.toVector ++ tmp2.toVector.drop(1), true)
+    copy(name, tmp1 ++ tmp2.drop(1), true)
 
   def setFalse(): Player =
     copy(name, karten, false)

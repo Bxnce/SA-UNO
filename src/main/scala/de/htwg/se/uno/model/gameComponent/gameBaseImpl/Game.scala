@@ -2,14 +2,16 @@ package de.htwg.se.uno
 package model.gameComponent.gameBaseImpl
 
 import model.gameComponent.gameInterface
-import Player._
-import toCard._
-import CardLayout._
-import Card._
+import Player.*
+import toCard.*
+import CardLayout.*
+import Card.*
+
 import scala.io.StdIn
-import util._
-import Console.{RED, GREEN, RESET}
-import scala.util.{Try, Success, Failure}
+import util.*
+
+import Console.{GREEN, RED, RESET}
+import scala.util.{Failure, Random, Success, Try}
 
 case class Game(
     pList: List[Player],
@@ -28,7 +30,7 @@ case class Game(
       ),
       startstate,
       0,
-      new CardStack(
+      CardStack(
         Card.values.map(x => (x, 2)).toMap
       ),
       Player("midcard", Vector[Card](), false),
@@ -56,13 +58,13 @@ case class Game(
       take(player)
     } else if (
       player
-        .equalsIgnoreCase("P1") || player.equalsIgnoreCase(pList(0).name)
+        .equalsIgnoreCase("P1") || player.equalsIgnoreCase(pList.head.name)
     ) {
       copy(
-        pList.updated(0, pList(0).add(card)),
+        pList.updated(0, pList.head.add(card)),
         currentstate,
         ERROR,
-        cardStack.decrease(card),
+        cardStack.alter_cs(card)((a:Int, b:Int) => a - b),
         midCard
       )
     } else if (
@@ -73,15 +75,15 @@ case class Game(
         pList.updated(1, pList(1).add(card)),
         currentstate,
         ERROR,
-        cardStack.decrease(card),
+        cardStack.alter_cs(card)((a:Int, b:Int) => a - b),
         midCard
       )
-    } else if (player.equals("midcard")) { //würde ich rausnehmen da wir dem Stapel nie eine Karte adden
+    } else if (player.equals("midcard")) {
       copy(
         pList,
         currentstate,
         ERROR,
-        cardStack.decrease(card),
+        cardStack.alter_cs(card)((a:Int, b:Int) => a - b),
         midCard.add(card)
       )
     } else {
@@ -99,7 +101,7 @@ case class Game(
         .color == CardColor.Black)
     } match {
       case Success(x) => x
-      case Failure(y) => false
+      case Failure(_) => false
     }
 
   def place(ind: Int, player: Int): Game =
@@ -109,9 +111,7 @@ case class Game(
         pList.updated(player, pList(player).removeInd(ind)),
         currentstate,
         0,
-        cardStack.increase(
-          midCard.karten(0)
-        ),
+        cardStack.alter_cs(midCard.karten(0))((a:Int, b:Int) => a + b),
         Player(
           midCard.name,
           midCard.karten.updated(0, pList(player).karten(ind)),
@@ -130,7 +130,7 @@ case class Game(
             case 0 =>
               tmp.copy(tmp.pList.updated(1, tmp.pList(1).setTrue()))
             case 1 =>
-              tmp.copy(tmp.pList.updated(0, tmp.pList(0).setTrue()))
+              tmp.copy(tmp.pList.updated(0, tmp.pList.head.setTrue()))
         case CardValue.Take4 =>
           player match
             case 0 =>
@@ -141,7 +141,7 @@ case class Game(
           tmp
     } else {
       Console.println(
-        s"${RED}!!!Karte kann nicht gelegt werden!!!${RESET}"
+        s"$RED!!!Karte kann nicht gelegt werden!!!$RESET"
       )
       setError(-1)
     }
@@ -183,7 +183,7 @@ case class Game(
     if (player.karten.isEmpty) {
       return true
     }
-    return false
+    false
 
   def setError(err: Int): Game =
     copy(
@@ -214,11 +214,11 @@ case class Game(
     }
 
   //wird nur in den Tests benutzt
-  def addTest(p: String, card: Card): Game =
+  def addTest(card: Card): Game =
     copy(
       pList,
       currentstate,
       ERROR,
-      cardStack.decrease(card),
+      cardStack.alter_cs(card)((a:Int, b:Int) => a - b),
       midCard.removeInd(0).add(card)
     )
