@@ -7,7 +7,11 @@ TUI and GUI are both working and running synchron.
 Program  | Badge
 --------|--------
 GitHub-Actions | [![Scala CI](https://github.com/Bxnce/uno/actions/workflows/scala.yml/badge.svg?branch=main)](https://github.com/Bxnce/uno/actions/workflows/scala.yml)
-CoverAlls | [![Coverage Status](https://coveralls.io/repos/github/Bxnce/uno/badge.svg?branch=main)](https://coveralls.io/github/Bxnce/uno?branch=main)
+CoverAlls | [![Coverage Status](https://coveralls.io/repos/github/Bxnce/SA-UNO/badge.svg?branch=main)](https://coveralls.io/github/Bxnce/SA-UNO?branch=main)
+Codecov | [![codecov](https://codecov.io/gh/Bxnce/SA-UNO/branch/main/graph/badge.svg?token=FLLPR81E5I)](https://codecov.io/gh/Bxnce/SA-UNO) 
+
+![Alt text](https://codecov.io/gh/Bxnce/SA-UNO/branch/main/graphs/sunburst.svg?token=FLLPR81E5I "codecov sunburst graph")
+
  
 
  
