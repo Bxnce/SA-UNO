@@ -35,7 +35,7 @@ class fileIO extends FileIOInterface {
         getCard((p1 \ "cardv") (i).as[String])
       }.toVector
     val p1p = (p1 \ "placed").get.as[Boolean]
-    val player1 = new Player(p1n, p1k, p1p)
+    val player1 = Player(p1n, p1k, p1p)
 
     val p2 = (json \ "game" \ "player2").get
     val p2n = (p2 \ "name").get.as[String]
@@ -46,7 +46,7 @@ class fileIO extends FileIOInterface {
         getCard((p2 \ "cardv") (i).as[String])
       }.toVector
     val p2p = (p2 \ "placed").get.as[Boolean]
-    val player2 = new Player(p2n, p2k, p2p)
+    val player2 = Player(p2n, p2k, p2p)
 
     val cs = (json \ "game" \ "currentstate").get.toString
     val csf = cs.replaceAll("\"", "")
@@ -63,17 +63,17 @@ class fileIO extends FileIOInterface {
     val mc = (json \ "game" \ "midCard").get
     val mcn = (mc \ "name").get.as[String]
 
-    val mck: Vector[Card] = Vector(getCard((mc \\ "cardv") (0).as[String]))
+    val mck: Vector[Card] = Vector(getCard((mc \\ "cardv").head.as[String]))
     val mcp = (mc \ "placed").get.as[Boolean]
-    val midcard = new Player(mcn, mck, mcp)
+    val midcard = Player(mcn, mck, mcp)
 
     val winner = (json \ "game" \ "winner").get.as[Int]
 
-    val game = new Game(
+    val game = Game(
       List(player1, player2),
       currentstate,
       ERROR,
-      new CardStack(
+      CardStack(
         Card.values.map(x => (x, 2)).toMap
       ),
       midcard,
@@ -84,21 +84,21 @@ class fileIO extends FileIOInterface {
   override def save(game: gameInterface): Unit =
     val pw = new PrintWriter(new File("game.json"))
     pw.write(Json.prettyPrint(gameToJson(game)))
-    pw.close
+    pw.close()
 
   def return_json(game: gameInterface): String =
     val game_j = Json.prettyPrint(gameToJson(game))
     game_j
 
-  def gameToJson(game: gameInterface) = {
+  def gameToJson(game: gameInterface): JsObject = {
     Json.obj(
       "game" -> Json.obj(
         "player1" -> Json.obj(
-          "name" -> game.pList(0).name,
-          "karten" -> vectorToJson(game.pList(0).karten),
-          "kartenzahl" -> game.pList(0).karten.size,
-          "placed" -> game.pList(0).placed,
-          "png_ind" -> smthngToJson(create_per_player(game.pList(0)))
+          "name" -> game.pList.head.name,
+          "karten" -> vectorToJson(game.pList.head.karten),
+          "kartenzahl" -> game.pList.head.karten.size,
+          "placed" -> game.pList.head.placed,
+          "png_ind" -> smthngToJson(create_per_player(game.pList.head))
         ),
         "player2" -> Json.obj(
           "name" -> game.pList(1).name,
@@ -171,7 +171,7 @@ class fileIO extends FileIOInterface {
         case CardValue.Take4 => "_+4"
         case CardValue.Special | CardValue.Error => ""
       }
-      val card_s = s"cards/${color}${value}.png"
+      val card_s = s"cards/$color$value.png"
       (card_s, ind)
     }.toList
 }
