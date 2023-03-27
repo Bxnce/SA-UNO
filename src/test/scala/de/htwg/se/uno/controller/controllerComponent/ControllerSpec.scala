@@ -12,7 +12,7 @@ import controller._
 class ControllerSpec extends AnyWordSpec {
   "Controller" should {
     var game = new Game("p1", "p2", between21State)
-    game = game.addTest("midstack", R0)
+    game = game.addTest(R0)
     game = game.add("p1", B0)
     var c = new Controller(game)
 
@@ -53,7 +53,7 @@ class ControllerSpec extends AnyWordSpec {
     }
 
     var game1 = new Game("p1", "p2", between21State)
-    game1 = game1.addTest("midstack", R0)
+    game1 = game1.addTest(R0)
     game1 = game1.add("p1", R1)
     var c1 = new Controller(game1)
 
@@ -84,7 +84,7 @@ class ControllerSpec extends AnyWordSpec {
     }
 
     var game2 = new Game("p1", "p2", between21State)
-    game2 = game2.addTest("midstack", R0)
+    game2 = game2.addTest(R0)
     game2 = game2.add("p1", R1)
     var c2 = new Controller(game2)
 
@@ -152,7 +152,7 @@ class ControllerSpec extends AnyWordSpec {
 
     "override the method toString" in {
       var game2 = new Game("p1", "p2", between21State)
-      game2 = game2.addTest("midstack", R0)
+      game2 = game2.addTest(R0)
       game2 = game2.add("p1", R1)
       game2 = game2.add("p2", G1)
       var c2 = new Controller(game2)

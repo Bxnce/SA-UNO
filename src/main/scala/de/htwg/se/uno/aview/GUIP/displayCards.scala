@@ -30,7 +30,7 @@ case class displayCards(controller: controllerInterface) {
     val c = player.karten(ind)
     var color = ""
     var value = ""
-    c.getColor match
+    c.color match
       case CardColor.Red    => color = "red"
       case CardColor.Blue   => color = "blue"
       case CardColor.Green  => color = "green"
@@ -38,7 +38,7 @@ case class displayCards(controller: controllerInterface) {
       case CardColor.Black  => color = "black"
       case CardColor.ErrorC => color = ""
 
-    c.getValue match
+    c.value match
       case CardValue.Zero     => value = "_0"
       case CardValue.One      => value = "_1"
       case CardValue.Two      => value = "_2"
@@ -98,14 +98,14 @@ case class displayCards(controller: controllerInterface) {
             if (
               controller.game.midCard
                 .karten(0)
-                .getValue == CardValue.Wildcard || controller.game.midCard
+                .value == CardValue.Wildcard || controller.game.midCard
                 .karten(0)
-                .getValue == CardValue.Take4
+                .value == CardValue.Take4
             ) {
               colorChoosePop(controller).ret.open
             }
             if (controller.game.ERROR != 0) {
-              controller.game.midCard.karten(0).getValue match
+              controller.game.midCard.karten(0).value match
                 case CardValue.Take2 =>
                   errorPop(
                     "You're not allowed to place a card after a '+2'",

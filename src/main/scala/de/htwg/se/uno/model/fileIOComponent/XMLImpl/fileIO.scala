@@ -27,25 +27,24 @@ class fileIO extends FileIOInterface {
     val p1N = (player1 \\ "name").text
     val p1V = (player1 \\ "karten").text
     val V1 = toCardVector(p1V)
-    var p1P = false
+    val p1P = false
     (player1 \\ "placed").text match
-      case "true"  => p1P = true
-      case "false" => p1P = false
+      case "true" => true
+      case "false" => false
     val player2 = (file \\ "game" \ "player2")
     val p2N = (player2 \\ "name").text
     val p2V = (player2 \\ "karten").text
     val V2 = toCardVector(p2V)
-    var p2P = false
+    val p2P = false
     (player2 \\ "placed").text match
-      case "true"  => p2P = true
-      case "false" => p2P = false
-    var currentstate: State = between21State
-    (file \\ "game" \ "currentstate").text match
-      case "between12State" => currentstate = between12State
-      case "between21State" => currentstate = between21State
-      case "player1State"   => currentstate = player1State
-      case "player2State"   => currentstate = player2State
-      case "winState"       => currentstate = winState
+      case "true" => true
+      case "false" => false
+    val currentstate: State = (file \\ "game" \ "currentstate").text match
+          case "between12State" => between12State
+          case "between21State" => between21State
+          case "player1State" => player1State
+          case "player2State" => player2State
+          case "winState" => winState
     val ERROR = (file \\ "game" \ "error").text.toInt
     val stackNote = (file \\ "pair")
     val cardStack: CardStack = new CardStack(
@@ -66,21 +65,41 @@ class fileIO extends FileIOInterface {
   }
 
   def playertoXml(player: Player) =
-    <player> 
-        <name>{player.name}</name> 
-        <karten>{player.karten.map(_.toString).map("" + _ + " ")}</karten>
-        <placed>{player.placed.toString}</placed>
+    <player>
+      <name>
+        {player.name}
+      </name>
+      <karten>
+        {player.karten.map(_.toString).map("" + _ + " ")}
+      </karten>
+      <placed>
+        {player.placed.toString}
+      </placed>
     </player>
 
   def gametoXml(game: gameInterface) =
     <game>
-            <player1>{playertoXml(game.pList(0))}</player1>
-            <player2>{playertoXml(game.pList(1))}</player2>
-            <currentstate>{game.currentstate.toString}</currentstate>
-            <error>{game.ERROR}</error>
-            <cardStack>{cardStacktoXML(game.cardStack.cards)}</cardStack>
-            <midCard>{playertoXml(game.midCard)}</midCard>
-            <winner>{game.winner}</winner>
+      <player1>
+        {playertoXml(game.pList(0))}
+      </player1>
+      <player2>
+        {playertoXml(game.pList(1))}
+      </player2>
+      <currentstate>
+        {game.currentstate.toString}
+      </currentstate>
+      <error>
+        {game.ERROR}
+      </error>
+      <cardStack>
+        {cardStacktoXML(game.cardStack.cards)}
+      </cardStack>
+      <midCard>
+        {playertoXml(game.midCard)}
+      </midCard>
+      <winner>
+        {game.winner}
+      </winner>
     </game>
 
   override def save(game: gameInterface): Unit =
@@ -94,23 +113,21 @@ class fileIO extends FileIOInterface {
     pw.close
 
   def toCardVector(text: String): Vector[Card] =
-    val tmp = text.split(" ")
-    var cardstmp = new ListBuffer[Card]()
-    for (i <- tmp) {
-      cardstmp += getCard(i)
-    }
-    cardstmp.toVector
+    text.split(" ").map(getCard).toVector
 
-  def cardStacktoXML(stack: Map[Card, Int]) = {
-    {
-      for (i <- stack) yield cardStackString(i(0), i(1))
-    }
-  }
+  def cardStacktoXML(stack: Map[Card, Int]): Seq[NodeSeq] =
+    stack.map { case (card, count) =>
+      cardStackString(card, count)
+    }.toSeq
 
   def cardStackString(c: Card, value: Int) = {
     <pair>
-        <card>{c.toString}</card>
-        <value>{value.toString}</value>
+      <card>
+        {c.toString}
+      </card>
+      <value>
+        {value.toString}
+      </value>
     </pair>
   }
 
@@ -118,14 +135,12 @@ class fileIO extends FileIOInterface {
     val xml = gametoXml(game).toString
     xml
   }
+
   def toStackMap(mapString: NodeSeq): Map[Card, Int] =
-    var sMap: Map[Card, Int] = Map[Card, Int]()
-    for (temp <- mapString) {
-      sMap = sMap.updated(
-        getCard((temp \\ "card").text),
-        (temp \\ "value").text.toInt
-      )
-    }
-    sMap
+    mapString.map { temp =>
+      val card = getCard((temp \\ "card").text)
+      val value = (temp \\ "value").text.toInt
+      (card, value)
+    }.toMap
 
 }
