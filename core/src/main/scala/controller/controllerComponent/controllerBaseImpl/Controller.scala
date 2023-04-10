@@ -1,27 +1,30 @@
 package controller.controllerComponent.controllerBaseImpl
 
+import controller.controllerComponent.controllerInterface
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject}
 import scala.io.StdIn.readLine
 import model.fileIOComponent.FileIOInterface
 import Console.{RED, RESET}
 import scala.collection.mutable.ListBuffer
-
+import model.gameComponent.gameBaseImpl._
+import model.gameComponent.gameInterface
+import util.Invoker
 
 case class Controller @Inject() (var game: gameInterface)
     extends controllerInterface:
   val invoker = new Invoker
 
   def take(): Unit =
-    game = invoker.doStep(UnoCommand(this, "take"))
+    game = invoker.doStep(UnoCommand(this.game, "take"))
     notifyObservers
 
   def place(ind: Int): Unit =
-    game = invoker.doStep(UnoCommand(ind, this))
+    game = invoker.doStep(UnoCommand(ind, this.game))
     notifyObservers
 
   def next(): Unit =
-    game = invoker.doStep(UnoCommand(this, "next"))
+    game = invoker.doStep(UnoCommand(this.game, "next"))
     notifyObservers
 
   def undo(): Unit =
@@ -33,14 +36,14 @@ case class Controller @Inject() (var game: gameInterface)
     notifyObservers
 
   def newG(p1: String, p2: String): Unit =
-    game = new Game(p1, p2, between21State).init()
+    game = new Game(p1, p2, UnoState.between21State).init()
     notifyObservers
 
   def WinG(p1: String, p2: String): Unit =
-    game = new Game(p1, p2, between21State).init()
+    game = new Game(p1, p2, UnoState.between21State).init()
 
   def colorChoose(color: String): Unit =
-    game = invoker.doStep(UnoCommand(color, this))
+    game = invoker.doStep(UnoCommand(color, this.game))
     notifyObservers
 
   def save: Unit =
@@ -58,15 +61,8 @@ case class Controller @Inject() (var game: gameInterface)
     notifyObservers
 
   override def toString: String =
-    UnoCommand(this, "print").toString
+    UnoCommand(this.game, "print").toString
 
-  def return_j: String =
-    def fileIO =
-      Guice.createInjector(new UnoModule).getInstance(classOf[FileIOInterface])
-    var ret_str = ""
-    if game.pList.head.name != "place_h" then
-      ret_str = fileIO.return_json(game)
-    ret_str
 
   def create_tuple() : List[List[(String, Int)]] =
     val card_list = new ListBuffer[List[(String, Int)]]()

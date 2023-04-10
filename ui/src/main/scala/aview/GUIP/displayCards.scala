@@ -1,15 +1,26 @@
 package aview.GUIP
 
-import de.htwg.se.uno.controller.controllerComponent.controllerInterface
+import controller.controllerComponent.controllerInterface
 
-import javax.swing.{BorderFactory, ImageIcon}
+import model.gameComponent.gameBaseImpl._
+import controller.controllerComponent.controllerBaseImpl._
+import controller.controllerComponent.controllerInterface
+import javax.swing.{ImageIcon, BorderFactory}
 import java.awt.image.BufferedImage
-import scala.util.{Failure, Success, Try}
+import scala.util.{Try, Success, Failure}
 import java.io.File
 import javax.imageio.ImageIO
 import scala.collection.mutable.ListBuffer
-import scala.swing.{Alignment, BoxPanel, Dimension, FlowPanel, GridPanel, Label, Orientation}
-import java.awt.{Color, GridLayout}
+import scala.swing.{
+  Alignment,
+  Label,
+  Orientation,
+  GridPanel,
+  FlowPanel,
+  BoxPanel,
+  Dimension
+}
+import java.awt.{GridLayout, Color}
 import scala.swing.event.MouseClicked
 import scala.swing.Font
 
@@ -46,7 +57,7 @@ case class displayCards(controller: controllerInterface) {
       case CardValue.Special  => value = ""
       case CardValue.Error    => value = ""
 
-    val imagePath = "src/main/resources/cards/" + color + value + ".png"
+    val imagePath = "Ui/src/main/resources/cards/" + color + value + ".png"
 
     val image: BufferedImage = Try(ImageIO.read(new File(imagePath))) match {
       case s: Success[BufferedImage] => s.value
@@ -61,12 +72,12 @@ case class displayCards(controller: controllerInterface) {
 
     var imageList = new ListBuffer[ImageIcon];
 
-    if (currentstate.equals(player1State)) {
+    if (currentstate.equals(UnoState.player1State)) {
       currentPlayer = controller.game.pList(0)
       for (i <- 0 to currentPlayer.karten.size - 1) {
         imageList += getImageIcon(currentPlayer, i);
       }
-    } else if (currentstate.equals(player2State)) {
+    } else if (currentstate.equals(UnoState.player2State)) {
       currentPlayer = controller.game.pList(1)
       for (i <- 0 to currentPlayer.karten.size - 1) {
         imageList += getImageIcon(currentPlayer, i);
@@ -124,7 +135,7 @@ case class displayCards(controller: controllerInterface) {
     val currentstate = controller.game.currentstate
     contents += new Label() {
       font = new Font("Arial", 3, 22)
-      if (currentstate.equals(player1State)) {
+      if (currentstate.equals(UnoState.player1State)) {
         text = controller.game
           .pList(0)
           .name + "'s turn; opponent has " + controller.game
@@ -132,7 +143,7 @@ case class displayCards(controller: controllerInterface) {
           .karten
           .size
           .toString + " card(s)"
-      } else if (currentstate.equals(player2State)) {
+      } else if (currentstate.equals(UnoState.player2State)) {
         text = controller.game
           .pList(1)
           .name + "'s turn; opponent has " + controller.game
@@ -140,7 +151,7 @@ case class displayCards(controller: controllerInterface) {
           .karten
           .size
           .toString + " card(s)"
-      } else if (currentstate.equals(between12State)) {
+      } else if (currentstate.equals(UnoState.between12State)) {
         foreground = Color.RED
         text = controller.game
           .pList(1)
@@ -149,7 +160,7 @@ case class displayCards(controller: controllerInterface) {
           .karten
           .size
           .toString + " card(s)"
-      } else if (currentstate.equals(between21State)) {
+      } else if (currentstate.equals(UnoState.between21State)) {
         foreground = Color.RED
         text = controller.game
           .pList(0)
@@ -178,7 +189,7 @@ case class displayCards(controller: controllerInterface) {
         reactions += { case e: MouseClicked =>
           controller.take()
         }
-        icon = ImageIcon("src/main/resources/cards/uno_back.png")
+        icon = ImageIcon("Ui/src/main/resources/cards/uno_back.png")
       }
     }
 }

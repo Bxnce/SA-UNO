@@ -4,18 +4,28 @@ import model.gameComponent.gameInterface
 
 import scala.io.StdIn
 import Console.{GREEN, RED, RESET}
-import util.{Failure, Random, State, Success, Try}
+import util.{Failure, Random, Success, Try}
+
+enum State:
+  case player1State, player2State, between12State, between21State, winState
+
+enum UnoState(val name: State, val string_repr : String):
+  case player1State extends UnoState(State.player1State, "player1state")
+  case player2State extends UnoState(State.player2State, "player2state")
+  case between12State extends UnoState(State.between12State, "between12State")
+  case between21State extends UnoState(State.between21State, "between21State")
+  case winState extends UnoState(State.winState, "winState")
 
 case class Game(
-    pList: List[Player],
-    currentstate: State,
-    ERROR: Int,
-    cardStack: CardStack,
-    midCard: Player,
-    winner: Int
-) extends gameInterface:
+                 pList: List[Player],
+                 currentstate: UnoState,
+                 ERROR: Int,
+                 cardStack: CardStack,
+                 midCard: Player,
+                 winner: Int
+               ) extends gameInterface:
 
-  def this(player1: String, player2: String, startstate: State) =
+  def this(player1: String, player2: String, startstate: UnoState) =
     this(
       List(
         Player(player1, Vector[Card](), false),
@@ -151,13 +161,13 @@ case class Game(
     val tmp = this
     color match
       case "Blue" | "B" =>
-        changeMid(tmp, B)
+        changeMid(tmp, Card.B)
       case "Red" | "R" =>
-        changeMid(tmp, R)
+        changeMid(tmp, Card.R)
       case "Green" | "G" =>
-        changeMid(tmp, G)
+        changeMid(tmp, Card.G)
       case "Yellow" | "Y" =>
-        changeMid(tmp, Y)
+        changeMid(tmp, Card.Y)
       case _ =>
         tmp
 
@@ -190,7 +200,7 @@ case class Game(
     val finalGame = (1 to count).foldLeft(this)((game, _) => game.take("P1").take("P2"))
     finalGame
 
-  def getNext(game: gameInterface, player: Int, state: State): Game =
+  def getNext(game: gameInterface, player: Int, state: UnoState): Game =
     if (player == -1) {
       Game(game.pList, state, 0, game.cardStack, game.midCard, player)
     } else {

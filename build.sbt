@@ -16,7 +16,7 @@ lazy val allDependencies = Seq(
 )
 
 lazy val util: Project = Project(id = "UNO-Util", base = file("Util"))
-  .dependsOn(model, core)
+  .dependsOn(model)
   .settings(
     name:="UNO-Util",
     version:="0.1.0-SNAPSHOT",
@@ -26,7 +26,7 @@ lazy val util: Project = Project(id = "UNO-Util", base = file("Util"))
   )
 
 lazy val core: Project = Project(id = "UNO-Core", base = file("Core"))
-  .dependsOn(model)
+  .dependsOn(model, util)
   .settings(
     name:="UNO-Core",
     version:="0.1.0-SNAPSHOT",
@@ -55,7 +55,7 @@ lazy val ui: Project = Project(id = "UNO-Ui", base = file("Ui"))
   )
 
 lazy val root: Project = Project(id = "UNO", base = file("."))
-  .aggregate(util, core, model, ui)
+  .dependsOn(util, core, model, ui)
   .settings(
     name:="UNO",
     version:="0.1.0-SNAPSHOT",

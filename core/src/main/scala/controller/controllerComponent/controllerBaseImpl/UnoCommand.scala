@@ -2,92 +2,179 @@ package controller.controllerComponent.controllerBaseImpl
 
 //import controller.controllerComponent
 
-case class TakeCommand(controller: controllerInterface)
-    extends Command(controller) {
+import util.Command
+import controller.controllerComponent.controllerInterface
+import model.gameComponent.gameBaseImpl._
+import model.gameComponent._
+import model.gameComponent.gameBaseImpl.CardLayout.eol
+
+case class TakeCommand(game : gameInterface) extends Command[gameInterface]:
+  val oldgame = game
+  var newgame = game
+
   override def execute =
-    newgame = controller.game.currentstate.handle(this)
+    newgame.currentstate match
+      case UnoState.player1State =>
+        newgame = newgame.take("P1")
+        newgame = newgame.setError(0)
+      case UnoState.player2State =>
+        newgame = newgame.take("P2")
+        newgame = newgame.setError(0)
+      case UnoState.between12State =>
+        newgame = newgame.setError(-1)
+      case UnoState.between21State =>
+        newgame = newgame.setError(-1)
+      case UnoState.winState =>
+        newgame = newgame.setError(-1)
+    newgame
+
+  override def undoStep: gameInterface =
+    oldgame
+
+  override def redoStep: gameInterface =
+    newgame
+
+
+case class PlaceCommand(ind: Int, game: gameInterface) extends Command[gameInterface]:
+  val oldgame = game
+  var newgame = game
+
+  override def execute =
+    newgame.currentstate match
+      case UnoState.player1State =>
+        newgame = newgame.place(ind, 0)
+        if (newgame.ERROR != -1) {
+          if (newgame.checkWin(newgame.pList(0))) {
+            newgame = newgame.getNext(newgame, 0, UnoState.winState)
+          } else {
+            newgame = newgame.getNext(newgame, 0, UnoState.between12State)
+          }
+        }
+      case UnoState.player2State =>
+        newgame = newgame.place(ind, 1)
+        if (newgame.ERROR != -1) {
+          if (newgame.checkWin(newgame.pList(1))) {
+            newgame = newgame.getNext(newgame, 1, UnoState.winState)
+          } else {
+            newgame = newgame.getNext(newgame, 1, UnoState.between21State)
+          }
+        }
+      case UnoState.between12State =>
+        newgame = newgame.setError(-1)
+      case UnoState.between21State =>
+        newgame = newgame.setError(-1)
+      case UnoState.winState =>
+        newgame = newgame.setError(-1)
+    newgame
+
+  override def undoStep: gameInterface =
+    oldgame
+
+  override def redoStep: gameInterface =
+    newgame
+
+case class NextCommand(game: gameInterface) extends Command[gameInterface] {
+  val oldgame = game
+  var newgame = game
+
+  override def execute =
+    newgame.currentstate match
+      case UnoState.player1State =>
+        newgame = newgame.getNext(newgame, 0, UnoState.between12State)
+      case UnoState.player2State =>
+        newgame = newgame.getNext(newgame, 0, UnoState.between21State)
+      case UnoState.between12State =>
+        newgame = newgame.getNext(newgame, -1, UnoState.player2State)
+      case UnoState.between21State =>
+        newgame = newgame.getNext(newgame, -1, UnoState.player1State)
+      case UnoState.winState =>
+        newgame = new Game(newgame.pList.head.name, newgame.pList(1).name, UnoState.between21State).init()
+    newgame
+
+  override def undoStep: gameInterface =
+    oldgame
+
+  override def redoStep: gameInterface =
     newgame
 }
 
-case class PlaceCommand(ind: Int, controller: controllerInterface)
-    extends Command(controller) {
+case class toStringCommand(game: gameInterface) extends Command[gameInterface] {
 
   override def execute =
-    newgame = controller.game.currentstate.handle(this)
-    newgame
-}
-
-case class NextCommand(controller: controllerInterface)
-    extends Command(controller) {
-
-  override def execute =
-    newgame = controller.game.currentstate.handle(this)
-    newgame
-}
-
-case class toStringCommand(controller: controllerInterface)
-    extends Command(controller) {
-
-  override def execute =
-    controller.game
+    game
   override def toString: String =
-    if (!controller.game.pList(0).name.equals("place_h")) {
-      if (controller.game.currentstate == player1State) {
-        return controller.game.pList(0).name + eol + controller.game
+    if (!game.pList(0).name.equals("place_h")) {
+      if (game.currentstate == UnoState.player1State) {
+        return game.pList(0).name + eol + game
           .pList(0)
-          .print() + eol + controller.game.midCard
-          .print() + eol + controller.game
+          .print() + eol + game.midCard
+          .print() + eol + game
           .pList(1)
-          .printFiller() + controller.game.pList(1).name + eol
-      } else if (controller.game.currentstate == player2State) {
-        return controller.game.pList(0).name + eol + controller.game
+          .printFiller() + game.pList(1).name + eol
+      } else if (game.currentstate == UnoState.player2State) {
+        return game.pList(0).name + eol + game
           .pList(0)
-          .printFiller() + eol + controller.game.midCard
-          .print() + eol + controller.game
+          .printFiller() + eol + game.midCard
+          .print() + eol + game
           .pList(1)
-          .print() + controller.game.pList(1).name + eol
-      } else if (controller.game.currentstate == winState) {
-        return controller.game
+          .print() + game.pList(1).name + eol
+      } else if (game.currentstate == UnoState.winState) {
+        return game
           .pList(
-            controller.game.winner
+            game.winner
           )
           .name
           + " hat gewonnen! 'next' fuer neues Spiel!"
       } else {
-        return controller.game
+        return game
           .pList(0)
-          .name + eol + controller.game
+          .name + eol + game
           .pList(0)
-          .printFiller() + eol + controller.game.midCard
-          .print() + eol + controller.game
+          .printFiller() + eol + game.midCard
+          .print() + eol + game
           .pList(1)
-          .printFiller() + controller.game.pList(1).name + eol
+          .printFiller() + game.pList(1).name + eol
       }
     } else {
       return ""
     }
+
+  override def undoStep: gameInterface =
+    print("undo")
+    game
+
+  override def redoStep: gameInterface =
+    print("redo")
+    game
 }
 
-case class colorChooseCommand(color: String, controller: controllerInterface)
-    extends Command(controller) {
+case class colorChooseCommand(color: String, game: gameInterface)
+  extends Command[gameInterface] {
+  val oldgame = game
+  var newgame = game
   override def execute =
-    controller.game.chooseColor(color)
+    newgame = newgame.chooseColor(color)
+    newgame
+  override def undoStep: gameInterface =
+    oldgame
 
+  override def redoStep: gameInterface =
+    newgame
 }
 
 object UnoCommand { //Factory
-  def apply(controller: controllerInterface, dec: String) =
+  def apply(game: gameInterface, dec: String) =
     dec match
       case "take" =>
-        new TakeCommand(controller)
+        new TakeCommand(game)
       case "next" =>
-        new NextCommand(controller)
+        new NextCommand(game)
       case "print" =>
-        new toStringCommand(controller)
+        new toStringCommand(game)
 
-  def apply(ind: Int, controller: controllerInterface) =
-    new PlaceCommand(ind, controller)
+  def apply(ind: Int, game: gameInterface) =
+    new PlaceCommand(ind, game)
 
-  def apply(color: String, controller: controllerInterface) =
-    new colorChooseCommand(color, controller)
+  def apply(color: String, game: gameInterface) =
+    new colorChooseCommand(color, game)
 }

@@ -1,10 +1,15 @@
 package model.fileIOComponent.JSONImpl
 
+
 import model.fileIOComponent.FileIOInterface
-import java.io.*
-import play.api.libs.json.*
+import java.io._
+import play.api.libs.json._
 import scala.io.Source
 import scala.collection.mutable.ListBuffer
+import model.gameComponent.gameInterface
+import model.gameComponent.gameBaseImpl._
+import model.gameComponent.gameBaseImpl.toCard.getCard
+
 
 
 class fileIO extends FileIOInterface {
@@ -37,12 +42,12 @@ class fileIO extends FileIOInterface {
     val cs = (json \ "game" \ "currentstate").get.toString
     val csf = cs.replaceAll("\"", "")
     val currentstate = csf match
-      case "between12State" => between12State
-      case "between21State" => between21State
-      case "player1State" => player1State
-      case "player2State" => player2State
-      case "winState" => winState
-      case _ => between21State
+      case "between12State" => UnoState.between12State
+      case "between21State" => UnoState.between21State
+      case "player1State" => UnoState.player1State
+      case "player2State" => UnoState.player2State
+      case "winState" => UnoState.winState
+      case _ => UnoState.between21State
 
     val ERROR = (json \ "game" \ "ERROR").get.as[Int]
 
@@ -93,7 +98,7 @@ class fileIO extends FileIOInterface {
           "placed" -> game.pList(1).placed,
           "png_ind" -> smthngToJson(create_per_player(game.pList(1)))
         ),
-        "currentstate" -> game.currentstate.toString,
+        "currentstate" -> game.currentstate.string_repr,
         "ERROR" -> game.ERROR,
         "cardstack" -> mapToJson(game.cardStack.cards),
         "midCard" -> Json.obj(

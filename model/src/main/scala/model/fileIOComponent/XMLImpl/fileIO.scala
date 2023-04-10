@@ -1,8 +1,13 @@
 package model.fileIOComponent.XMLImpl
 
+import model.gameComponent.gameInterface
 import model.fileIOComponent.FileIOInterface
-import java.io.*
+import java.io._
+import model.gameComponent.gameBaseImpl.toCard._
+import model.gameComponent.gameBaseImpl.{CardStack, Card, Game, Player}
+import model.gameComponent.gameBaseImpl.UnoState
 import scala.collection.mutable.ListBuffer
+
 import scala.xml.{NodeSeq, PrettyPrinter}
 
 class fileIO extends FileIOInterface {
@@ -25,12 +30,12 @@ class fileIO extends FileIOInterface {
     (player2 \\ "placed").text match
       case "true" => true
       case "false" => false
-    val currentstate: State = (file \\ "game" \ "currentstate").text match
-          case "between12State" => between12State
-          case "between21State" => between21State
-          case "player1State" => player1State
-          case "player2State" => player2State
-          case "winState" => winState
+    val currentstate: UnoState = (file \\ "game" \ "currentstate").text match
+      case "between12State" => UnoState.between12State
+      case "between21State" => UnoState.between21State
+      case "player1State" => UnoState.player1State
+      case "player2State" => UnoState.player2State
+      case "winState" => UnoState.winState
     val ERROR = (file \\ "game" \ "error").text.toInt
     val stackNote = (file \\ "pair")
     val cardStack: CardStack = new CardStack(

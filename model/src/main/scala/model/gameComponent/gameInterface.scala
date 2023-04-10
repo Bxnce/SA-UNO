@@ -6,7 +6,7 @@ import util.State
 
 trait gameInterface {
   val pList: List[Player]
-  val currentstate: State
+  val currentstate: UnoState
   val ERROR: Int
   val cardStack: CardStack
   val midCard: Player
@@ -18,7 +18,7 @@ trait gameInterface {
   def checkWin(player: Player): Boolean
   def setError(err: Int): gameInterface
   def init(): gameInterface
-  def getNext(game: gameInterface, player: Int, state: State): gameInterface
+  def getNext(game: gameInterface, player: Int, state: UnoState): gameInterface
   def changeMid(tmp: gameInterface, c: Card): gameInterface
   def chooseColor(color: String): gameInterface
 }

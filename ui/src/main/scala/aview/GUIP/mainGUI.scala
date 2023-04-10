@@ -1,17 +1,19 @@
 package aview.GUIP
 
-import de.htwg.se.uno.controller.controllerComponent.controllerInterface
-
+import controller.controllerComponent.controllerInterface
+import util._
 import scala.swing.{BorderPanel, BoxPanel, FlowPanel, Frame, GridPanel, Label, MainFrame, Orientation}
 import java.awt.{Color, Dimension, Image, Toolkit}
 import javax.swing.BorderFactory
 import java.awt.FlowLayout
+import model.gameComponent.gameBaseImpl._
+
 
 class mainGUI(controller: controllerInterface) extends MainFrame with Observer {
   title = "BEST UNO EUW"
   controller.add(this)
   iconImage = Toolkit.getDefaultToolkit.getImage(
-    "src/main/resources/cards/uno_back.png"
+    "Ui/src/main/resources/cards/uno_back.png"
   )
   var dpCont = displayCards(controller)
   val butts = buttonsPanel(controller)
@@ -27,7 +29,7 @@ class mainGUI(controller: controllerInterface) extends MainFrame with Observer {
   override def update: Unit =
     dpCont = displayCards(controller)
 
-    if (controller.game.currentstate == winState) {
+    if (controller.game.currentstate == UnoState.winState) {
       winPop(controller).ret.open()
     }
 

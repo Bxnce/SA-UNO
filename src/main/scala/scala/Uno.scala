@@ -1,10 +1,12 @@
 package scala
-import com.google.inject.Guice
-import controller.controllerComponent.controllerInterface
 
+import com.google.inject.Guice
 import scala.Console.{BLUE, RESET}
 import scala.io.StdIn.readLine
-// mport Uno
+import controller.controllerComponent.controllerInterface
+import scala._
+import aview.GUIP.mainGUI
+import aview.TUI
 
 @main def Main: Unit =
   val injector = Guice.createInjector(new UnoModule)
@@ -18,11 +20,3 @@ import scala.io.StdIn.readLine
     Console.print(s"${BLUE}>>>  ${RESET}")
     input = readLine()
     tui.run(input)
-
-class Kek{
-  def controller_return =
-    val injector = Guice.createInjector(new UnoModule)
-    val controller = injector.getInstance(classOf[controllerInterface])
-    controller.game = controller.game.init()
-    controller
-}
