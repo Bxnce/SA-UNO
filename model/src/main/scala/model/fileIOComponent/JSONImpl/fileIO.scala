@@ -1,10 +1,8 @@
 package model.fileIOComponent.JSONImpl
 
 import model.fileIOComponent.FileIOInterface
-
 import java.io.*
 import play.api.libs.json.*
-
 import scala.io.Source
 import scala.collection.mutable.ListBuffer
 

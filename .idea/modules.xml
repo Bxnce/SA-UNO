@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UNO.iml" filepath="$PROJECT_DIR$/.idea/modules/UNO.iml" group="uno" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UNO-Core.iml" filepath="$PROJECT_DIR$/.idea/modules/UNO-Core.iml" group="uno" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UNO-Model.iml" filepath="$PROJECT_DIR$/.idea/modules/UNO-Model.iml" group="uno" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UNO-Ui.iml" filepath="$PROJECT_DIR$/.idea/modules/UNO-Ui.iml" group="uno" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UNO-Util.iml" filepath="$PROJECT_DIR$/.idea/modules/UNO-Util.iml" group="uno" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/uno-build.iml" filepath="$PROJECT_DIR$/.idea/modules/uno-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UNO.iml" filepath="$PROJECT_DIR$/.idea/modules/UNO.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UNO-Core.iml" filepath="$PROJECT_DIR$/.idea/modules/UNO-Core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UNO-Model.iml" filepath="$PROJECT_DIR$/.idea/modules/UNO-Model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UNO-Ui.iml" filepath="$PROJECT_DIR$/.idea/modules/UNO-Ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UNO-Util.iml" filepath="$PROJECT_DIR$/.idea/modules/UNO-Util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/UNO-build.iml" filepath="$PROJECT_DIR$/.idea/modules/UNO-build.iml" />
     </modules>
   </component>
 </project>

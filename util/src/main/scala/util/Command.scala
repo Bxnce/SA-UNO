@@ -1,7 +1,7 @@
 package util
 
-import de.htwg.se.uno.controller.controllerComponent.controllerInterface
-import de.htwg.se.uno.model.gameComponent.gameInterface
+import controller.controllerComponent.controllerInterface
+import model.gameComponent.gameInterface
 
 trait Command(controller: controllerInterface) { //template Pattern eingebaut
   val oldgame = controller.game

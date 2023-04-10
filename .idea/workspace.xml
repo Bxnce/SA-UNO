@@ -5,133 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="123d2027-cb6c-4347-bb4d-405989721893" name="Changes" comment="refactor into modules, change packages in modules, modules are not recognized by the other modules">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/bence.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/test.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sbt__com_novocode_junit_interface_0_11_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sbt__junit_junit_4_11_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sbt__org_hamcrest_hamcrest_core_1_3_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sbt__org_scala_lang_scala3_library_3_3_0_2_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sbt__org_scala_lang_scala_library_2_13_6_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sbt__org_scala_sbt_test_interface_1_0_jar.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/project/build.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/uno-build.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/uno-build.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/uno.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/UNO.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sbt.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sbt.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/scala_compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/uno-build.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/UNO-build.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/anime-naruto.gif" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/anime-naruto.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/back.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/black_+4.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/black_+4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/black_wildcard.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/black_wildcard.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_+2.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_+2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_0.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_0.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_5.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_6.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_6.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_7.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_7.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_8.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_8.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_9.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_9.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_reverse.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_reverse.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/blue_skip.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/blue_skip.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/crown-royalty.gif" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/crown-royalty.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/crown.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/crown.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_+2.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_+2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_0.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_0.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_5.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_6.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_6.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_7.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_7.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_8.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_8.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_9.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_9.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_reverse.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_reverse.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/green_skip.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/green_skip.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/p0.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/p0.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/redX.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/redX.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_+2.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_+2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_0.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_0.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_5.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_6.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_6.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_7.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_7.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_8.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_8.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_9.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_9.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_reverse.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_reverse.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/red_skip.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/red_skip.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/project/dependencies.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/unknown.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/unknown.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/uno_back.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/uno_back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_+2.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_+2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_0.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_0.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_5.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_6.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_6.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_7.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_7.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_8.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_8.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_9.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_9.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_reverse.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_reverse.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/cards/yellow_skip.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/cards/yellow_skip.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/rmpics/create_game.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/rmpics/create_game.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/rmpics/gui1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/resources/rmpics/gui1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/Uno.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/Uno.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/UnoModule.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/UnoModule.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/aview/GUIP/buttons.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/scala/aview/GUIP/buttons.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/aview/GUIP/colorChoosePop.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/scala/aview/GUIP/colorChoosePop.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/aview/GUIP/createGame.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/scala/aview/GUIP/createGame.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/aview/GUIP/displayCards.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/scala/aview/GUIP/displayCards.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/aview/GUIP/errorPop.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/scala/aview/GUIP/errorPop.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/aview/GUIP/mainGUI.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/scala/aview/GUIP/mainGUI.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/aview/GUIP/menubar.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/scala/aview/GUIP/menubar.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/aview/GUIP/winPop.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/scala/aview/GUIP/winPop.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/aview/TUI.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/scala/aview/TUI.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/controller/controllerComponent/controllerBaseImpl/Controller.scala" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/scala/controller/controllerComponent/controllerBaseImpl/Controller.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/controller/controllerComponent/controllerBaseImpl/UnoCommand.scala" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/scala/controller/controllerComponent/controllerBaseImpl/UnoCommand.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/controller/controllerComponent/controllerBaseImpl/UnoState.scala" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/scala/controller/controllerComponent/controllerBaseImpl/UnoState.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/controller/controllerComponent/controllerInterface.scala" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/scala/controller/controllerComponent/controllerInterface.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/model/fileIOComponent/FileIOInterface.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/FileIOInterface.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/model/fileIOComponent/JSONImpl/fileIO.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/JSONImpl/fileIO.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/model/fileIOComponent/XMLImpl/fileIO.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/XMLImpl/fileIO.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/model/fileIOComponent/XMLImpl/test.worksheet.sc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/model/gameComponent/gameBaseImpl/CardLayout.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameBaseImpl/CardLayout.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/model/gameComponent/gameBaseImpl/CardStack.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameBaseImpl/CardStack.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/model/gameComponent/gameBaseImpl/Cards.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameBaseImpl/Cards.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/model/gameComponent/gameBaseImpl/Game.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameBaseImpl/Game.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/model/gameComponent/gameBaseImpl/Player.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameBaseImpl/Player.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/model/gameComponent/gameInterface.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameInterface.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/util/Command.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/main/scala/util/Command.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/util/Invoker.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/main/scala/util/Invoker.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/util/Observer.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/main/scala/util/Observer.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/de/htwg/se/uno/util/State.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/main/scala/util/State.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/de/htwg/se/uno/aview/TUISpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/test/scala/aview/TUISpec.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/de/htwg/se/uno/controller/controllerComponent/ControllerSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/test/scala/controller/controllerComponent/ControllerSpec.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/de/htwg/se/uno/controller/controllerComponent/UnoStateSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/test/scala/controller/controllerComponent/UnoStateSpec.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/de/htwg/se/uno/model/gameComponent/CardLayoutSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/test/scala/gameComponent/CardLayoutSpec.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/de/htwg/se/uno/model/gameComponent/CardsSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/test/scala/gameComponent/CardsSpec.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/de/htwg/se/uno/model/gameComponent/GameSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/test/scala/gameComponent/GameSpec.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/de/htwg/se/uno/model/gameComponent/PlayerSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/test/scala/gameComponent/PlayerSpec.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/de/htwg/se/uno/util/CommandSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/test/scala/util/CommandSpec.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/de/htwg/se/uno/util/InvokerSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/test/scala/util/InvokerSpec.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/de/htwg/se/uno/util/ObserverSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/test/scala/util/ObserverSpec.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/scala/de/htwg/se/uno/util/StateSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/test/scala/util/StateSpec.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/JSONImpl/fileIO.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/JSONImpl/fileIO.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/XMLImpl/fileIO.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/XMLImpl/fileIO.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameBaseImpl/Game.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameBaseImpl/Game.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameBaseImpl/Player.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameBaseImpl/Player.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameInterface.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameInterface.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/main/scala/util/Command.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/main/scala/util/Command.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/main/scala/util/State.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/main/scala/util/State.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/test/scala/util/StateSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/test/scala/util/StateSpec.scala" afterDir="false" />
+    </list>
+    <list id="ef4a1060-a901-412f-bf47-5eebbf3c62b8" name="Changes by haase" comment="">
+      <change beforePath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/FileIOInterface.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/FileIOInterface.scala" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,6 +35,23 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="SBT">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="UNO" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -201,6 +108,7 @@
       <recent name="C:\Users\bence\Documents\SA\SA-UNO\util\src\test\scala" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="util" />
       <recent name="" />
     </key>
   </component>
@@ -232,7 +140,8 @@
       <workItem from="1680987283099" duration="10000" />
       <workItem from="1680990401597" duration="4699000" />
       <workItem from="1680997701833" duration="611000" />
-      <workItem from="1681115265036" duration="20000" />
+      <workItem from="1681115265036" duration="3717000" />
+      <workItem from="1681119045216" duration="807000" />
     </task>
     <task id="LOCAL-00001" summary="extended json file for uno_web">
       <created>1669457744619</created>
@@ -318,7 +227,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679938757734</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="refactor into modules, change packages in modules, modules are not recognized by the other modules">
+      <created>1681115489015</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1681115489015</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

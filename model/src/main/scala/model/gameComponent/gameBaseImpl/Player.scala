@@ -1,4 +1,5 @@
 package model.gameComponent.gameBaseImpl
+
 import Card._
 import CardLayout._
 

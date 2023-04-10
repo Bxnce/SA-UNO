@@ -65,9 +65,6 @@ lazy val root: Project = Project(id = "UNO", base = file("."))
   )
 
 lazy val settings: Seq[Def.Setting[_]] = Seq(
-    name := "uno",
-    version := "0.1.0-SNAPSHOT",
-    scalaVersion := scala3Version,
     jacocoReportSettings := JacocoReportSettings(
       "Jacoco Coverage Report",
       None,

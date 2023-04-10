@@ -1,9 +1,7 @@
 package model.fileIOComponent.XMLImpl
 
 import model.fileIOComponent.FileIOInterface
-
 import java.io.*
-
 import scala.collection.mutable.ListBuffer
 import scala.xml.{NodeSeq, PrettyPrinter}
 

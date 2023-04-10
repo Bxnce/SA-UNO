@@ -1,7 +1,5 @@
 package util
 
-import de.htwg.se.uno.model.gameComponent.gameBaseImpl.Game
-import de.htwg.se.uno.model.gameComponent.gameInterface
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers.*
 

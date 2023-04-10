@@ -1,14 +1,10 @@
 package model.gameComponent.gameBaseImpl
 
-import Player.*
-import toCard.*
-import CardLayout.*
-import Card.*
+import model.gameComponent.gameInterface
 
 import scala.io.StdIn
-
 import Console.{GREEN, RED, RESET}
-import scala.util.{Failure, Random, Success, Try}
+import util.{Failure, Random, State, Success, Try}
 
 case class Game(
     pList: List[Player],
