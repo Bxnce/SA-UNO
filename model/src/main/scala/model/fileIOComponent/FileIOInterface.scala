@@ -1,5 +1,8 @@
 package model.fileIOComponent
 
+import model.fileIOComponent.{JSONImpl, XMLImpl}
+import model.gameComponent.gameInterface
+
 trait FileIOInterface {
   def load: gameInterface
   def save(game: gameInterface): Unit
