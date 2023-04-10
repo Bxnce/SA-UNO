@@ -1,5 +1,9 @@
 package controller.controllerComponent
 
+import util._
+import controller.controllerComponent.controllerBaseImpl._
+import model.gameComponent.gameInterface
+import model.gameComponent.gameBaseImpl.Player
 
 trait controllerInterface extends Observable {
   var game: gameInterface
@@ -15,7 +19,6 @@ trait controllerInterface extends Observable {
   override def toString: String
   def load: Unit
   def save: Unit
-  def return_j: String
   def create_per_player(player: Player) : List[(String, Int)]
   def create_tuple() : List[List[(String, Int)]]
 }

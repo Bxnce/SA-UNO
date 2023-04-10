@@ -1,6 +1,6 @@
 package aview.GUIP
 
-import de.htwg.se.uno.controller.controllerComponent.controllerInterface
+import controller.controllerComponent.controllerInterface
 
 import scala.swing.{BoxPanel, Button, Dialog, Dimension, Font, Label, Orientation, event}
 import java.awt.Color
@@ -19,7 +19,7 @@ case class winPop(controller: controllerInterface) {
       maximumSize = new Dimension(362, 420)
       preferredSize = new Dimension(362, 420)
       contents += new Label() {
-        icon = new ImageIcon("src/main/resources/cards/anime-naruto.gif")
+        icon = new ImageIcon("Ui/src/main/resources/cards/anime-naruto.gif")
       }
       contents += new Label(
         controller.game.pList(controller.game.winner).name + " won"

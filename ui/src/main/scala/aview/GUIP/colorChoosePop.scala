@@ -1,6 +1,6 @@
 package aview.GUIP
 
-import de.htwg.se.uno.controller.controllerComponent.controllerInterface
+import controller.controllerComponent.controllerInterface
 
 import scala.swing.{Dialog, Dimension, GridPanel, Label}
 import javax.swing.ImageIcon
@@ -9,7 +9,7 @@ import scala.swing.event.MouseClicked
 case class colorChoosePop(controller: controllerInterface) {
 
   def getImage(color: String): ImageIcon =
-    new ImageIcon("src/main/resources/cards/" + color + ".png")
+    new ImageIcon("Ui/src/main/resources/cards/" + color + ".png")
 
   def ret: Dialog = new Dialog() {
     centerOnScreen

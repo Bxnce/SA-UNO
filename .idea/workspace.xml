@@ -4,37 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="123d2027-cb6c-4347-bb4d-405989721893" name="Changes" comment="refactor into modules, change packages in modules, modules are not recognized by the other modules">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/sbt__org_scala_lang_scala3_library_3_3_1_2_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/sbt__org_scala_lang_scala_library_2_13_8_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Core.UNO-Core.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Model.UNO-Model.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Ui.UNO-Ui.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/Util.UNO-Util.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/UNO-build.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/UNO-build.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/UNO.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/UNO.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/scala_compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/scala_compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ui/src/main/scala/aview/GUIP/winPop.scala" beforeDir="false" afterPath="$PROJECT_DIR$/Ui/src/main/scala/aview/GUIP/winPop.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/scala/controller/controllerComponent/controllerBaseImpl/Controller.scala" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/scala/controller/controllerComponent/controllerBaseImpl/Controller.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/scala/controller/controllerComponent/controllerBaseImpl/UnoCommand.scala" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/scala/controller/controllerComponent/controllerBaseImpl/UnoCommand.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/scala/controller/controllerComponent/controllerBaseImpl/UnoState.scala" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/JSONImpl/fileIO.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/JSONImpl/fileIO.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/XMLImpl/fileIO.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/fileIOComponent/XMLImpl/fileIO.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameBaseImpl/Game.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameBaseImpl/Game.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameInterface.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameInterface.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/Uno.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/scala/Uno.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/UnoModule.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/scala/UnoModule.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/main/scala/aview/GUIP/displayCards.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/scala/aview/GUIP/displayCards.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/src/main/scala/aview/GUIP/mainGUI.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/main/scala/aview/GUIP/mainGUI.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/src/main/scala/util/State.scala" beforeDir="false" />
-    </list>
-    <list id="ef4a1060-a901-412f-bf47-5eebbf3c62b8" name="Changes by haase" comment="">
-      <change beforePath="$PROJECT_DIR$/core/src/main/scala/controller/controllerComponent/controllerBaseImpl/Controller.scala" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/scala/controller/controllerComponent/controllerBaseImpl/Controller.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameInterface.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/main/scala/model/gameComponent/gameInterface.scala" afterDir="false" />
-    </list>
+    <list default="true" id="123d2027-cb6c-4347-bb4d-405989721893" name="Changes" comment="game works again, refactored in modules" />
+    <list id="ef4a1060-a901-412f-bf47-5eebbf3c62b8" name="Changes by haase" comment="game works again, refactored in modules" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -91,33 +62,6 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/Model/src/main/scala/model/gameComponent/gameInterface.scala">
-      <ranges>
-        <range start1="2" end1="5" start2="2" end2="3" changelist="ef4a1060-a901-412f-bf47-5eebbf3c62b8" />
-        <range start1="8" end1="9" start2="6" end2="7" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-        <range start1="20" end1="21" start2="18" end2="19" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-        <range start1="24" end1="25" start2="22" end2="22" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/Core/src/main/scala/controller/controllerComponent/controllerBaseImpl/Controller.scala">
-      <ranges>
-        <range start1="2" end1="2" start2="2" end2="3" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-        <range start1="8" end1="9" start2="9" end2="12" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-        <range start1="15" end1="16" start2="18" end2="19" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-        <range start1="19" end1="20" start2="22" end2="23" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-        <range start1="23" end1="24" start2="26" end2="27" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-        <range start1="35" end1="36" start2="38" end2="39" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-        <range start1="39" end1="40" start2="42" end2="43" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-        <range start1="42" end1="43" start2="45" end2="46" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-        <range start1="46" end1="49" start2="49" end2="50" changelist="ef4a1060-a901-412f-bf47-5eebbf3c62b8" />
-        <range start1="50" end1="52" start2="51" end2="51" changelist="ef4a1060-a901-412f-bf47-5eebbf3c62b8" />
-        <range start1="54" end1="57" start2="53" end2="54" changelist="ef4a1060-a901-412f-bf47-5eebbf3c62b8" />
-        <range start1="60" end1="61" start2="57" end2="58" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-        <range start1="62" end1="69" start2="59" end2="59" changelist="123d2027-cb6c-4347-bb4d-405989721893" />
-      </ranges>
-    </file>
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -129,27 +73,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "last_directory_selection": "C:/Users/bence/Documents/SA/SA-UNO/src/main/scala",
-    "last_opened_file_path": "C:/Users/bence/Documents/SWQS/junit",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "Errors",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/bence/Documents/SA/SA-UNO/src/main/scala&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/bence/Documents/SWQS/junit&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\bence\Documents\SA\SA-UNO\ui\src\main" />
@@ -162,101 +106,6 @@
       <recent name="util" />
       <recent name="" />
     </key>
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="DjangoTestsConfigurationType">
-      <module name="UNO" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="TARGET" value="" />
-      <option name="SETTINGS_FILE" value="" />
-      <option name="CUSTOM_SETTINGS" value="false" />
-      <option name="USE_OPTIONS" value="false" />
-      <option name="OPTIONS" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="UNO" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="UNO" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
-      <module name="UNO" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="ADDITIONAL_ARGS" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
-      <module name="UNO" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Python.FlaskServer">
-      <module name="UNO" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="launchJavascriptDebuger" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Tox" factoryName="Tox">
-      <module name="UNO" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <method v="2" />
-    </configuration>
   </component>
   <component name="ScalaProjectSettings">
     <option name="scala3DisclaimerShown" value="true" />
@@ -380,7 +229,21 @@
       <option name="project" value="LOCAL" />
       <updated>1681115489015</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="game works again, refactored in modules">
+      <created>1681132688696</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1681132688696</updated>
+    </task>
+    <task id="LOCAL-00015" summary="game works again, refactored in modules">
+      <created>1681132717402</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1681132717402</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -391,7 +254,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="04-microservices" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -410,7 +285,8 @@
     <MESSAGE value="remove useless &quot;new&quot;, change xx(0) to xx.head" />
     <MESSAGE value="update coverage sites" />
     <MESSAGE value="refactor into modules, change packages in modules, modules are not recognized by the other modules" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor into modules, change packages in modules, modules are not recognized by the other modules" />
+    <MESSAGE value="game works again, refactored in modules" />
+    <option name="LAST_COMMIT_MESSAGE" value="game works again, refactored in modules" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

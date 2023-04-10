@@ -1,6 +1,6 @@
 package aview.GUIP
 
-import de.htwg.se.uno.controller.controllerComponent.controllerInterface
+import controller.controllerComponent.controllerInterface
 
 import scala.swing.*
 

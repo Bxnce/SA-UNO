@@ -1,15 +1,18 @@
 package util
 
 import model.gameComponent.gameInterface
+import util.Command
 
 class Invoker {
-  private var undoStack: List[Command] = Nil
-  private var redoStack: List[Command] = Nil
+  private var undoStack: List[Command[gameInterface]] = Nil
+  private var redoStack: List[Command[gameInterface]] = Nil
 
-  def doStep(command: Command): gameInterface = {
-    undoStack = command :: undoStack
+  def doStep(command: Command[gameInterface]): gameInterface =
+    command match
+      case _ =>
+        undoStack = command :: undoStack
+        redoStack = Nil
     command.execute
-  }
 
   def undoStep: Option[gameInterface] = {
     undoStack match {

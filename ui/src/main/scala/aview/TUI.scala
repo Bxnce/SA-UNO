@@ -1,10 +1,12 @@
 package aview
 
-import de.htwg.se.uno.controller.controllerComponent.controllerInterface
+import controller.controllerComponent.controllerInterface
 
 import scala.io.StdIn.readLine
 import Console.{GREEN, RED, RESET}
-import de.htwg.se.uno.model.fileIOComponent.XMLImpl.*
+import model.fileIOComponent.XMLImpl.*
+import util._
+import model.gameComponent.gameBaseImpl.CardValue
 
 class TUI(controller: controllerInterface) extends Observer:
   val ERROR = -1
@@ -30,7 +32,7 @@ class TUI(controller: controllerInterface) extends Observer:
 
     in(0) match
       case "s" =>
-        print(controller.return_j)
+        controller.save
         return SUCCESS
       case "l" =>
         controller.load
