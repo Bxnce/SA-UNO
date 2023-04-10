@@ -47,17 +47,11 @@ case class Controller @Inject() (var game: gameInterface)
     notifyObservers
 
   def save: Unit =
-    def fileIO =
-      Guice.createInjector(new UnoModule).getInstance(classOf[FileIOInterface])
-    fileIO.save(game)
+    //fileIO.save(game)
     notifyObservers
 
-
-
   def load: Unit =
-    def fileIO =
-      Guice.createInjector(new UnoModule).getInstance(classOf[FileIOInterface])
-    game = fileIO.load
+    //fileIO.load
     notifyObservers
 
   override def toString: String =

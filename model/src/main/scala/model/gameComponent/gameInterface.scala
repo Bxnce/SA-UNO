@@ -1,8 +1,6 @@
 package model.gameComponent
 
-import gameBaseImpl.{Card, CardColor, CardLayout, CardStack, CardValue, Player}
-
-import util.State
+import model.gameComponent.gameBaseImpl.{Card, CardColor, CardLayout, CardStack, CardValue, Player, UnoState}
 
 trait gameInterface {
   val pList: List[Player]
