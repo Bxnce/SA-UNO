@@ -2,7 +2,7 @@ package model.gameComponent
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
-import CardLayout._
+import gameBaseImpl.CardLayout._
 class CardLayoutSpec extends AnyWordSpec {
   "The Object CardLayout" should {
     "have a variable eol as String of form'\\n'" in {
