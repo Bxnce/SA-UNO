@@ -1,6 +1,6 @@
 package model.gameComponent
 
-import model.gameComponent.gameBaseImpl.{Card, CardColor, CardValue, toCard}
+import gameBaseImpl.{Card, CardColor, CardValue, toCard}
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers.*
 
