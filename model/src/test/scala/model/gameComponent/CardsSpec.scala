@@ -1,13 +1,14 @@
-package model.gameComponent.gameBaseImpl
+package model.gameComponent
 
+import model.gameComponent.gameBaseImpl.{Card, CardColor, CardValue, toCard}
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers.*
 
 class CardsSpec extends AnyWordSpec {
   "Cards" should {
-    import Card._
-    import CardColor._
-    import CardValue._
+    import model.gameComponent.gameBaseImpl.Card._
+    import model.gameComponent.gameBaseImpl.CardColor._
+    import model.gameComponent.gameBaseImpl.CardValue._
     "be one of 5 colors (Red, Blue, Green, Yellow, Black) and have a value between 0 and 9 and +2, Skip for Black the values are Wildcard and +4" in {
       val red: Array[Card] = Card.values.filter(c => c.color == Red)
       red.length should be(13)
