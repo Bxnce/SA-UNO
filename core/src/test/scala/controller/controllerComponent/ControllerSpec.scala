@@ -1,7 +1,10 @@
 package controller.controllerComponent.controllerBaseImpl
 
 
-import model.gameComponent.gameBaseImpl.UnoState
+import model.gameComponent.gameBaseImpl.{Game, UnoState}
+import model.gameComponent.gameInterface
+import model.gameComponent.gameBaseImpl.Card.*
+import model.gameComponent
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers.*
 import controller.*
@@ -154,9 +157,9 @@ class ControllerSpec extends AnyWordSpec {
       game2 = game2.add("p2", G1)
       var c2 = new Controller(game2)
 
-      c2.toString shouldBe (UnoCommand(c2, "print").toString)
+      c2.toString shouldBe (UnoCommand(c2.game, "print").toString)
       c2.next()
-      c2.toString shouldBe (UnoCommand(c2, "print").toString)
+      c2.toString shouldBe (UnoCommand(c2.game, "print").toString)
     }
 
   }
