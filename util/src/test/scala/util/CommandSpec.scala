@@ -1,8 +1,8 @@
 package util
 
-import de.htwg.se.uno.controller.controllerComponent.controllerInterface
-import de.htwg.se.uno.model.gameComponent.gameBaseImpl.Game
-import de.htwg.se.uno.model.gameComponent.gameInterface
+import controller.controllerComponent.controllerInterface
+import model.gameComponent.gameBaseImpl.Game
+import model.gameComponent.gameInterface
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers.*
 

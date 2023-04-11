@@ -1,12 +1,13 @@
 package aview
 
-import de.htwg.se.uno.model.gameComponent.gameBaseImpl.Game
+import model.gameComponent.gameBaseImpl.Game
+import model.gameComponent.gameBaseImpl.UnoState
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers.*
 
 class TUISpec extends AnyWordSpec {
   "TUI" when {
-    var game = new Game("Bence", "Timo", between21State)
+    var game = new Game("Bence", "Timo", UnoState.between21State)
     game = game.addTest(Y0)
     game = game.add("P1", R0)
     game = game.add("P1", R1)
@@ -57,7 +58,7 @@ class TUISpec extends AnyWordSpec {
         tui.convertinputString("- 1") shouldBe (tui.ERROR)
 
         tui.convertinputString("n") shouldBe (tui.SUCCESS) //p2s
-        controller.game.currentstate shouldBe (player2State)
+        controller.game.currentstate shouldBe (UnoState.player2State)
 
         tui.convertinputString("+")
         controller.game.pList(1).karten.size shouldBe (4)

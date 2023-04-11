@@ -2,23 +2,23 @@ package model.gameComponent.gameBaseImpl
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers.*
-import de.htwg.se.uno.controller.controllerComponent.controllerBaseImpl.{between12State, between21State, player1State, player2State}
+import model.gameComponent.gameBaseImpl.UnoState
 
 class GameSpec extends AnyWordSpec {
   "Case Class Game" should {
     "have a second constructor that takes (String,String,State) and creates a new Game" in {
-      val g1 = new Game("Bence", "Timo", between21State)
+      val g1 = new Game("Bence", "Timo", UnoState.between21State)
       g1.pList(0).name shouldBe ("Bence")
       g1.pList(1).name shouldBe ("Timo")
       g1.pList(0).karten.size shouldBe (0)
       g1.pList(1).karten.size shouldBe (0)
       g1.midCard.karten.size shouldBe (0)
-      g1.currentstate shouldEqual (between21State)
+      g1.currentstate shouldEqual (UnoState.between21State)
     }
 
     "should create a game with 2 Players and one Card in the middle" in {
-      val g1 = new Game("player1", "player2", between21State).take("midcard")
-      g1.currentstate shouldEqual (between21State)
+      val g1 = new Game("player1", "player2", UnoState.between21State).take("midcard")
+      g1.currentstate shouldEqual (UnoState.between21State)
       g1.midCard.karten.size shouldBe (1)
       g1.pList(0).karten.size shouldBe (0)
       g1.pList(1).karten.size shouldBe (0)
@@ -26,7 +26,7 @@ class GameSpec extends AnyWordSpec {
     }
 
     "have a method add(String, Card) that adds a card to a players hand" in {
-      var game1 = new Game("player1", "player2", between21State).take("midcard")
+      var game1 = new Game("player1", "player2", UnoState.between21State).take("midcard")
       game1.pList(0).karten.size shouldBe (0)
       game1.pList(1).karten.size shouldBe (0)
       game1.midCard.karten.size shouldBe (1)
@@ -47,7 +47,7 @@ class GameSpec extends AnyWordSpec {
     }
 
     "have a method take(String) that adds a random card to a players hand" in {
-      var game1 = new Game("player1", "player2", between21State)
+      var game1 = new Game("player1", "player2", UnoState.between21State)
       game1.pList(0).karten.size shouldBe (0)
       game1.pList(1).karten.size shouldBe (0)
 
@@ -59,22 +59,22 @@ class GameSpec extends AnyWordSpec {
     }
 
     "have a method checkPlace(Int,Int) that checks if a player is allowed to place a specific card" in {
-      var game1 = new Game("player1", "player2", between21State)
+      var game1 = new Game("player1", "player2", UnoState.between21State)
       game1 = game1.addTest(R0)
       game1 = game1.add("p1", R1)
       game1 = game1.add("p1", W)
       game1.checkPlace(0, 0) shouldBe (true)
       game1.checkPlace(1, 0) shouldBe (true)
 
-      var game2 = new Game("player1", "player2", between21State)
+      var game2 = new Game("player1", "player2", UnoState.between21State)
       game2 = game2.addTest(R0)
       game2 = game2.add("p2", G0)
       game2.checkPlace(0, 1) shouldBe (true)
     }
 
     "have a method place(Integer, player) that places a card onto the stack" in {
-      var game1 = new Game("player1", "player2", between21State)
-      game1.currentstate shouldBe (between21State)
+      var game1 = new Game("player1", "player2", UnoState.between21State)
+      game1.currentstate shouldBe (UnoState.between21State)
       game1 = game1.addTest(R0)
       game1.midCard.karten(0) shouldBe (R0)
       game1 = game1.add("p1", B0)
@@ -97,7 +97,7 @@ class GameSpec extends AnyWordSpec {
       game1.midCard.karten.size shouldBe (1)
       game1.midCard.karten(0) shouldBe (G0)
 
-      var game2 = new Game("player1", "player2", between21State)
+      var game2 = new Game("player1", "player2", UnoState.between21State)
       game2 = game2.addTest(R1)
       game2.midCard.karten(0) shouldBe (R1)
       game2 = game2.add("p1", B0)
@@ -125,7 +125,7 @@ class GameSpec extends AnyWordSpec {
       game2.midCard.karten.size shouldBe (1)
       game2.midCard.karten(0) shouldBe (G1)
 
-      var game3 = new Game("player1", "player2", between21State)
+      var game3 = new Game("player1", "player2", UnoState.between21State)
       game3.currentstate shouldBe (between21State)
       game3 = game3.addTest(R0)
       game3.midCard.karten(0) shouldBe (R0)
@@ -136,7 +136,7 @@ class GameSpec extends AnyWordSpec {
       game3 = game3.place(0, 0)
       game3.ERROR shouldBe (-1)
 
-      var game4 = new Game("player1", "player2", between21State)
+      var game4 = new Game("player1", "player2", UnoState.between21State)
       game4 = game4.addTest(R0)
       game4 = game4.add("p1", RP)
       game4 = game4.add("p2", BP)
@@ -151,7 +151,7 @@ class GameSpec extends AnyWordSpec {
       game4.pList(0).karten.size shouldBe (2)
       game4.pList(1).karten.size shouldBe (2)
 
-      var game5 = new Game("Skip", "Skip2", between21State)
+      var game5 = new Game("Skip", "Skip2", UnoState.between21State)
       game5 = game5.addTest(G0)
       game5 = game5.add("p1", GS)
       game5 = game5.add("p2", YS)
@@ -179,7 +179,7 @@ class GameSpec extends AnyWordSpec {
       game5.pList(0).karten.size shouldBe (0)
       game5.pList(1).karten.size shouldBe (0)
 
-      var game6 = new Game("player1", "player2", between21State)
+      var game6 = new Game("player1", "player2", UnoState.between21State)
       game6 = game6.addTest(R0)
       game6 = game6.add("p1", T4)
       game6 = game6.add("p2", T4)
@@ -196,7 +196,7 @@ class GameSpec extends AnyWordSpec {
     }
 
     "have a method takeCards(Game,Int,String) that gives a player a specific amount of cards and returns a game" in {
-      var game = new Game("player1", "player2", between21State)
+      var game = new Game("player1", "player2", UnoState.between21State)
       game.pList(0).karten.size shouldBe (0)
       game.pList(1).karten.size shouldBe (0)
 
@@ -210,7 +210,7 @@ class GameSpec extends AnyWordSpec {
     }
 
     "have a method chooseColor(String), that changes the midCard to the given Color" in {
-      var game = new Game("p1", "p2", between21State)
+      var game = new Game("p1", "p2", UnoState.between21State)
       game = game.addTest(G0)
       game = game.chooseColor("Red")
       game.midCard.karten(0) shouldBe (R)
@@ -232,7 +232,7 @@ class GameSpec extends AnyWordSpec {
     }
 
     "have a method changeMid(Game, Card), that changes the midCard to the given Card" in {
-      var game = new Game("p1", "p2", between21State)
+      var game = new Game("p1", "p2", UnoState.between21State)
       game = game.addTest(G0)
 
       game = game.changeMid(game, T4)
@@ -246,7 +246,7 @@ class GameSpec extends AnyWordSpec {
     }
 
     "have a method checkWin(Player) that checks if the player has won" in {
-      var game1 = new Game("player1", "player2", between21State)
+      var game1 = new Game("player1", "player2", UnoState.between21State)
       game1.checkWin(game1.pList(0)) shouldBe (true)
 
       game1 = game1.add("p1", B0)
@@ -254,7 +254,7 @@ class GameSpec extends AnyWordSpec {
     }
 
     "have a method setError(Int), that sets the ERROR value of game to the given Int" in {
-      var game1 = new Game("player1", "player2", between21State)
+      var game1 = new Game("player1", "player2", UnoState.between21State)
       game1.ERROR shouldBe (0)
 
       game1 = game1.setError(-1)
@@ -265,7 +265,7 @@ class GameSpec extends AnyWordSpec {
     }
 
     "have a method playerFill() that fills the karten from one player with the parameter amount " in {
-      var game1 = new Game("player1", "player2", between21State)
+      var game1 = new Game("player1", "player2", UnoState.between21State)
       game1.pList(0).karten.size shouldBe (0)
       game1.pList(1).karten.size shouldBe (0)
       game1 = game1.playerFill(2)

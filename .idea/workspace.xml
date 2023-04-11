@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="123d2027-cb6c-4347-bb4d-405989721893" name="Changes" comment="game works again, refactored in modules" />
-    <list id="ef4a1060-a901-412f-bf47-5eebbf3c62b8" name="Changes by haase" comment="game works again, refactored in modules" />
+    <list default="true" id="123d2027-cb6c-4347-bb4d-405989721893" name="Changes" comment="extended json file for uno_web">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/test/scala/controller/controllerComponent/ControllerSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/test/scala/controller/controllerComponent/ControllerSpec.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/test/scala/controller/controllerComponent/UnoStateSpec.scala" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/project/build.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/src/test/scala/gameComponent/GameSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/model/src/test/scala/gameComponent/GameSpec.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/test/scala/aview/TUISpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/test/scala/aview/TUISpec.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/test/scala/util/CommandSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/test/scala/util/CommandSpec.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/src/test/scala/util/InvokerSpec.scala" beforeDir="false" afterPath="$PROJECT_DIR$/util/src/test/scala/util/InvokerSpec.scala" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,45 +27,10 @@
       <ProjectState />
     </projectState>
   </component>
-  <component name="ExternalProjectsManager">
-    <system id="SBT">
-      <state>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="UNO" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="UNO" type="f1a62948:ProjectNode" />
-                <item name="UNO" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="UNO" type="f1a62948:ProjectNode" />
-                <item name="UNO" type="2d1252cf:ModuleNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Scala Worksheet" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="01-functional" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -77,36 +50,16 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;last_directory_selection&quot;: &quot;C:/Users/bence/Documents/SA/SA-UNO/src/main/scala&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/bence/Documents/SWQS/junit&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/bence/Documents/uno&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\bence\Documents\SA\SA-UNO\ui\src\main" />
-      <recent name="C:\Users\bence\Documents\SA\SA-UNO" />
-      <recent name="C:\Users\bence\Documents\SA\SA-UNO\ui" />
-      <recent name="C:\Users\bence\Documents\SA\SA-UNO\model\src\test\scala" />
-      <recent name="C:\Users\bence\Documents\SA\SA-UNO\util\src\test\scala" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="util" />
-      <recent name="" />
-    </key>
-  </component>
   <component name="ScalaProjectSettings">
     <option name="scala3DisclaimerShown" value="true" />
   </component>
@@ -123,20 +76,6 @@
       <workItem from="1669550284111" duration="3608000" />
       <workItem from="1669641626041" duration="90000" />
       <workItem from="1669641854502" duration="37000" />
-      <workItem from="1679656953223" duration="4172000" />
-      <workItem from="1679738360948" duration="6064000" />
-      <workItem from="1679746206665" duration="1489000" />
-      <workItem from="1679936909901" duration="659000" />
-      <workItem from="1679937585579" duration="495000" />
-      <workItem from="1679938110057" duration="1663000" />
-      <workItem from="1680030886296" duration="600000" />
-      <workItem from="1680086866252" duration="113000" />
-      <workItem from="1680983033787" duration="3268000" />
-      <workItem from="1680987283099" duration="10000" />
-      <workItem from="1680990401597" duration="4699000" />
-      <workItem from="1680997701833" duration="611000" />
-      <workItem from="1681115265036" duration="3717000" />
-      <workItem from="1681119045216" duration="807000" />
     </task>
     <task id="LOCAL-00001" summary="extended json file for uno_web">
       <created>1669457744619</created>
@@ -152,98 +91,7 @@
       <option name="project" value="LOCAL" />
       <updated>1669460260186</updated>
     </task>
-    <task id="LOCAL-00003" summary="clean fileio vars and for loops">
-      <created>1679658759364</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1679658759364</updated>
-    </task>
-    <task id="LOCAL-00004" summary="removed getter and setter and useless returns">
-      <created>1679660622422</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1679660622422</updated>
-    </task>
-    <task id="LOCAL-00005" summary="removed getter and setter and useless returns">
-      <created>1679660650297</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1679660650297</updated>
-    </task>
-    <task id="LOCAL-00006" summary="removed all vars">
-      <created>1679660676720</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1679660676720</updated>
-    </task>
-    <task id="LOCAL-00007" summary="fix tests">
-      <created>1679739841865</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1679739841865</updated>
-    </task>
-    <task id="LOCAL-00008" summary="remove redundant code, higher order function">
-      <created>1679746524301</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1679746524301</updated>
-    </task>
-    <task id="LOCAL-00009" summary="remove redundant code, higher order function">
-      <created>1679746582752</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1679746582752</updated>
-    </task>
-    <task id="LOCAL-00010" summary="add return type and change for loop with map">
-      <created>1679937741081</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1679937741081</updated>
-    </task>
-    <task id="LOCAL-00011" summary="remove useless &quot;new&quot;, change xx(0) to xx.head">
-      <created>1679938079702</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1679938079702</updated>
-    </task>
-    <task id="LOCAL-00012" summary="update coverage sites">
-      <created>1679938757734</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1679938757734</updated>
-    </task>
-    <task id="LOCAL-00013" summary="refactor into modules, change packages in modules, modules are not recognized by the other modules">
-      <created>1681115489015</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1681115489015</updated>
-    </task>
-    <task id="LOCAL-00014" summary="game works again, refactored in modules">
-      <created>1681132688696</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1681132688696</updated>
-    </task>
-    <task id="LOCAL-00015" summary="game works again, refactored in modules">
-      <created>1681132717402</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1681132717402</updated>
-    </task>
-    <option name="localTasksCounter" value="16" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -254,19 +102,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="04-microservices" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -274,22 +110,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="extended json file for uno_web" />
-    <MESSAGE value="clean fileio vars and for loops" />
-    <MESSAGE value="removed getter and setter and useless returns" />
-    <MESSAGE value="removed all vars" />
-    <MESSAGE value="fix tests" />
-    <MESSAGE value="remove redundant code, higher order function," />
-    <MESSAGE value="remove redundant code, higher order function" />
-    <MESSAGE value="add return type and change for loop with map" />
-    <MESSAGE value="change access to first list item from xx(0) to xx.head" />
-    <MESSAGE value="remove useless &quot;new&quot;, change xx(0) to xx.head" />
-    <MESSAGE value="update coverage sites" />
-    <MESSAGE value="refactor into modules, change packages in modules, modules are not recognized by the other modules" />
-    <MESSAGE value="game works again, refactored in modules" />
-    <option name="LAST_COMMIT_MESSAGE" value="game works again, refactored in modules" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
+    <option name="LAST_COMMIT_MESSAGE" value="extended json file for uno_web" />
   </component>
 </project>
