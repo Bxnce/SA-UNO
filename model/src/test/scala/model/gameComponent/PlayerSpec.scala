@@ -2,7 +2,8 @@ package model.gameComponent
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers.*
-import model.gameComponent.gameBaseImpl
+import gameBaseImpl.{Player, Card}
+import gameBaseImpl.Card._
 
 class PlayerSpec extends AnyWordSpec {
   "Player" should {
