@@ -2,7 +2,10 @@ package model.gameComponent
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers.*
-import model.gameComponent.gameBaseImpl.UnoState
+import gameBaseImpl._
+import gameBaseImpl.UnoState
+import gameBaseImpl.Card._
+import gameBaseImpl.{Card, CardColor, CardValue, toCard}
 
 class GameSpec extends AnyWordSpec {
   "Case Class Game" should {
@@ -126,7 +129,7 @@ class GameSpec extends AnyWordSpec {
       game2.midCard.karten(0) shouldBe (G1)
 
       var game3 = new Game("player1", "player2", UnoState.between21State)
-      game3.currentstate shouldBe (between21State)
+      game3.currentstate shouldBe (UnoState.between21State)
       game3 = game3.addTest(R0)
       game3.midCard.karten(0) shouldBe (R0)
       game3 = game3.add("p1", B1)
