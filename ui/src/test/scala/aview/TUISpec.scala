@@ -1,7 +1,10 @@
 package aview
 
+import controller.controllerComponent.controllerInterface
+import controller.controllerComponent.controllerBaseImpl.Controller
 import model.gameComponent.gameBaseImpl.Game
 import model.gameComponent.gameBaseImpl.UnoState
+import model.gameComponent.gameBaseImpl.Card.*
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers.*
 

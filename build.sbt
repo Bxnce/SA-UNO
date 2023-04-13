@@ -56,6 +56,7 @@ lazy val ui: Project = Project(id = "UNO-Ui", base = file("Ui"))
 
 lazy val root: Project = Project(id = "UNO", base = file("."))
   .dependsOn(util, core, model, ui)
+  .aggregate(util, core, model, ui)
   .settings(
     name:="UNO",
     version:="0.1.0-SNAPSHOT",
