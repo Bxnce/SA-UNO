@@ -8,6 +8,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Core" />
+            <option value="$PROJECT_DIR$/Model" />
+            <option value="$PROJECT_DIR$/Ui" />
+            <option value="$PROJECT_DIR$/Util" />
             <option value="$PROJECT_DIR$/project" />
           </set>
         </option>

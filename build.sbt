@@ -1,26 +1,71 @@
-val scala3Version = "3.0.2"
+import sbt.Keys.libraryDependencies
+import dependencies._
 
-lazy val root = project
-  .in(file("."))
+val scala3Version = "3.1.2"
+
+
+
+lazy val allDependencies = Seq(
+  guice,
+  scalaxml,
+  playjson,
+  scalactic,
+  scalatest,
+  scalaswing,
+  scalaguice
+)
+
+lazy val util: Project = Project(id = "UNO-Util", base = file("Util"))
+  .dependsOn(model)
   .settings(
-    name := "uno",
-    version := "0.1.0-SNAPSHOT",
+    name:="UNO-Util",
+    version:="0.1.0-SNAPSHOT",
     scalaVersion := scala3Version,
-    //crossScalaVersions ++= Seq("2.13.5", "3.0.2"),
-    libraryDependencies += "com.google.inject" % "guice" % "4.2.3",
-    libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.0.1",
-    //libraryDependencies += "com.typesafe.play" %% "play-json" % "2.10.0-RC5",
-    libraryDependencies += ("com.typesafe.play" %% "play-json" % "2.9.3")
-      .cross(CrossVersion.for3Use2_13),
-    libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.10",
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.10" % "test",
-    libraryDependencies += ("org.scala-lang.modules" %% "scala-swing" % "3.0.0")
-      .cross(CrossVersion.for3Use2_13),
-    libraryDependencies += ("net.codingwell" %% "scala-guice" % "5.0.2")
-      .cross(CrossVersion.for3Use2_13),
-    libraryDependencies ++= Seq(
-      "com.novocode" % "junit-interface" % "0.11" % "test"
-    ), 
+    settings,
+    libraryDependencies ++= allDependencies
+  )
+
+lazy val core: Project = Project(id = "UNO-Core", base = file("Core"))
+  .dependsOn(model, util)
+  .settings(
+    name:="UNO-Core",
+    version:="0.1.0-SNAPSHOT",
+    scalaVersion := scala3Version,
+    settings,
+    libraryDependencies ++= allDependencies
+  )
+
+lazy val model: Project = Project(id = "UNO-Model", base = file("Model"))
+  .settings(
+    name:="UNO-Model",
+    version:="0.1.0-SNAPSHOT",
+    scalaVersion := scala3Version,
+    settings,
+    libraryDependencies ++= allDependencies
+  )
+
+lazy val ui: Project = Project(id = "UNO-Ui", base = file("Ui"))
+  .dependsOn(core)
+  .settings(
+    name:="UNO-Ui",
+    version:="0.1.0-SNAPSHOT",
+    scalaVersion := scala3Version,
+    settings,
+    libraryDependencies ++= allDependencies
+  )
+
+lazy val root: Project = Project(id = "UNO", base = file("."))
+  .dependsOn(util, core, model, ui)
+  .aggregate(util, core, model, ui)
+  .settings(
+    name:="UNO",
+    version:="0.1.0-SNAPSHOT",
+    scalaVersion := scala3Version,
+    settings,
+    libraryDependencies ++= allDependencies
+  )
+
+lazy val settings: Seq[Def.Setting[_]] = Seq(
     jacocoReportSettings := JacocoReportSettings(
       "Jacoco Coverage Report",
       None,
@@ -41,12 +86,5 @@ lazy val root = project
     jacocoCoverallsBranch := sys.env.get("CI_BRANCH"),
     jacocoCoverallsPullRequest := sys.env.get("GITHUB_EVENT_NAME"),
     jacocoCoverallsRepoToken := sys.env.get("COVERALLS_REPO_TOKEN")
-    //jacocoCoverallsRepoToken := sys.env.get("CODECOV_REPO_TOKEN")
   )
-  .enablePlugins(JacocoCoverallsPlugin)
-//falls es zu Problemem mit Parallelität kommt
-parallelExecution in Test := false
-assemblyMergeStrategy in assembly := {
- case PathList("META-INF", _*) => MergeStrategy.discard
- case _                        => MergeStrategy.first
-}
+
