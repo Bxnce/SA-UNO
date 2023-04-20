@@ -1,9 +1,6 @@
-import sbt.Keys.libraryDependencies
-import dependencies._
+import dependencies.*
 
 val scala3Version = "3.1.2"
-
-
 
 lazy val allDependencies = Seq(
   guice,
@@ -15,17 +12,17 @@ lazy val allDependencies = Seq(
   scalaguice
 )
 
-lazy val util: Project = Project(id = "UNO-Util", base = file("Util"))
-  .dependsOn(model)
+lazy val util = (project in file("util"))
+  .dependsOn(model % Test)
   .settings(
     name:="UNO-Util",
     version:="0.1.0-SNAPSHOT",
     scalaVersion := scala3Version,
     settings,
-    libraryDependencies ++= allDependencies
+    libraryDependencies ++= allDependencies,
   )
 
-lazy val core: Project = Project(id = "UNO-Core", base = file("Core"))
+lazy val core = (project in file("core"))
   .dependsOn(model, util)
   .settings(
     name:="UNO-Core",
@@ -35,7 +32,7 @@ lazy val core: Project = Project(id = "UNO-Core", base = file("Core"))
     libraryDependencies ++= allDependencies
   )
 
-lazy val model: Project = Project(id = "UNO-Model", base = file("Model"))
+lazy val model = (project in file("model"))
   .settings(
     name:="UNO-Model",
     version:="0.1.0-SNAPSHOT",
@@ -44,7 +41,7 @@ lazy val model: Project = Project(id = "UNO-Model", base = file("Model"))
     libraryDependencies ++= allDependencies
   )
 
-lazy val ui: Project = Project(id = "UNO-Ui", base = file("Ui"))
+lazy val ui = (project in file("ui"))
   .dependsOn(core)
   .settings(
     name:="UNO-Ui",
@@ -54,7 +51,7 @@ lazy val ui: Project = Project(id = "UNO-Ui", base = file("Ui"))
     libraryDependencies ++= allDependencies
   )
 
-lazy val root: Project = Project(id = "UNO", base = file("."))
+lazy val root = (project in file("."))
   .dependsOn(util, core, model, ui)
   .aggregate(util, core, model, ui)
   .settings(
@@ -65,7 +62,7 @@ lazy val root: Project = Project(id = "UNO", base = file("."))
     libraryDependencies ++= allDependencies
   )
 
-lazy val settings: Seq[Def.Setting[_]] = Seq(
+lazy val settings: Seq[Def.Setting[?]] = Seq(
     jacocoReportSettings := JacocoReportSettings(
       "Jacoco Coverage Report",
       None,
