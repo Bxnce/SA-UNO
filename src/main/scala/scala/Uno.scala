@@ -13,10 +13,10 @@ import UnoModule.given_controllerInterface
 @main def Main: Unit =
   val controllerApi = RestAPI()
   controllerApi.start()
-  controller.game = controller.game.init()
+
   println("\n" * 50)
-  val tui = TUI(controller)
-  val gui = mainGUI(controller)
+  val tui = TUI()
+  val gui = mainGUI()
   var input: String = ""
   while input != "q" && input != "exit" do
     Console.print(s"${BLUE}>>>  ${RESET}")

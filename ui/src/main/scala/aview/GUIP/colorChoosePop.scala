@@ -1,12 +1,12 @@
 package aview.GUIP
 
-import controller.controllerComponent.controllerInterface
+import aview.GUIP.UIRequest
 
 import scala.swing.{Dialog, Dimension, GridPanel, Label}
 import javax.swing.ImageIcon
 import scala.swing.event.MouseClicked
 
-case class colorChoosePop(controller: controllerInterface) {
+case class colorChoosePop(controller: UIRequest) {
 
   def getImage(color: String): ImageIcon =
     new ImageIcon("Ui/src/main/resources/cards/" + color + ".png")

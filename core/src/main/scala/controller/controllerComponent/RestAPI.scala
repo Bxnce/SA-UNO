@@ -96,7 +96,7 @@ class RestAPI(using controller: controllerInterface):
       },
       post {
         path("controller" / "next") {
-          controller.take()
+          controller.next()
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
         }
       },

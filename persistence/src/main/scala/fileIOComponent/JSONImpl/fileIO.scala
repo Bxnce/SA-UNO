@@ -164,4 +164,60 @@ class fileIO extends FileIOInterface {
       val card_s = s"cards/$color$value.png"
       (card_s, ind)
     }.toList
+  def jsonToGame(json_str:String): gameInterface =
+      val json: JsValue = Json.parse(json_str)
+
+      val p1 = (json \ "game" \ "player1").get
+      val p1n = (p1 \ "name").get.as[String]
+      val p1ktmp = (p1 \ "kartenzahl").get.as[Int]
+      val p1k: Vector[Card] =
+        (0 until p1ktmp).map { i =>
+          getCard((p1 \ "cardv") (i).as[String])
+        }.toVector
+      val p1p = (p1 \ "placed").get.as[Boolean]
+      val player1 = Player(p1n, p1k, p1p)
+
+      val p2 = (json \ "game" \ "player2").get
+      val p2n = (p2 \ "name").get.as[String]
+      val p2ktmp =
+        (p2 \ "kartenzahl").get.as[Int]
+      val p2k: Vector[Card] =
+        (0 until p2ktmp).map { i =>
+          getCard((p2 \ "cardv") (i).as[String])
+        }.toVector
+      val p2p = (p2 \ "placed").get.as[Boolean]
+      val player2 = Player(p2n, p2k, p2p)
+
+      val cs = (json \ "game" \ "currentstate").get.toString
+      val csf = cs.replaceAll("\"", "")
+      val currentstate = csf match
+        case "between12State" => UnoState.between12State
+        case "between21State" => UnoState.between21State
+        case "player1State" => UnoState.player1State
+        case "player2State" => UnoState.player2State
+        case "winState" => UnoState.winState
+        case _ => UnoState.between21State
+
+      val ERROR = (json \ "game" \ "ERROR").get.as[Int]
+
+      val mc = (json \ "game" \ "midCard").get
+      val mcn = (mc \ "name").get.as[String]
+
+      val mck: Vector[Card] = Vector(getCard((mc \\ "cardv").head.as[String]))
+      val mcp = (mc \ "placed").get.as[Boolean]
+      val midcard = Player(mcn, mck, mcp)
+
+      val winner = (json \ "game" \ "winner").get.as[Int]
+
+      val game = Game(
+        List(player1, player2),
+        currentstate,
+        ERROR,
+        CardStack(
+          Card.values.map(x => (x, 2)).toMap
+        ),
+        midcard,
+        winner
+      )
+      game
 }

@@ -18,41 +18,51 @@ case class Controller @Inject() (var game: gameInterface)
 
   def take(): Unit =
     game = invoker.doStep(UnoCommand(this.game, "take"))
+    print("conTake")
     notifyObservers
 
   def place(ind: Int): Unit =
     game = invoker.doStep(UnoCommand(ind, this.game))
+    print("conPlace")
     notifyObservers
 
   def next(): Unit =
     game = invoker.doStep(UnoCommand(this.game, "next"))
+    print("conNext")
     notifyObservers
 
   def undo(): Unit =
     game = invoker.undoStep.getOrElse(game)
+    print("conUndo")
     notifyObservers
 
   def redo(): Unit =
     game = invoker.redoStep.getOrElse(game)
+    print("conRedo")
     notifyObservers
 
   def newG(p1: String, p2: String): Unit =
     game = new Game(p1, p2, UnoState.between21State).init()
+    print("conNewG")
     notifyObservers
 
   def WinG(p1: String, p2: String): Unit =
     game = new Game(p1, p2, UnoState.between21State).init()
+    print("conWinG")
 
   def colorChoose(color: String): Unit =
     game = invoker.doStep(UnoCommand(color, this.game))
+    print("conColorChoose")
     notifyObservers
 
   def save(): Unit =
     fileIO.save(game)
+    print("conSave")
     notifyObservers
 
   def load(): Unit =
     fileIO.load
+    print("conLoad")
     notifyObservers
 
   override def toString: String =

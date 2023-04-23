@@ -7,11 +7,11 @@ import java.awt.{Color, Dimension, Image, Toolkit}
 import javax.swing.BorderFactory
 import java.awt.FlowLayout
 import model.gameComponent.gameBaseImpl._
+import aview.GUIP.UIRequest
 
-
-class mainGUI(controller: controllerInterface) extends MainFrame with Observer {
+class mainGUI() extends MainFrame with Observer {
   title = "BEST UNO EUW"
-  controller.add(this)
+  val controller = new UIRequest()
   iconImage = Toolkit.getDefaultToolkit.getImage(
     "Ui/src/main/resources/cards/uno_back.png"
   )

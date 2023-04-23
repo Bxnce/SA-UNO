@@ -2,6 +2,7 @@ package aview.GUIP
 
 import controller.controllerComponent.controllerInterface
 
+import aview.GUIP.UIRequest
 import model.gameComponent.gameBaseImpl._
 import controller.controllerComponent.controllerBaseImpl._
 import controller.controllerComponent.controllerInterface
@@ -24,10 +25,9 @@ import java.awt.{GridLayout, Color}
 import scala.swing.event.MouseClicked
 import scala.swing.Font
 
-case class displayCards(controller: controllerInterface) {
+case class displayCards(controller: UIRequest) {
 
   def getImageIcon(player: Player, ind: Int): ImageIcon =
-
     val c = player.karten(ind)
     var color = ""
     var value = ""

@@ -1,14 +1,13 @@
 package aview.GUIP
 
-import controller.controllerComponent.controllerInterface
-
+import aview.GUIP.UIRequest
 import scala.swing.*
 import java.awt.Color
 import javax.swing.BorderFactory
 
-case class createGame(controller: controllerInterface) {
+case class createGame(controller: UIRequest) {
 
-  val name1 = new TextArea("Name 1") {
+  val name1 = new TextArea("Name1") {
     background = Color.GRAY.brighter
     foreground = Color.BLACK
     font = new Font("Arial", 2, 40)
@@ -18,7 +17,7 @@ case class createGame(controller: controllerInterface) {
     preferredSize = new Dimension(100, 40)
   }
 
-  val name2 = new TextArea("Name 2") {
+  val name2 = new TextArea("Name2") {
     background = Color.GRAY.brighter
     foreground = Color.BLACK
     font = new Font("Arial", 2, 40)
