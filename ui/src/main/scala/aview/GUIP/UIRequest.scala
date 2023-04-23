@@ -26,10 +26,11 @@ class UIRequest {
 
 
   def fetchData(apiEndpoint: String): Unit = {
-    print(apiEndpoint)
     implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "SingleRequest")
     implicit val executionContext: ExecutionContextExecutor = system.executionContext
-    val responseFuture = Http().singleRequest(HttpRequest(uri = "http://localhost:8080/controller/" + apiEndpoint))
+    val uri = "http://localhost:8080/controller/" + apiEndpoint
+    println(uri)
+    val responseFuture = Http().singleRequest(HttpRequest(uri=uri))
     responseFuture
       .onComplete {
         case Failure(_) => sys.error("Failed getting Json")

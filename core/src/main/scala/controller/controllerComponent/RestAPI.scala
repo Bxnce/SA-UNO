@@ -87,11 +87,9 @@ class RestAPI(using controller: controllerInterface):
       post {
         path("controller" / "place") {
           parameter("ind") {(ind) =>
-            controller.place(ind.toInt)
+            controller.place(ind.toInt - 1)
             complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
           }
-          controller.take()
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
         }
       },
       post {

@@ -10,7 +10,7 @@ import model.gameComponent.gameBaseImpl.Game
 import model.gameComponent.gameBaseImpl.UnoState
 
 object UnoModule:
-  given controllerInterface = Controller(new Game("place_h", "place_h", UnoState.between21State))
+  given controllerInterface = Controller(new Game("place_h", "place_h", UnoState.between21State).init())
 
 class UnoModule extends AbstractModule {
 
