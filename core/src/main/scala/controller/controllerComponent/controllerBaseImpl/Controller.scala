@@ -46,11 +46,11 @@ case class Controller @Inject() (var game: gameInterface)
     game = invoker.doStep(UnoCommand(color, this.game))
     notifyObservers
 
-  def save: Unit =
+  def save(): Unit =
     //fileIO.save(game)
     notifyObservers
 
-  def load: Unit =
+  def load(): Unit =
     //fileIO.load
     notifyObservers
 

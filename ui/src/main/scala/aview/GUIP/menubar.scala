@@ -13,8 +13,8 @@ case class menubar(controller: controllerInterface) {
     contents ++= Seq(
       new Menu("File") {
         contents ++= Seq(
-          MenuItem(Action("Load")(controller.load)),
-          MenuItem(Action("Save")(controller.save)),
+          MenuItem(Action("Load")(controller.load())),
+          MenuItem(Action("Save")(controller.save())),
           MenuItem(Action("Undo")(controller.undo())),
           MenuItem(Action("Redo")(controller.redo()))
         )

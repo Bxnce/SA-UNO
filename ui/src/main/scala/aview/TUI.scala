@@ -32,10 +32,10 @@ class TUI(controller: controllerInterface) extends Observer:
 
     in(0) match
       case "s" =>
-        controller.save
+        controller.save()
         return SUCCESS
       case "l" =>
-        controller.load
+        controller.load()
         return SUCCESS
       case "exit" | "q" => return EXIT
 
