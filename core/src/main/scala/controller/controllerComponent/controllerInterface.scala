@@ -1,6 +1,6 @@
 package controller.controllerComponent
 
-import util.{Invoker, Observable}
+import controller.controllerComponent.{Invoker, Observable}
 import controller.controllerComponent.controllerBaseImpl.*
 import model.gameComponent.gameInterface
 import model.gameComponent.gameBaseImpl.Player

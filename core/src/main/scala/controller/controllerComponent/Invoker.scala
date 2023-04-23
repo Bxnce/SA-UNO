@@ -1,6 +1,6 @@
-package util
+package controller.controllerComponent
 
-import util.Command
+import controller.controllerComponent.Command
 
 class Invoker[T] {
   private var undoStack: List[Command[T]] = Nil

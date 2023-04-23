@@ -9,7 +9,7 @@ import Console.{RED, RESET}
 import scala.collection.mutable.ListBuffer
 import model.gameComponent.gameBaseImpl._
 import model.gameComponent.gameInterface
-import util.Invoker
+import controller.controllerComponent.Invoker
 
 case class Controller @Inject() (var game: gameInterface)
     extends controllerInterface:

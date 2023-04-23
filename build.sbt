@@ -12,18 +12,8 @@ lazy val allDependencies = Seq(
   scalaguice
 )
 
-lazy val util = (project in file("util"))
-  .dependsOn(model % Test)
-  .settings(
-    name:="UNO-Util",
-    version:="0.1.0-SNAPSHOT",
-    scalaVersion := scala3Version,
-    settings,
-    libraryDependencies ++= allDependencies,
-  )
-
 lazy val core = (project in file("core"))
-  .dependsOn(model, util)
+  .dependsOn(model)
   .settings(
     name:="UNO-Core",
     version:="0.1.0-SNAPSHOT",
@@ -52,8 +42,8 @@ lazy val ui = (project in file("ui"))
   )
 
 lazy val root = (project in file("."))
-  .dependsOn(util, core, model, ui)
-  .aggregate(util, core, model, ui)
+  .dependsOn(core, model, ui)
+  .aggregate(core, model, ui)
   .settings(
     name:="UNO",
     version:="0.1.0-SNAPSHOT",

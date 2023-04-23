@@ -1,10 +1,12 @@
-package util
+package controller.controllerComponent
 
 import model.gameComponent.gameBaseImpl.Game
-import model.gameComponent.gameBaseImpl.UnoState._
+import model.gameComponent.gameBaseImpl.UnoState.*
 import model.gameComponent.gameInterface
-import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers.*
+import org.scalatest.wordspec.AnyWordSpec
+
+import controller.controllerComponent.TestCommand
 
 class TestCommand(game: gameInterface) extends Command[gameInterface] {
   var newgame: gameInterface = game

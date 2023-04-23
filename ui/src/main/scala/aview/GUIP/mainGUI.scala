@@ -1,7 +1,7 @@
 package aview.GUIP
 
 import controller.controllerComponent.controllerInterface
-import util._
+import controller.controllerComponent.Observer
 import scala.swing.{BorderPanel, BoxPanel, FlowPanel, Frame, GridPanel, Label, MainFrame, Orientation}
 import java.awt.{Color, Dimension, Image, Toolkit}
 import javax.swing.BorderFactory

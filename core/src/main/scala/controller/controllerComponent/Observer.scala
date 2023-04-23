@@ -1,4 +1,6 @@
-package util
+package controller.controllerComponent
+
+import controller.controllerComponent.Observer
 
 trait Observer:
   def update: Unit

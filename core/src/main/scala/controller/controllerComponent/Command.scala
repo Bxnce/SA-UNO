@@ -1,4 +1,4 @@
-package util
+package controller.controllerComponent
 
 trait Command[T]:
   def execute: T

@@ -1,10 +1,9 @@
-package util
+package controller.controllerComponent
 
-import model.gameComponent.gameBaseImpl.Game
+import model.gameComponent.gameBaseImpl.{Game, UnoState}
 import model.gameComponent.gameInterface
-import model.gameComponent.gameBaseImpl.UnoState
-import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers.*
+import org.scalatest.wordspec.AnyWordSpec
 
 class InvokerSpec extends AnyWordSpec {
   //"A Invoker " should {

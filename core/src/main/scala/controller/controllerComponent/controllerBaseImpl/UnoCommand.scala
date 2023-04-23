@@ -2,7 +2,7 @@ package controller.controllerComponent.controllerBaseImpl
 
 //import controller.controllerComponent
 
-import util.Command
+import controller.controllerComponent.Command
 import controller.controllerComponent.controllerInterface
 import model.gameComponent.gameBaseImpl._
 import model.gameComponent._

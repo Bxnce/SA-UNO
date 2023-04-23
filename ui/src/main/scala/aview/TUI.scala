@@ -5,7 +5,7 @@ import controller.controllerComponent.controllerInterface
 import scala.io.StdIn.readLine
 import Console.{GREEN, RED, RESET}
 import model.fileIOComponent.XMLImpl.*
-import util._
+import controller.controllerComponent.Observer
 import model.gameComponent.gameBaseImpl.CardValue
 
 class TUI(controller: controllerInterface) extends Observer:
