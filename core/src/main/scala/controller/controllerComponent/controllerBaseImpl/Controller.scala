@@ -4,16 +4,17 @@ import controller.controllerComponent.controllerInterface
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject}
 import scala.io.StdIn.readLine
-import model.fileIOComponent.FileIOInterface
 import Console.{RED, RESET}
 import scala.collection.mutable.ListBuffer
 import model.gameComponent.gameBaseImpl._
 import model.gameComponent.gameInterface
 import controller.controllerComponent.Invoker
+import fileIOComponent.JSONImpl.fileIO
 
 case class Controller @Inject() (var game: gameInterface)
     extends controllerInterface:
   val invoker = new Invoker
+  val fileIO = new fileIO
 
   def take(): Unit =
     game = invoker.doStep(UnoCommand(this.game, "take"))
@@ -47,11 +48,11 @@ case class Controller @Inject() (var game: gameInterface)
     notifyObservers
 
   def save(): Unit =
-    //fileIO.save(game)
+    fileIO.save(game)
     notifyObservers
 
   def load(): Unit =
-    //fileIO.load
+    fileIO.load
     notifyObservers
 
   override def toString: String =

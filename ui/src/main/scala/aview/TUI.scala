@@ -4,7 +4,6 @@ import controller.controllerComponent.controllerInterface
 
 import scala.io.StdIn.readLine
 import Console.{GREEN, RED, RESET}
-import model.fileIOComponent.XMLImpl.*
 import controller.controllerComponent.Observer
 import model.gameComponent.gameBaseImpl.CardValue
 

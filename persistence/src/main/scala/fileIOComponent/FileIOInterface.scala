@@ -1,4 +1,4 @@
-package model.fileIOComponent
+package fileIOComponent
 
 import model.gameComponent.gameInterface
 

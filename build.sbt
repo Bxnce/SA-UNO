@@ -12,8 +12,18 @@ lazy val allDependencies = Seq(
   scalaguice
 )
 
-lazy val core = (project in file("core"))
+lazy val persistence = (project in file("persistence"))
   .dependsOn(model)
+  .settings(
+    name:="UNO-Persistence",
+    version:="0.1.0-SNAPSHOT",
+    scalaVersion := scala3Version,
+    settings,
+    libraryDependencies ++= allDependencies
+  )
+
+lazy val core = (project in file("core"))
+  .dependsOn(model, persistence)
   .settings(
     name:="UNO-Core",
     version:="0.1.0-SNAPSHOT",

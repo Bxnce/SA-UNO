@@ -1,7 +1,6 @@
-package model.fileIOComponent.JSONImpl
+package fileIOComponent.JSONImpl
 
-
-import model.fileIOComponent.FileIOInterface
+import fileIOComponent.FileIOInterface
 import java.io._
 import play.api.libs.json._
 import scala.io.Source
