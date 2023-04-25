@@ -6,7 +6,12 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives.*
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpMethods, HttpRequest, HttpResponse, StatusCode}
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
-
+import akka.http.javadsl.model.StatusCodes
+import akka.http.javadsl.model.Uri
+import scala.concurrent.Await
+import akka.actor.ActorSystem
+import akka.stream.{SystemMaterializer, Materializer}
+import akka.http.scaladsl.model.Uri
 import scala.util.{Failure, Success, Try}
 import play.api.libs.json.*
 import akka.http.scaladsl.unmarshalling.Unmarshal
@@ -26,27 +31,7 @@ class UIRequest {
   //implicit val executionContext = system.executionContext
 
   var game: gameInterface = new Game("place_h", "place_h", UnoState.between21State).init()
-
-
-  def fetchData(apiEndpoint: String): Unit = {
-    implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "SingleRequest")
-    implicit val executionContext: ExecutionContextExecutor = system.executionContext
-    val uri = "http://localhost:8080/controller/" + apiEndpoint
-    println(uri)
-    val responseFuture = Http().singleRequest(HttpRequest(uri=uri))
-    responseFuture
-      .onComplete {
-        case Failure(_) => sys.error("Failed getting Json")
-        case Success(value) => {
-          Unmarshal(value.entity).to[String].onComplete {
-            case Failure(_) => sys.error("Failed unmarshalling")
-            case Success(value) => {
-              this.game = fileIO.jsonToGame(value)
-            }
-          }
-        }
-      }
-  }
+  val webClient = new WebClient("http://localhost:8080/controller/")
 
   def fetchGame(): Unit = {
     val endpoint = "get"
