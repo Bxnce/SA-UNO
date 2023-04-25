@@ -1,6 +1,5 @@
 package aview
 
-import controller.controllerComponent.controllerInterface
 import controller.controllerComponent.controllerBaseImpl.Controller
 import model.gameComponent.gameBaseImpl.Game
 import model.gameComponent.gameBaseImpl.UnoState
@@ -19,7 +18,7 @@ class TUISpec extends AnyWordSpec {
     game = game.add("P2", G1)
     game = game.add("P2", G2)
     val controller = Controller(game)
-    val tui = TUI
+    val tui = TUI()(using controller)
 
     "created with the given parameters " should {
       "have the following values" in {
