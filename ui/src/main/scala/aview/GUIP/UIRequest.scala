@@ -23,7 +23,10 @@ import fileIOComponent.JSONImpl.fileIO
 import model.gameComponent.gameInterface
 import model.gameComponent.gameBaseImpl.{Game, Player, UnoState}
 import aview.GUIP.WebClient
+import controller.controllerComponent.Observable
+
 import scala.concurrent.ExecutionContext.Implicits.global
+
 
 class UIRequest extends Observable{
 
@@ -61,9 +64,22 @@ class UIRequest extends Observable{
   def newG(name1: String, name2: String): Unit = {
     val endpoint = s"newg?name1=$name1&name2=$name2"
     val postResponse = webClient.postRequest("", endpoint)
-    postResponse.onComplete(response => println(s"POST request response: $response"))
-    //fetchData(endpoint)
-  }
+    postResponse.onComplete {
+      case Success(response) =>
+        println("Success")
+        Unmarshal(response.entity).to[String].map { jsonStr =>
+          println(jsonStr)
+          this.game = fio.jsonToGame(jsonStr)
+
+        }
+        notifyObservers
+      case Failure(ex) =>
+        println(s"Error: ${ex.getMessage}")
+        ""
+    }
+    println("GAME::::::  " + this.game.toString)
+    }
+
 
   def WinG(name1: String, name2: String): Unit = {
     val endpoint = s"wing?name1=$name1&name2=$name2"
