@@ -18,7 +18,6 @@ class WebClient(serverUri: String)(implicit system: ActorSystem, mat: Materializ
       uri = serverUri + path,
       entity = HttpEntity(ContentTypes.`text/plain(UTF-8)`, data)
     )
-    print("Put " + request.uri)
     http.singleRequest(request)
   }
 
@@ -27,7 +26,6 @@ class WebClient(serverUri: String)(implicit system: ActorSystem, mat: Materializ
       method = HttpMethods.GET,
       uri = serverUri + path
     )
-    print("Get " + request.uri)
     http.singleRequest(request)
   }
 
@@ -37,7 +35,6 @@ class WebClient(serverUri: String)(implicit system: ActorSystem, mat: Materializ
       uri = serverUri + path,
       entity = HttpEntity(ContentTypes.`text/plain(UTF-8)`, data)
     )
-    print("Post " + request.uri)
     http.singleRequest(request)
   }
 }
