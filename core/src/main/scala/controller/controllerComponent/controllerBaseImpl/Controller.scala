@@ -10,11 +10,14 @@ import model.gameComponent.gameBaseImpl._
 import model.gameComponent.gameInterface
 import controller.controllerComponent.Invoker
 import fileIOComponent.JSONImpl.fileIO
+import controller.controllerComponent.PersistenceAPI
+
 
 case class Controller @Inject() (var game: gameInterface)
     extends controllerInterface:
   val invoker = new Invoker
   val fileIO = new fileIO
+  val persistenceAPI = new PersistenceAPI()
 
   def take(): Unit =
     game = invoker.doStep(UnoCommand(this.game, "take"))
@@ -56,7 +59,6 @@ case class Controller @Inject() (var game: gameInterface)
     notifyObservers
 
   def save(): Unit =
-    fileIO.save(game)
     println("conSave")
     notifyObservers
 

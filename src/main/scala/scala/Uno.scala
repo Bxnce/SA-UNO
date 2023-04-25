@@ -7,12 +7,15 @@ import controller.controllerComponent.controllerInterface
 import controller.controllerComponent.RestAPI
 import scala._
 import aview.GUIP.mainGUI
+import fileIOComponent.RestAPIPersistence
 import aview.TUI
 import UnoModule.given_controllerInterface
 
 @main def Main: Unit =
   val controllerApi = RestAPI()
+  val persistenceApi = RestAPIPersistence()
   controllerApi.start()
+  persistenceApi.start()
 
   println("\n" * 50)
   val tui = TUI()

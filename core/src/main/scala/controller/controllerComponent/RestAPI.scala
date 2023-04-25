@@ -14,11 +14,13 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
 import akka.http.scaladsl.server.Directives.{entity, *}
-import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Directives.*
+import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.MethodDirectives.get
 import akka.stream.ActorMaterializer
 import controller.controllerComponent.controllerInterface
 import model.gameComponent.gameInterface
+
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.{Failure, Success}
 import akka.protobufv3.internal.compiler.PluginProtos.CodeGeneratorResponse.File
@@ -36,7 +38,7 @@ class RestAPI(using controller: controllerInterface):
     """
         """.stripMargin
 
-  val route =
+  val route: Route =
     concat(
       pathSingleSlash {
         complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, routes))
@@ -121,7 +123,7 @@ class RestAPI(using controller: controllerInterface):
 
     binding.onComplete {
       case Success(binding) => {
-        println(s"UNO ControllerAPI service online at http://127.0.0.1:$RestUIPort/")
+        println(s"UNO ControllerAPI service online at http://localhost:$RestUIPort/")
       }
       case Failure(exception) => {
         println(s"UNO ControllerAPI service failed to start: ${exception.getMessage}")
