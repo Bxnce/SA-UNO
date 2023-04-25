@@ -1,7 +1,7 @@
 package fileIOComponent
 
-
 import fileIOComponent.JSONImpl.fileIO
+
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
@@ -11,10 +11,10 @@ import akka.http.scaladsl.server.Directives.*
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.MethodDirectives.get
 import akka.stream.ActorMaterializer
+import akka.protobufv3.internal.compiler.PluginProtos.CodeGeneratorResponse.File
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.{Failure, Success}
-import akka.protobufv3.internal.compiler.PluginProtos.CodeGeneratorResponse.File
 import play.api.libs.json.*
 
 class RestAPIPersistence():
@@ -34,7 +34,7 @@ class RestAPIPersistence():
         complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, routes))
       },
       get {
-        path("persistence"/ "load") {
+        path("persistence" / "load") {
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(fileIO.load).toString()))
         }
       },

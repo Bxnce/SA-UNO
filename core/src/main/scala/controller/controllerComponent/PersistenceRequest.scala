@@ -32,9 +32,9 @@ class PersistenceRequest {
 
   val webClient = new WebClient("http://localhost:8081/persistence/")
 
-  def loadGame(resulti: Future[HttpResponse]):String = {
+  def loadGame(result: Future[HttpResponse]): String = {
     var resJSON = ""
-    val res = resulti .flatMap { response =>
+    val res = result.flatMap { response =>
       response.status match {
         case StatusCodes.OK =>
           Unmarshal(response.entity).to[String].map { jsonStr =>
@@ -65,7 +65,7 @@ class PersistenceRequest {
     Await.result(res, 10.seconds)
   }
 
-  def load():String = {
+  def load(): String = {
     val endpoint = "load"
     val postResponse = webClient.getRequest(endpoint)
     loadGame(postResponse)

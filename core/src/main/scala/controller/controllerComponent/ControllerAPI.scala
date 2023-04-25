@@ -1,12 +1,4 @@
-/**
- * RootSevice.scala
- *  implementation for AKKA RestControllerAPI
- */
-
-//****************************************************************************** PACKAGE
 package controller.controllerComponent
-
-//****************************************************************************** IMPORTS
 
 import fileIOComponent.JSONImpl.fileIO
 import akka.actor.typed.ActorSystem
@@ -26,7 +18,7 @@ import scala.util.{Failure, Success}
 import akka.protobufv3.internal.compiler.PluginProtos.CodeGeneratorResponse.File
 import play.api.libs.json.*
 
-//****************************************************************************** CLASS DEFINITION
+
 class ControllerAPI(using controller: controllerInterface):
 
   implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "my-system")
@@ -44,19 +36,19 @@ class ControllerAPI(using controller: controllerInterface):
         complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, routes))
       },
       get {
-        path("controller"/ "get") {
+        path("controller" / "get") {
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
         }
       },
       get {
-        path("controller"/ "redo") {
+        path("controller" / "redo") {
           controller.redo()
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
         }
       },
       get {
         controller.undo()
-        path("controller"/ "undo") {
+        path("controller" / "undo") {
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
         }
       },
@@ -67,11 +59,11 @@ class ControllerAPI(using controller: controllerInterface):
         }
       },
       post {
-        path("controller"/ "save") {
-            controller.save()
-            complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
-          }
-        },
+        path("controller" / "save") {
+          controller.save()
+          complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
+        }
+      },
       post {
         path("controller" / "newg") {
           parameter("name1", "name2") { (name1, name2) =>
@@ -88,7 +80,7 @@ class ControllerAPI(using controller: controllerInterface):
       },
       post {
         path("controller" / "place") {
-          parameter("ind") {(ind) =>
+          parameter("ind") { (ind) =>
             controller.place(ind.toInt)
             complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
           }
@@ -110,10 +102,10 @@ class ControllerAPI(using controller: controllerInterface):
       },
       post {
         path("controller" / "color") {
-        parameter("color") { (color) =>
-          controller.colorChoose(color)
-          complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
-        }
+          parameter("color") { (color) =>
+            controller.colorChoose(color)
+            complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
+          }
         }
       },
     )

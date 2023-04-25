@@ -1,10 +1,8 @@
 package controller.controllerComponent.controllerBaseImpl
 
 import controller.controllerComponent.controllerInterface
-import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject}
 
-import scala.io.StdIn.readLine
 import Console.{RED, RESET}
 import scala.collection.mutable.ListBuffer
 import model.gameComponent.gameBaseImpl.*

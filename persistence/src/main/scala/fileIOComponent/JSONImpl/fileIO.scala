@@ -1,14 +1,13 @@
 package fileIOComponent.JSONImpl
 
 import fileIOComponent.FileIOInterface
-import java.io._
-import play.api.libs.json._
+import java.io.*
+import play.api.libs.json.*
 import scala.io.Source
 import scala.collection.mutable.ListBuffer
 import model.gameComponent.gameInterface
-import model.gameComponent.gameBaseImpl._
+import model.gameComponent.gameBaseImpl.*
 import model.gameComponent.gameBaseImpl.toCard.getCard
-
 
 
 class fileIO extends FileIOInterface {
@@ -118,7 +117,7 @@ class fileIO extends FileIOInterface {
 
   def mapToJson(m: Map[Card, Int]) =
     Json.toJson(
-      for { i <- m } yield {
+      for {i <- m} yield {
         Json.obj(
           "cardv" -> i(0).toString,
           "value" -> i(1)
@@ -126,7 +125,7 @@ class fileIO extends FileIOInterface {
       }
     )
 
-  def jsonToGame(jsonStr: String)=
+  def jsonToGame(jsonStr: String) =
     val json: JsValue = Json.parse(jsonStr)
 
     val p1 = (json \ "game" \ "player1").get
