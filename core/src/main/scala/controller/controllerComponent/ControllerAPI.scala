@@ -27,7 +27,7 @@ import akka.protobufv3.internal.compiler.PluginProtos.CodeGeneratorResponse.File
 import play.api.libs.json.*
 
 //****************************************************************************** CLASS DEFINITION
-class RestAPI(using controller: controllerInterface):
+class ControllerAPI(using controller: controllerInterface):
 
   implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "my-system")
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
@@ -69,7 +69,7 @@ class RestAPI(using controller: controllerInterface):
       post {
         path("controller"/ "save") {
             controller.save()
-            complete(HttpEntity(ContentTypes.`application/json`, "Game saved"))
+            complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
           }
         },
       post {

@@ -1,12 +1,5 @@
-/**
- * RootSevice.scala
- *  implementation for AKKA RestControllerAPI
- */
-
-//****************************************************************************** PACKAGE
 package fileIOComponent
 
-//****************************************************************************** IMPORTS
 
 import fileIOComponent.JSONImpl.fileIO
 import akka.actor.typed.ActorSystem
@@ -24,7 +17,6 @@ import scala.util.{Failure, Success}
 import akka.protobufv3.internal.compiler.PluginProtos.CodeGeneratorResponse.File
 import play.api.libs.json.*
 
-//****************************************************************************** CLASS DEFINITION
 class RestAPIPersistence():
 
   implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "my-system")
@@ -43,7 +35,7 @@ class RestAPIPersistence():
       },
       get {
         path("persistence"/ "load") {
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.load.toString))
+          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(fileIO.load).toString()))
         }
       },
       put {

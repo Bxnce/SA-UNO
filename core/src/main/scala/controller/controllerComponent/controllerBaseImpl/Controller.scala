@@ -3,68 +3,61 @@ package controller.controllerComponent.controllerBaseImpl
 import controller.controllerComponent.controllerInterface
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject}
+
 import scala.io.StdIn.readLine
 import Console.{RED, RESET}
 import scala.collection.mutable.ListBuffer
-import model.gameComponent.gameBaseImpl._
+import model.gameComponent.gameBaseImpl.*
 import model.gameComponent.gameInterface
 import controller.controllerComponent.Invoker
 import fileIOComponent.JSONImpl.fileIO
-import controller.controllerComponent.PersistenceAPI
+import controller.controllerComponent.PersistenceRequest
 
 
 case class Controller @Inject() (var game: gameInterface)
     extends controllerInterface:
   val invoker = new Invoker
   val fileIO = new fileIO
-  val persistenceAPI = new PersistenceAPI()
+  val persistenceRequest = new PersistenceRequest
 
   def take(): Unit =
     game = invoker.doStep(UnoCommand(this.game, "take"))
-    print("conTake")
     notifyObservers
 
   def place(ind: Int): Unit =
     game = invoker.doStep(UnoCommand(ind, this.game))
-    println("conPlace")
     notifyObservers
 
   def next(): Unit =
     game = invoker.doStep(UnoCommand(this.game, "next"))
-    println("conNext")
     notifyObservers
 
   def undo(): Unit =
     game = invoker.undoStep.getOrElse(game)
-    println("conUndo")
     notifyObservers
 
   def redo(): Unit =
     game = invoker.redoStep.getOrElse(game)
-    println("conRedo")
     notifyObservers
 
   def newG(p1: String, p2: String): Unit =
     game = new Game(p1, p2, UnoState.between21State).init()
-    println("conNewG")
     notifyObservers
 
   def WinG(p1: String, p2: String): Unit =
     game = new Game(p1, p2, UnoState.between21State).init()
-    println("conWinG")
 
   def colorChoose(color: String): Unit =
     game = invoker.doStep(UnoCommand(color, this.game))
-    println("conColorChoose")
     notifyObservers
 
   def save(): Unit =
-    println("conSave")
+    persistenceRequest.save(this.game)
     notifyObservers
 
   def load(): Unit =
-    fileIO.load
-    println("conLoad")
+    val newGJSON = persistenceRequest.load()
+    game = fileIO.jsonToGame(newGJSON)
     notifyObservers
 
   override def toString: String =

@@ -4,7 +4,7 @@ import com.google.inject.Guice
 import scala.Console.{BLUE, RESET}
 import scala.io.StdIn.readLine
 import controller.controllerComponent.controllerInterface
-import controller.controllerComponent.RestAPI
+import controller.controllerComponent.ControllerAPI
 import scala._
 import aview.GUIP.mainGUI
 import fileIOComponent.RestAPIPersistence
@@ -12,10 +12,10 @@ import aview.TUI
 import UnoModule.given_controllerInterface
 
 @main def Main: Unit =
-  val controllerApi = RestAPI()
-  //val persistenceApi = RestAPIPersistence()
+  val controllerApi = ControllerAPI()
+  val persistenceApi = RestAPIPersistence()
   controllerApi.start()
-  //persistenceApi.start()
+  persistenceApi.start()
 
   println("\n" * 50)
   val tui = TUI()
