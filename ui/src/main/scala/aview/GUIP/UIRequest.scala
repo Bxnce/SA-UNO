@@ -8,10 +8,12 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpMethods, HttpRequ
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import akka.http.javadsl.model.StatusCodes
 import akka.http.javadsl.model.Uri
+
 import scala.concurrent.Await
 import akka.actor.ActorSystem
-import akka.stream.{SystemMaterializer, Materializer}
+import akka.stream.{Materializer, SystemMaterializer}
 import akka.http.scaladsl.model.Uri
+
 import scala.util.{Failure, Success, Try}
 import play.api.libs.json.*
 import akka.http.scaladsl.unmarshalling.Unmarshal
@@ -23,24 +25,22 @@ import model.gameComponent.gameBaseImpl.{Game, Player, UnoState}
 import aview.GUIP.WebClient
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class UIRequest {
+class UIRequest extends Observable{
+
+  val fio = new fileIO()
+  var game: gameInterface = new Game("place_h", "place_h", UnoState.between21State).init()
   implicit val system: ActorSystem = ActorSystem()
   implicit val mat: Materializer = SystemMaterializer(system).materializer
 
   //implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
   //implicit val executionContext = system.executionContext
 
-  var game: gameInterface = new Game("place_h", "place_h", UnoState.between21State).init()
   val webClient = new WebClient("http://localhost:8080/controller/")
 
-  def fetchGame(): Unit = {
-    val endpoint = "get"
-    //fetchData(endpoint)
-  }
 
   def undo(): Unit = {
     val endpoint = "undo"
-    //fetchData(endpoint)
+    //webClient.getRequest(endpoint).onComplete(response => println(s"GET request response: $response")
   }
 
   def redo(): Unit = {

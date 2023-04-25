@@ -11,7 +11,8 @@ import aview.GUIP.UIRequest
 
 class mainGUI() extends MainFrame with Observer {
   title = "BEST UNO EUW"
-  val controller = new UIRequest()
+  var controller = new UIRequest()
+  controller.add(this)
   iconImage = Toolkit.getDefaultToolkit.getImage(
     "Ui/src/main/resources/cards/uno_back.png"
   )
