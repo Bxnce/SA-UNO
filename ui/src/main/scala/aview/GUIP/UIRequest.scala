@@ -8,16 +8,13 @@ import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpMethods, HttpRequ
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import akka.http.javadsl.model.StatusCodes
 import akka.http.javadsl.model.Uri
-
 import scala.concurrent.Await
 import akka.actor.ActorSystem
 import akka.stream.{Materializer, SystemMaterializer}
 import akka.http.scaladsl.model.Uri
-
 import scala.util.{Failure, Success, Try}
 import play.api.libs.json.*
 import akka.http.scaladsl.unmarshalling.Unmarshal
-
 import scala.concurrent.duration.*
 import fileIOComponent.JSONImpl.fileIO
 import model.gameComponent.gameInterface
@@ -40,69 +37,79 @@ class UIRequest extends Observable{
 
   val webClient = new WebClient("http://localhost:8080/controller/")
 
+  def waitRefreshGame(resulti: Future[HttpResponse]) = {
+    val res = resulti .flatMap { response =>
+      response.status match {
+        case StatusCodes.OK =>
+          Unmarshal(response.entity).to[String].map { jsonStr =>
+            this.game = fio.jsonToGame(jsonStr)
+          }
+        case _ =>
+          Future.failed(new RuntimeException(s"HTTP request failed with status ${response.status} and entity ${response.entity}"))
+      }
+    }
+    Await.result(res, 10.seconds)
+    notifyObservers
+  }
 
   def undo(): Unit = {
     val endpoint = "undo"
-    //webClient.getRequest(endpoint).onComplete(response => println(s"GET request response: $response")
+    val postResponse = webClient.getRequest(endpoint)
+    waitRefreshGame(postResponse)
   }
 
   def redo(): Unit = {
     val endpoint = "redo"
-    //fetchData(endpoint)
+    val postResponse = webClient.getRequest(endpoint)
+    waitRefreshGame(postResponse)
   }
 
   def load(): Unit = {
     val endpoint = "load"
-    //fetchData(endpoint)
+    val postResponse = webClient.getRequest(endpoint)
+    waitRefreshGame(postResponse)
   }
 
   def save(): Unit = {
     val endpoint = "save"
-    //fetchData(endpoint)
+    val postResponse = webClient.postRequest(fio.gameToJson(this.game).toString(), endpoint)
+    waitRefreshGame(postResponse)
   }
 
   def newG(name1: String, name2: String): Unit = {
     val endpoint = s"newg?name1=$name1&name2=$name2"
     val postResponse = webClient.postRequest("", endpoint)
-    postResponse.onComplete {
-      case Success(response) =>
-        println("Success")
-        Unmarshal(response.entity).to[String].map { jsonStr =>
-          println(jsonStr)
-          this.game = fio.jsonToGame(jsonStr)
-
-        }
-        notifyObservers
-      case Failure(ex) =>
-        println(s"Error: ${ex.getMessage}")
-        ""
-    }
-    println("GAME::::::  " + this.game.toString)
+    waitRefreshGame(postResponse)
     }
 
 
   def WinG(name1: String, name2: String): Unit = {
     val endpoint = s"wing?name1=$name1&name2=$name2"
-    //fetchData(endpoint)
+    val postResponse = webClient.postRequest("",endpoint)
+    waitRefreshGame(postResponse)
   }
 
   def place(ind: Int): Unit = {
     val endpoint = s"place?ind=$ind"
-    //fetchData(endpoint)
+    val postResponse = webClient.postRequest("",endpoint)
+    waitRefreshGame(postResponse)
   }
 
   def take(): Unit = {
     val endpoint = s"take"
-    //fetchData(endpoint)
+    val postResponse = webClient.postRequest("",endpoint)
+    waitRefreshGame(postResponse)
   }
 
   def next(): Unit = {
     val endpoint = s"next"
-    //fetchData(endpoint)
+    val postResponse = webClient.postRequest("",endpoint)
+    waitRefreshGame(postResponse)
   }
 
   def colorChoose(color: String): Unit = {
     val endpoint = s"color?color=$color"
-    //fetchData(endpoint)
+    val postResponse = webClient.postRequest("",endpoint)
+    waitRefreshGame(postResponse)
   }
 }
