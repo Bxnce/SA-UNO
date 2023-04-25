@@ -13,9 +13,9 @@ import UnoModule.given_controllerInterface
 
 @main def Main: Unit =
   val controllerApi = RestAPI()
-  val persistenceApi = RestAPIPersistence()
+  //val persistenceApi = RestAPIPersistence()
   controllerApi.start()
-  persistenceApi.start()
+  //persistenceApi.start()
 
   println("\n" * 50)
   val tui = TUI()

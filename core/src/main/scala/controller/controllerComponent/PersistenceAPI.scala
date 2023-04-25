@@ -10,7 +10,6 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 class PersistenceAPI {
-  def main(args: Array[String]): Unit = {
     val rootBehavior = Behaviors.setup[Nothing] { context =>
       implicit val system: ActorSystem[Nothing] = context.system
       implicit val materializer: Materializer = Materializer(context)
@@ -79,7 +78,5 @@ class PersistenceAPI {
 
       Behaviors.empty
     }
-
     ActorSystem[Nothing](rootBehavior, "Example")
-  }
 }

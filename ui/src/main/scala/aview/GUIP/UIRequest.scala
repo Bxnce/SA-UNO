@@ -1,7 +1,6 @@
 package aview.GUIP
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
-import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives.*
@@ -15,13 +14,17 @@ import akka.http.scaladsl.unmarshalling.Unmarshal
 import scala.concurrent.duration.*
 import fileIOComponent.JSONImpl.fileIO
 import model.gameComponent.gameInterface
-import akka.stream.ActorMaterializer
 import model.gameComponent.gameBaseImpl.{Game, Player, UnoState}
-
+import aview.GUIP.WebClient
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class UIRequest {
+  implicit val system: ActorSystem = ActorSystem()
+  implicit val mat: Materializer = SystemMaterializer(system).materializer
 
-  val fileIO = new fileIO
+  //implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
+  //implicit val executionContext = system.executionContext
+
   var game: gameInterface = new Game("place_h", "place_h", UnoState.between21State).init()
 
 
@@ -47,61 +50,58 @@ class UIRequest {
 
   def fetchGame(): Unit = {
     val endpoint = "get"
-    fetchData(endpoint)
+    //fetchData(endpoint)
   }
 
   def undo(): Unit = {
     val endpoint = "undo"
-    fetchData(endpoint)
+    //fetchData(endpoint)
   }
 
   def redo(): Unit = {
     val endpoint = "redo"
-    fetchData(endpoint)
+    //fetchData(endpoint)
   }
 
   def load(): Unit = {
     val endpoint = "load"
-    fetchData(endpoint)
+    //fetchData(endpoint)
   }
 
   def save(): Unit = {
     val endpoint = "save"
-    fetchData(endpoint)
+    //fetchData(endpoint)
   }
 
   def newG(name1: String, name2: String): Unit = {
     val endpoint = s"newg?name1=$name1&name2=$name2"
-    fetchData(endpoint)
+    val postResponse = webClient.postRequest("", endpoint)
+    postResponse.onComplete(response => println(s"POST request response: $response"))
+    //fetchData(endpoint)
   }
 
   def WinG(name1: String, name2: String): Unit = {
     val endpoint = s"wing?name1=$name1&name2=$name2"
-    fetchData(endpoint)
+    //fetchData(endpoint)
   }
 
   def place(ind: Int): Unit = {
     val endpoint = s"place?ind=$ind"
-    fetchData(endpoint)
+    //fetchData(endpoint)
   }
 
   def take(): Unit = {
     val endpoint = s"take"
-    fetchData(endpoint)
+    //fetchData(endpoint)
   }
 
   def next(): Unit = {
     val endpoint = s"next"
-    fetchData(endpoint)
+    //fetchData(endpoint)
   }
 
   def colorChoose(color: String): Unit = {
     val endpoint = s"color?color=$color"
-    fetchData(endpoint)
-  }
-
-  def request(req: String): Unit = {
-    val endpoint = "request/" + req
-    fetchData(endpoint)
+    //fetchData(endpoint)
   }
 }
