@@ -1,20 +1,22 @@
 package scala
 
-import com.google.inject.Guice
 import scala.Console.{BLUE, RESET}
 import scala.io.StdIn.readLine
-import controller.controllerComponent.controllerInterface
-import scala._
+import controller.controllerComponent.ControllerAPI
 import aview.GUIP.mainGUI
+import fileIOComponent.RestAPIPersistence
 import aview.TUI
+import UnoModule.given_controllerInterface
 
 @main def Main: Unit =
-  val injector = Guice.createInjector(new UnoModule)
-  val controller = injector.getInstance(classOf[controllerInterface])
-  controller.game = controller.game.init()
+  val controllerApi = ControllerAPI()
+  val persistenceApi = RestAPIPersistence()
+  controllerApi.start()
+  persistenceApi.start()
+
   println("\n" * 50)
-  val tui = TUI(controller)
-  val gui = mainGUI(controller)
+  val tui = TUI()
+  mainGUI()
   var input: String = ""
   while input != "q" && input != "exit" do
     Console.print(s"${BLUE}>>>  ${RESET}")

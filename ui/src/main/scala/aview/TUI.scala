@@ -7,7 +7,8 @@ import Console.{GREEN, RED, RESET}
 import controller.controllerComponent.Observer
 import model.gameComponent.gameBaseImpl.CardValue
 
-class TUI(controller: controllerInterface) extends Observer:
+class TUI(using controller: controllerInterface) extends Observer:
+  controller.game.init()
   val ERROR = -1
   val EXIT = 0
   val SUCCESS = 1

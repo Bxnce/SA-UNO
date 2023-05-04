@@ -9,7 +9,14 @@ lazy val allDependencies = Seq(
   scalactic,
   scalatest,
   scalaswing,
-  scalaguice
+  scalaguice,
+  akkaHttp,
+  akkaHttpSpray,
+  akkaHttpCore,
+  akkaActorTyped,
+  akkaStream,
+  akkaActor,
+  slf4jNop
 )
 
 lazy val persistence = (project in file("persistence"))

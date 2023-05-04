@@ -1,6 +1,6 @@
 package aview.GUIP
 
-import controller.controllerComponent.controllerInterface
+import aview.GUIP.UIRequest
 
 import scala.swing.{BoxPanel, Button, Dialog, Dimension, Font, Label, Orientation, event}
 import java.awt.Color
@@ -8,7 +8,7 @@ import javax.swing.ImageIcon
 import scala.swing.event.MouseClicked
 import javax.swing.BorderFactory
 
-case class winPop(controller: controllerInterface) {
+case class winPop(controller: UIRequest) {
 
   def ret: Dialog = new Dialog() {
     modal = true

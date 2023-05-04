@@ -1,12 +1,12 @@
 package aview.GUIP
 
-import controller.controllerComponent.controllerInterface
+import aview.GUIP.UIRequest
 
 import scala.swing.*
 import java.awt.Color
 import javax.swing.{BorderFactory, Icon, ImageIcon}
 
-case class buttonsPanel(controller: controllerInterface) {
+case class buttonsPanel(controller: UIRequest) {
 
   val buttons =
     new Button("Next    ") {

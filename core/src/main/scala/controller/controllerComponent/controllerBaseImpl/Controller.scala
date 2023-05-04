@@ -1,20 +1,22 @@
 package controller.controllerComponent.controllerBaseImpl
 
 import controller.controllerComponent.controllerInterface
-import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject}
-import scala.io.StdIn.readLine
+
 import Console.{RED, RESET}
 import scala.collection.mutable.ListBuffer
-import model.gameComponent.gameBaseImpl._
+import model.gameComponent.gameBaseImpl.*
 import model.gameComponent.gameInterface
 import controller.controllerComponent.Invoker
 import fileIOComponent.JSONImpl.fileIO
+import controller.controllerComponent.PersistenceRequest
+
 
 case class Controller @Inject() (var game: gameInterface)
     extends controllerInterface:
   val invoker = new Invoker
   val fileIO = new fileIO
+  val persistenceRequest = new PersistenceRequest
 
   def take(): Unit =
     game = invoker.doStep(UnoCommand(this.game, "take"))
@@ -48,11 +50,12 @@ case class Controller @Inject() (var game: gameInterface)
     notifyObservers
 
   def save(): Unit =
-    fileIO.save(game)
+    persistenceRequest.save(this.game)
     notifyObservers
 
   def load(): Unit =
-    fileIO.load
+    val newGJSON = persistenceRequest.load()
+    game = fileIO.jsonToGame(newGJSON)
     notifyObservers
 
   override def toString: String =

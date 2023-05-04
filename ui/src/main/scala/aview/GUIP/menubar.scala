@@ -1,10 +1,9 @@
 package aview.GUIP
 
-import controller.controllerComponent.controllerInterface
-
+import aview.GUIP.UIRequest
 import scala.swing.*
 
-case class menubar(controller: controllerInterface) {
+case class menubar(controller: UIRequest) {
   val menubar = new MenuBar {
     val dim = new Dimension(550, 20)
     maximumSize = dim
