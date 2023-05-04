@@ -107,4 +107,7 @@ class UIRequest extends Observable {
     val postResponse = webClient.postRequest("", endpoint)
     waitRefreshGame(postResponse)
   }
+
+  override def toString: String =
+    UnoCommand(this.game, "print").toString
 }

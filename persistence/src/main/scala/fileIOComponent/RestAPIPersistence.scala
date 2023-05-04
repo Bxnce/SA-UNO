@@ -51,11 +51,11 @@ class RestAPIPersistence():
     )
 
   def start(): Unit = {
-    val binding = Http().newServerAt("localhost", RestUIPort).bind(route)
+    val binding = Http().newServerAt("127.0.0.1", RestUIPort).bind(route)
 
     binding.onComplete {
       case Success(binding) => {
-        println(s"UNO PersistenceAPI service online at http://localhost:$RestUIPort/")
+        println(s"UNO PersistenceAPI service online at http://127.0.0.1:$RestUIPort/")
       }
       case Failure(exception) => {
         println(s"UNO PersistenceAPI service failed to start: ${exception.getMessage}")

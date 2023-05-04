@@ -30,7 +30,7 @@ class PersistenceRequest {
   implicit val system: ActorSystem = ActorSystem()
   implicit val mat: Materializer = SystemMaterializer(system).materializer
 
-  val webClient = new WebClient("http://localhost:8081/persistence/")
+  val webClient = new WebClient("http://127.0.0.1:8081/persistence/")
 
   def loadGame(result: Future[HttpResponse]): String = {
     var resJSON = ""
