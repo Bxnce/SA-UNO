@@ -9,10 +9,8 @@ import aview.TUI
 import UnoModule.given_controllerInterface
 
 @main def Main: Unit =
-  val controllerApi = ControllerAPI()
-  val persistenceApi = RestAPIPersistence()
-  controllerApi.start()
-  persistenceApi.start()
+  ControllerAPI().start()
+  RestAPIPersistence().start()
 
   println("\n" * 50)
   val tui = TUI()
