@@ -1,7 +1,6 @@
 package aview.GUIP
 
-import aview.GUIP.UIRequest
-
+import aview.UIRequest
 import scala.swing.{BoxPanel, Button, Dialog, Dimension, Font, Label, Orientation, event}
 import java.awt.Color
 import javax.swing.ImageIcon

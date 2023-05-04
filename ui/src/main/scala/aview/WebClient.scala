@@ -1,12 +1,13 @@
-package aview.GUIP
+package aview
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model._
-import akka.http.scaladsl.model.headers._
+import akka.http.scaladsl.model.*
+import akka.http.scaladsl.model.headers.*
 import akka.stream.Materializer
-import scala.concurrent.Future
+
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class WebClient(serverUri: String)(implicit system: ActorSystem, mat: Materializer) {
 

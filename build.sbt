@@ -83,7 +83,6 @@ lazy val settings: Seq[Def.Setting[?]] = Seq(
     jacocoExcludes := Seq(
       "*aview.*",
       "*fileIOComponent.*",
-      "*.UnoModule.scala",
       "*.Uno.scala"
     ),
     jacocoCoverallsServiceName := "github-actions",

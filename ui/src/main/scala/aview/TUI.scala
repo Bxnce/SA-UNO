@@ -25,6 +25,9 @@ class TUI(using controller: controllerInterface) extends Observer:
   //case _       => print("Hier sollten sie nicht hinkommen\n")
 
   def convertinputString(input: String): Int =
+    if (input == null)
+      print("this bad")
+      return ERROR
     if (input.size == 0)
       print("no input!\n")
       return ERROR

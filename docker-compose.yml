@@ -1,0 +1,56 @@
+version: "3.9"
+
+services:
+  persistence:
+    image: uno-persistence-service
+    build:
+      context: ./persistence/
+      dockerfile: ./Dockerfile
+    ports:
+      - "8081:8081"
+    stdin_open: true
+    container_name: uno-persistence-service
+    environment:
+      PERSISTENCE_SERVICE_HOST: persistence
+      PERSISTENCE_SERVICE_PORT: 8081
+    tty: true
+
+  core:
+    image: uno-core-service
+    build:
+      context: ./core/
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    stdin_open: true
+    container_name: uno-core-service
+    depends_on:
+      - persistence
+    environment:
+      CORE_SERVICE_HOST: persistence
+      CORE_SERVICE_PORT: 8080
+    tty: true
+
+  sa-uno:
+    image: uno-service
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    ports:
+      - "8082:8082"
+    stdin_open: true
+    container_name: uno_service
+    depends_on:
+      - persistence
+      - core
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      DISPLAY: $DISPLAY
+      UNO_SERVICE_HOST: uno
+      UNO_SERVICE_PORT: 8082
+      PERSISTENCE_SERVICE_HOST: persistence
+      PERSISTENCE_SERVICE_PORT: 8081
+      CORE_SERVICE_HOST: core
+      CORE_SERVICE_PORT: 8080
+    tty: true

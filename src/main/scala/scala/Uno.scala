@@ -14,7 +14,7 @@ import UnoModule.given_controllerInterface
 
   println("\n" * 50)
   val tui = TUI()
-  mainGUI()
+  //mainGUI()
   var input: String = ""
   while input != "q" && input != "exit" do
     Console.print(s"${BLUE}>>>  ${RESET}")

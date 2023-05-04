@@ -1,7 +1,6 @@
 package aview.GUIP
 
-import aview.GUIP.UIRequest
-
+import aview.UIRequest
 import scala.swing.{Dialog, Dimension, GridPanel, Label}
 import javax.swing.ImageIcon
 import scala.swing.event.MouseClicked
