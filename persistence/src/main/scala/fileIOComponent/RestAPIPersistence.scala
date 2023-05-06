@@ -23,7 +23,7 @@ class RestAPIPersistence():
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
   val fileIO = new fileIO
-  val RestUIPort = 8081
+  val RestUIPort: Int = sys.env.getOrElse("PERSISTENCE_SERVICE_PORT", "8081").toInt
   val routes: String =
     """
         """.stripMargin

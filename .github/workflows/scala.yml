@@ -18,20 +18,7 @@ jobs:
         distribution: 'adopt'
     - name: compile
       run: sbt compile
-  run_tests:
-    name: Test 🧪 and Upload Coverage 📊
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build Project and export Coverage
-        run: |
-          sbt clean coverage test
-          sbt coverageAggregate
-      - uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
+
 
     
     

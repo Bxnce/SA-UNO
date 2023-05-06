@@ -29,8 +29,11 @@ class UIRequest extends Observable {
 
   implicit val system: ActorSystem = ActorSystem()
   implicit val mat: Materializer = SystemMaterializer(system).materializer
+  
+  val port: String = sys.env.getOrElse("CORE_SERVICE_PORT", "8080")
+  val host: String = sys.env.getOrElse("CORE_SERVICE_HOST", "controller")
 
-  val webClient = new WebClient("http://127.0.0.1:8080/controller/")
+  val webClient = new WebClient(s"http://127.0.0.1:$port/$host/")
 
   def waitRefreshGame(resulti: Future[HttpResponse]): Unit = {
     val res = resulti.flatMap { response =>

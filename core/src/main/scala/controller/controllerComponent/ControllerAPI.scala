@@ -25,7 +25,7 @@ class ControllerAPI(using controller: controllerInterface):
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
   val fileIO = new fileIO
-  val RestUIPort = 8080
+  val RestUIPort = sys.env.getOrElse("CORE_SERVICE_PORT", "8080").toInt
   val routes: String =
     """
         """.stripMargin

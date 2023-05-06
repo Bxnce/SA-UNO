@@ -61,8 +61,8 @@ lazy val ui = (project in file("ui"))
   )
 
 lazy val root = (project in file("."))
-  .dependsOn(core, model, ui)
-  .aggregate(core, model, ui)
+  .dependsOn(core, model, ui, persistence)
+  .aggregate(core, model, ui, persistence)
   .settings(
     name:="UNO",
     version:="0.1.0-SNAPSHOT",
