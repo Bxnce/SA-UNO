@@ -25,7 +25,9 @@ class ControllerAPI(using controller: controllerInterface):
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
   val fileIO = new fileIO
-  val RestUIPort = sys.env.getOrElse("CORE_SERVICE_PORT", "8080").toInt
+  val RestUIPort: Int = sys.env.getOrElse("CORE_SERVICE_PORT", "8080").toInt
+  val RestUIHost = sys.env.getOrElse("CORE_SERVICE_HOST", "uno-core-service")
+
   val routes: String =
     """
         """.stripMargin
@@ -111,11 +113,11 @@ class ControllerAPI(using controller: controllerInterface):
     )
 
   def start(): Unit = {
-    val binding = Http().newServerAt("127.0.0.1", RestUIPort).bind(route)
+    val binding = Http().newServerAt(RestUIHost, RestUIPort).bind(route)
 
     binding.onComplete {
       case Success(binding) => {
-        println(s"UNO ControllerAPI service online at http://127.0.0.1:$RestUIPort/")
+        println(s"UNO ControllerAPI service online at http://$RestUIHost:$RestUIPort/")
       }
       case Failure(exception) => {
         println(s"UNO ControllerAPI service failed to start: ${exception.getMessage}")

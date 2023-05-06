@@ -31,10 +31,11 @@ class PersistenceRequest {
   implicit val mat: Materializer = SystemMaterializer(system).materializer
 
   val port: String = sys.env.getOrElse("PERSISTENCE_SERVICE_PORT", "8081")
-  val host: String = sys.env.getOrElse("PERSISTENCE_SERVICE_HOST", "persistence")
+  val path: String = sys.env.getOrElse("PERSISTENCE_SERVICE_PATH", "/persistence/")
+  val host: String = sys.env.getOrElse("PERSISTENCE_SERVICE_HOST", "uno-persistence-service")
 
-  val webClient = new WebClient(s"http://127.0.0.1:$port/$host/")
-  
+  val webClient = new WebClient(s"http://$host:$port$path")
+
   def loadGame(result: Future[HttpResponse]): String = {
     var resJSON = ""
     val res = result.flatMap { response =>
