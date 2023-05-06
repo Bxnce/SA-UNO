@@ -50,19 +50,31 @@ lazy val model = (project in file("model"))
     libraryDependencies ++= allDependencies
   )
 
-lazy val ui = (project in file("ui"))
+lazy val tui = (project in file("tui"))
   .dependsOn(core)
   .settings(
-    name:="UNO-Ui",
+    name:="UNO-Tui",
     version:="0.1.0-SNAPSHOT",
+    dockerExposedPorts := Seq(8090),
     scalaVersion := scala3Version,
     settings,
     libraryDependencies ++= allDependencies
-  )
+  ).enablePlugins(JavaAppPackaging, DockerPlugin)
+
+lazy val gui = (project in file("gui"))
+  .dependsOn(core)
+  .settings(
+    name:="UNO-Gui",
+    version:="0.1.0-SNAPSHOT",
+    dockerExposedPorts := Seq(8091),
+    scalaVersion := scala3Version,
+    settings,
+    libraryDependencies ++= allDependencies,
+    libraryDependencies += "org.scalafx" %% "scalafx" % "20.0.0-R31",
+  ).enablePlugins(JavaAppPackaging, DockerPlugin)
 
 lazy val root = (project in file("."))
-  .dependsOn(core, model, ui, persistence)
-  .aggregate(core, model, ui, persistence)
+  .aggregate(core, model, tui, gui, persistence)
   .settings(
     name:="UNO",
     version:="0.1.0-SNAPSHOT",

@@ -26,6 +26,31 @@ services:
       CORE_SERVICE_HOST: uno-core-service
       CORE_SERVICE_PORT: 8080
 
+  tui:
+    image: uno-tui:0.1.0-SNAPSHOT
+    ports:
+      - "8090:8090"
+    stdin_open: true
+    tty: true
+    container_name: uno-tui-service
+    depends_on:
+      - core
+    environment:
+      CORE_SERVICE_HOST: uno-core-service
+      CORE_SERVICE_PORT: 8080
+
+  gui:
+    image: uno-gui:0.1.0-SNAPSHOT
+    ports:
+      - "8091:8091"
+    stdin_open: true
+    tty: true
+    container_name: uno-gui-service
+    depends_on:
+      - core
+    environment:
+      CORE_SERVICE_HOST: uno-core-service
+      CORE_SERVICE_PORT: 8080
 
   sa-uno:
     image: uno:0.1.0-SNAPSHOT

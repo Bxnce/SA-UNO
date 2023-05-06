@@ -1,0 +1,1 @@
+FROM uno-gui:0.1.0-SNAPSHOT
