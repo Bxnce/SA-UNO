@@ -23,7 +23,9 @@ class RestAPIPersistence():
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
   val fileIO = new fileIO
-  val RestUIPort = 8081
+  val RestUIPort: Int = sys.env.getOrElse("PERSISTENCE_SERVICE_PORT", "8081").toInt
+  val RestUIHost: String = sys.env.getOrElse("PERSISTENCE_SERVICE_HOST", "uno-persistence-service")
+
   val routes: String =
     """
         """.stripMargin
@@ -51,11 +53,11 @@ class RestAPIPersistence():
     )
 
   def start(): Unit = {
-    val binding = Http().newServerAt("localhost", RestUIPort).bind(route)
+    val binding = Http().newServerAt(RestUIHost, RestUIPort).bind(route)
 
     binding.onComplete {
       case Success(binding) => {
-        println(s"UNO PersistenceAPI service online at http://localhost:$RestUIPort/")
+        println(s"UNO PersistenceAPI service online at http://$RestUIHost:$RestUIPort/")
       }
       case Failure(exception) => {
         println(s"UNO PersistenceAPI service failed to start: ${exception.getMessage}")

@@ -1,8 +1,7 @@
 package aview.GUIP
 
+import aview.UIRequest
 import controller.controllerComponent.controllerInterface
-
-import aview.GUIP.UIRequest
 import model.gameComponent.gameBaseImpl._
 import controller.controllerComponent.controllerBaseImpl._
 import controller.controllerComponent.controllerInterface

@@ -1,5 +1,6 @@
 package aview.GUIP
 
+import aview.UIRequest
 import controller.controllerComponent.controllerInterface
 import controller.controllerComponent.Observer
 import scala.swing.{BorderPanel, BoxPanel, FlowPanel, Frame, GridPanel, Label, MainFrame, Orientation}
@@ -7,7 +8,6 @@ import java.awt.{Color, Dimension, Image, Toolkit}
 import javax.swing.BorderFactory
 import java.awt.FlowLayout
 import model.gameComponent.gameBaseImpl._
-import aview.GUIP.UIRequest
 
 class mainGUI() extends MainFrame with Observer {
   title = "BEST UNO EUW"

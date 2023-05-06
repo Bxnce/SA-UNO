@@ -6,17 +6,12 @@ import controller.controllerComponent.ControllerAPI
 import aview.GUIP.mainGUI
 import fileIOComponent.RestAPIPersistence
 import aview.TUI
-import UnoModule.given_controllerInterface
 
 @main def Main: Unit =
-  val controllerApi = ControllerAPI()
-  val persistenceApi = RestAPIPersistence()
-  controllerApi.start()
-  persistenceApi.start()
 
   println("\n" * 50)
   val tui = TUI()
-  mainGUI()
+  //mainGUI()
   var input: String = ""
   while input != "q" && input != "exit" do
     Console.print(s"${BLUE}>>>  ${RESET}")

@@ -18,7 +18,7 @@ class TUISpec extends AnyWordSpec {
     game = game.add("P2", G1)
     game = game.add("P2", G2)
     val controller = Controller(game)
-    val tui = TUI()(using controller)
+    val tui = TUI()
 
     "created with the given parameters " should {
       "have the following values" in {

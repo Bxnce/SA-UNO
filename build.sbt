@@ -24,20 +24,22 @@ lazy val persistence = (project in file("persistence"))
   .settings(
     name:="UNO-Persistence",
     version:="0.1.0-SNAPSHOT",
+    dockerExposedPorts := Seq(8081),
     scalaVersion := scala3Version,
     settings,
     libraryDependencies ++= allDependencies
-  )
+  ).enablePlugins(JavaAppPackaging, DockerPlugin)
 
 lazy val core = (project in file("core"))
   .dependsOn(model, persistence)
   .settings(
     name:="UNO-Core",
     version:="0.1.0-SNAPSHOT",
+    dockerExposedPorts := Seq(8080),
     scalaVersion := scala3Version,
     settings,
     libraryDependencies ++= allDependencies
-  )
+  ).enablePlugins(JavaAppPackaging, DockerPlugin)
 
 lazy val model = (project in file("model"))
   .settings(
@@ -59,15 +61,16 @@ lazy val ui = (project in file("ui"))
   )
 
 lazy val root = (project in file("."))
-  .dependsOn(core, model, ui)
-  .aggregate(core, model, ui)
+  .dependsOn(core, model, ui, persistence)
+  .aggregate(core, model, ui, persistence)
   .settings(
     name:="UNO",
     version:="0.1.0-SNAPSHOT",
+    dockerExposedPorts := Seq(8082),
     scalaVersion := scala3Version,
     settings,
     libraryDependencies ++= allDependencies
-  )
+  ).enablePlugins(JavaAppPackaging, DockerPlugin)
 
 lazy val settings: Seq[Def.Setting[?]] = Seq(
     jacocoReportSettings := JacocoReportSettings(
@@ -83,7 +86,6 @@ lazy val settings: Seq[Def.Setting[?]] = Seq(
     jacocoExcludes := Seq(
       "*aview.*",
       "*fileIOComponent.*",
-      "*.UnoModule.scala",
       "*.Uno.scala"
     ),
     jacocoCoverallsServiceName := "github-actions",

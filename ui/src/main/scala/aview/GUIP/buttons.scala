@@ -1,7 +1,6 @@
 package aview.GUIP
 
-import aview.GUIP.UIRequest
-
+import aview.UIRequest
 import scala.swing.*
 import java.awt.Color
 import javax.swing.{BorderFactory, Icon, ImageIcon}

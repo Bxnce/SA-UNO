@@ -1,3 +1,4 @@
 addSbtPlugin("com.github.sbt" % "sbt-jacoco" % "3.4.0")
 addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.3.1")
 addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.5")
+addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "1.9.4")

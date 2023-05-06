@@ -1,6 +1,6 @@
 package aview.GUIP
 
-import aview.GUIP.UIRequest
+import aview.UIRequest
 import scala.swing.*
 
 case class menubar(controller: UIRequest) {

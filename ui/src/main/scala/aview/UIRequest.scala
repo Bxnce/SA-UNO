@@ -1,29 +1,25 @@
-package aview.GUIP
-
-import aview.GUIP.WebClient
+package aview
 
 import akka.actor.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
+import akka.http.javadsl.model.{StatusCodes, Uri}
 import akka.http.scaladsl.Http
+import akka.http.scaladsl.model.*
 import akka.http.scaladsl.server.Directives.*
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpMethods, HttpRequest, HttpResponse, StatusCode, Uri}
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
-import akka.http.javadsl.model.StatusCodes
-import akka.http.javadsl.model.Uri
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.{Materializer, SystemMaterializer}
-
 import controller.controllerComponent.Observable
 import fileIOComponent.JSONImpl.fileIO
-import model.gameComponent.gameInterface
 import model.gameComponent.gameBaseImpl.{Game, Player, UnoState}
-
+import model.gameComponent.gameInterface
 import play.api.libs.json.*
-import scala.concurrent.{ExecutionContextExecutor, Future}
-import scala.concurrent.Await
-import scala.util.{Failure, Success, Try}
-import scala.concurrent.duration.*
+import controller.controllerComponent.controllerBaseImpl.UnoCommand
+
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.*
+import scala.concurrent.{Await, ExecutionContextExecutor, Future}
+import scala.util.{Failure, Success, Try}
 
 
 class UIRequest extends Observable {
@@ -34,7 +30,11 @@ class UIRequest extends Observable {
   implicit val system: ActorSystem = ActorSystem()
   implicit val mat: Materializer = SystemMaterializer(system).materializer
 
-  val webClient = new WebClient("http://localhost:8080/controller/")
+  val port: String = sys.env.getOrElse("CORE_SERVICE_PORT", "8080")
+  val host: String = sys.env.getOrElse("CORE_SERVICE_HOST", "uno-core-service")
+  val path: String = sys.env.getOrElse("CORE_SERVICE_PATH", "/controller/")
+
+  val webClient = new WebClient(s"http://$host:$port$path")
 
   def waitRefreshGame(resulti: Future[HttpResponse]): Unit = {
     val res = resulti.flatMap { response =>
@@ -111,4 +111,7 @@ class UIRequest extends Observable {
     val postResponse = webClient.postRequest("", endpoint)
     waitRefreshGame(postResponse)
   }
+
+  override def toString: String =
+    UnoCommand(this.game, "print").toString
 }
