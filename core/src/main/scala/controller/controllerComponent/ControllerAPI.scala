@@ -26,7 +26,7 @@ class ControllerAPI(using controller: controllerInterface):
 
   val fileIO = new fileIO
   val RestUIPort: Int = sys.env.getOrElse("CORE_SERVICE_PORT", "8080").toInt
-  val RestUIHost = sys.env.getOrElse("CORE_SERVICE_HOST", "uno-core-service")
+  val RestUIHost: String = sys.env.getOrElse("CORE_SERVICE_HOST", "uno-core-service")
 
   val routes: String =
     """

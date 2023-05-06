@@ -34,7 +34,7 @@ class UIRequest extends Observable {
   val host: String = sys.env.getOrElse("CORE_SERVICE_HOST", "uno-core-service")
   val path: String = sys.env.getOrElse("CORE_SERVICE_PATH", "/controller/")
 
-  val webClient = new WebClient(s"http://$host:$port/$path/")
+  val webClient = new WebClient(s"http://$host:$port$path")
 
   def waitRefreshGame(resulti: Future[HttpResponse]): Unit = {
     val res = resulti.flatMap { response =>
