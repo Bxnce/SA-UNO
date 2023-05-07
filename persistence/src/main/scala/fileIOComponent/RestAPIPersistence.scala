@@ -45,8 +45,15 @@ class RestAPIPersistence():
       },
       get {
         path("persistence" / "dbload") {
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(slick.load()
-            .getOrElse(new Game("ERROR LOADING DATABASE", "ERROR LOADING DATABASE", UnoState.winState))).toString()))
+          parameter("id".?) { (id) =>
+            val id_updated = 
+              id match {
+              case Some(id) => Some(id.toInt)
+              case None => None  
+            }
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(slick.load(id_updated)
+              .getOrElse(new Game("ERROR LOADING DATABASE", "ERROR LOADING DATABASE", UnoState.winState))).toString()))
+          }
         }
       },
       put {

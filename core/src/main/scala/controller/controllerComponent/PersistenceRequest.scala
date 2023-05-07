@@ -54,7 +54,7 @@ class PersistenceRequest {
 
 
   def save(game: gameInterface): Unit = {
-    val endpoint = "store"
+    val endpoint = "dbstore"
     val putResponse = webClient.putRequest(fio.gameToJson(game).toString(), endpoint)
     val res = putResponse.flatMap { response =>
       response.status match {
@@ -69,8 +69,11 @@ class PersistenceRequest {
     Await.result(res, 10.seconds)
   }
 
-  def load(): String = {
-    val endpoint = "load"
+  def load(id : Option[Int] = None): String = {
+    val endpoint = id match {
+      case Some(id) => s"dbload/?id=$id"
+      case None => "dbload"
+    }
     val postResponse = webClient.getRequest(endpoint)
     loadGame(postResponse)
   }

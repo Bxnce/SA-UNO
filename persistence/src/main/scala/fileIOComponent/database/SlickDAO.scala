@@ -1,6 +1,9 @@
 package fileIOComponent.database
 /*Uno-Dependecies*/
+import com.mysql.cj.jdbc.exceptions.CommunicationsException
 import model.gameComponent.gameInterface
+
+import java.sql.SQLNonTransientException
 /*Libraries*/
 import slick.lifted.TableQuery
 import slick.jdbc.JdbcBackend.Database
@@ -20,7 +23,7 @@ class SlickDAO extends DAOInterface {
   val databasePassword: String = sys.env.getOrElse("MYSQL_PASSWORD", "root")
   val databasePort: String = sys.env.getOrElse("MYSQL_PORT", "3306")
   val databaseHost: String = sys.env.getOrElse("MYSQL_HOST", "localhost")
-  val databaseUrl = s"jdbc:mysql://$databaseHost:$databasePort/$databaseDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"
+  val databaseUrl = s"jdbc:mysql://$databaseHost:$databasePort/$databaseDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&autoReconnect=true"
   println(databaseUrl)
   val database = Database.forURL(
     url = databaseUrl,
@@ -34,7 +37,14 @@ class SlickDAO extends DAOInterface {
 
   val setup: DBIOAction[Unit, NoStream, Effect.Schema] = DBIO.seq(player.schema.createIfNotExists, gameTable.schema.createIfNotExists)
   println("create tables")
-  Await.result(database.run(setup), 5.seconds)
+  try {
+    Await.result(database.run(setup), 5.seconds)
+  } catch  {
+    case e: SQLNonTransientException =>
+      println("Waiting for DB connection")
+      Thread.sleep(5000)
+      Await.result(database.run(setup), 5.seconds)
+  }
   println("tables created")
 
   override def save(saveGame: gameInterface): Unit =

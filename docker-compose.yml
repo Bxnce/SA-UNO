@@ -4,6 +4,7 @@ services:
 
   database:
     image: mysql:5.7
+    restart: always
     ports:
       - "3306:3306"
     container_name: uno-database
@@ -14,6 +15,8 @@ services:
       MYSQL_DATABASE: uno
       MYSQL_USER: nue
       MYSQL_PASSWORD: root
+    volumes:
+      - .:/var/lib/sql/uno
 
   persistence:
     image: uno-persistence:0.1.0-SNAPSHOT
@@ -32,6 +35,8 @@ services:
       MYSQL_USER: nue
       MYSQL_PASSWORD: root
     working_dir: /fileio
+    depends_on:
+      - database
     volumes:
       - ./:/fileio:xro
 
