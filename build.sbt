@@ -16,14 +16,16 @@ lazy val allDependencies = Seq(
   akkaActorTyped,
   akkaStream,
   akkaActor,
-  slf4jNop
+  slf4jNop,
+  mysql,
+  slick
 )
 
 lazy val persistence = (project in file("persistence"))
   .dependsOn(model)
   .settings(
-    name:="UNO-Persistence",
-    version:="0.1.0-SNAPSHOT",
+    name := "UNO-Persistence",
+    version := "0.1.0-SNAPSHOT",
     dockerExposedPorts := Seq(8081),
     scalaVersion := scala3Version,
     settings,
@@ -33,8 +35,8 @@ lazy val persistence = (project in file("persistence"))
 lazy val core = (project in file("core"))
   .dependsOn(model, persistence)
   .settings(
-    name:="UNO-Core",
-    version:="0.1.0-SNAPSHOT",
+    name := "UNO-Core",
+    version := "0.1.0-SNAPSHOT",
     dockerExposedPorts := Seq(8080),
     scalaVersion := scala3Version,
     settings,
@@ -43,8 +45,8 @@ lazy val core = (project in file("core"))
 
 lazy val model = (project in file("model"))
   .settings(
-    name:="UNO-Model",
-    version:="0.1.0-SNAPSHOT",
+    name := "UNO-Model",
+    version := "0.1.0-SNAPSHOT",
     scalaVersion := scala3Version,
     settings,
     libraryDependencies ++= allDependencies
@@ -53,8 +55,8 @@ lazy val model = (project in file("model"))
 lazy val ui = (project in file("ui"))
   .dependsOn(core)
   .settings(
-    name:="UNO-Ui",
-    version:="0.1.0-SNAPSHOT",
+    name := "UNO-Ui",
+    version := "0.1.0-SNAPSHOT",
     scalaVersion := scala3Version,
     settings,
     libraryDependencies ++= allDependencies
@@ -64,8 +66,8 @@ lazy val root = (project in file("."))
   .dependsOn(core, model, ui, persistence)
   .aggregate(core, model, ui, persistence)
   .settings(
-    name:="UNO",
-    version:="0.1.0-SNAPSHOT",
+    name := "UNO",
+    version := "0.1.0-SNAPSHOT",
     dockerExposedPorts := Seq(8082),
     scalaVersion := scala3Version,
     settings,
@@ -73,24 +75,24 @@ lazy val root = (project in file("."))
   ).enablePlugins(JavaAppPackaging, DockerPlugin)
 
 lazy val settings: Seq[Def.Setting[?]] = Seq(
-    jacocoReportSettings := JacocoReportSettings(
-      "Jacoco Coverage Report",
-      None,
-      JacocoThresholds(),
-      Seq(
-        JacocoReportFormats.ScalaHTML,
-        JacocoReportFormats.XML
-      ), // note XML formatter
-      "utf-8"
-    ),
-    jacocoExcludes := Seq(
-      "*aview.*",
-      "*fileIOComponent.*",
-      "*.Uno.scala"
-    ),
-    jacocoCoverallsServiceName := "github-actions",
-    jacocoCoverallsBranch := sys.env.get("CI_BRANCH"),
-    jacocoCoverallsPullRequest := sys.env.get("GITHUB_EVENT_NAME"),
-    jacocoCoverallsRepoToken := sys.env.get("COVERALLS_REPO_TOKEN")
-  )
+  jacocoReportSettings := JacocoReportSettings(
+    "Jacoco Coverage Report",
+    None,
+    JacocoThresholds(),
+    Seq(
+      JacocoReportFormats.ScalaHTML,
+      JacocoReportFormats.XML
+    ), // note XML formatter
+    "utf-8"
+  ),
+  jacocoExcludes := Seq(
+    "*aview.*",
+    "*fileIOComponent.*",
+    "*.Uno.scala"
+  ),
+  jacocoCoverallsServiceName := "github-actions",
+  jacocoCoverallsBranch := sys.env.get("CI_BRANCH"),
+  jacocoCoverallsPullRequest := sys.env.get("GITHUB_EVENT_NAME"),
+  jacocoCoverallsRepoToken := sys.env.get("COVERALLS_REPO_TOKEN")
+)
 

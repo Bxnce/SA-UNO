@@ -1,7 +1,6 @@
 package fileIOComponent
 
 import fileIOComponent.JSONImpl.fileIO
-
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
@@ -12,6 +11,7 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.MethodDirectives.get
 import akka.stream.ActorMaterializer
 import akka.protobufv3.internal.compiler.PluginProtos.CodeGeneratorResponse.File
+import fileIOComponent.database.Slick
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.{Failure, Success}
@@ -23,8 +23,9 @@ class RestAPIPersistence():
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
   val fileIO = new fileIO
+  val slick = new Slick
   val RestUIPort: Int = sys.env.getOrElse("PERSISTENCE_SERVICE_PORT", "8081").toInt
-  val RestUIHost: String = sys.env.getOrElse("PERSISTENCE_SERVICE_HOST", "uno-persistence-service")
+  val RestUIHost: String = sys.env.getOrElse("PERSISTENCE_SERVICE_HOST", "localhost")
 
   val routes: String =
     """
@@ -40,11 +41,26 @@ class RestAPIPersistence():
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(fileIO.load).toString()))
         }
       },
+      get {
+        path("persistence" / "dbload") {
+          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(slick.load()).toString()))
+        }
+      },
       put {
         path("persistence" / "store") {
           entity(as[String]) { data =>
             complete {
               fileIO.save(fileIO.jsonToGame(data))
+              Future.successful(HttpEntity(ContentTypes.`text/html(UTF-8)`, "game successfully saved"))
+            }
+          }
+        }
+      },
+      put {
+        path("persistence" / "dbstore") {
+          entity(as[String]) { data =>
+            complete {
+              slick.save(fileIO.jsonToGame(data))
               Future.successful(HttpEntity(ContentTypes.`text/html(UTF-8)`, "game successfully saved"))
             }
           }
