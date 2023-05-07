@@ -11,7 +11,7 @@ import concurrent.duration.DurationInt
 import scala.concurrent.{Await, Future}
 import model.gameComponent.gameBaseImpl.{Game, Player, UnoState}
 import play.api.libs.json.{JsObject, Json}
-
+// TODO implement load and cleanup this whole fucking dumb shit
 class Slick extends DAOInterface {
   val fileIO = new fileIO()
   val databaseDB: String = sys.env.getOrElse("MYSQL_DATABASE", "uno")

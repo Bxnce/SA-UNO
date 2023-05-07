@@ -10,3 +10,4 @@
 #
 #CMD sbt run
 FROM uno-persistence:0.1.0-SNAPSHOT
+# TODO fix connection between persistence docker and mysql docker

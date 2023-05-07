@@ -20,8 +20,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.*
 import scala.concurrent.{Await, ExecutionContextExecutor, Future}
 import scala.util.{Failure, Success, Try}
-
-
+// TODO split ui in TUI and GUI -> branch : 06-docker_split_tui_gui
 class UIRequest extends Observable {
 
   val fio = new fileIO()
