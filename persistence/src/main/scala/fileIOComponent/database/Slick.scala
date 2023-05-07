@@ -105,16 +105,15 @@ class Slick extends DAOInterface {
     val winner = sanitize(game.head._8.toString)
 
     val resString =
-      s"""{game : {"player1" : {$player1},
-                   "player2" : {$player2},
-                   "currenstate" : $currentstate,
+      s"""{"game" : {"player1" : $player1,
+                   "player2" : $player2,
+                   "currentstate" : $currentstate,
                    "ERROR" : $ERROR,
                    "cardstack" : $cardstack,
-                   "midCard" : {$midcard},
+                   "midCard" : $midcard,
                    "winner" : $winner}}"""
-    print(resString)
     fileIO.jsonToGame(resString)
-    //new Game("place_h", "place_h", UnoState.between21State)
+
 
   def queryPlayer(id: Int): String =
     val playerQuery = player.filter(_.id === id).result
