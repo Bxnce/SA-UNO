@@ -1,3 +1,4 @@
+# TODO Fix pipeline, integrate tests - new tests
 name: Scala CI
 
 on:

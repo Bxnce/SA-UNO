@@ -1,6 +1,23 @@
 version: "3.9"
 
 services:
+
+  database:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - "3306:3306"
+    container_name: uno-database
+    environment:
+      MYSQL_HOST: uno-database
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: uno
+      MYSQL_USER: nue
+      MYSQL_PASSWORD: root
+    volumes:
+      - .:/var/lib/sql/uno
+
   persistence:
     image: uno-persistence:0.1.0-SNAPSHOT
     ports:
@@ -11,6 +28,17 @@ services:
     environment:
       PERSISTENCE_SERVICE_HOST: uno-persistence-service
       PERSISTENCE_SERVICE_PORT: 8081
+      MYSQL_HOST: uno-database
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: uno
+      MYSQL_USER: nue
+      MYSQL_PASSWORD: root
+    working_dir: /fileio
+    depends_on:
+      - database
+    volumes:
+      - ./:/fileio:xro
 
 
   core:
