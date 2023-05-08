@@ -14,7 +14,7 @@ import scala.util.{Failure, Success, Try}
 import scala.concurrent.{Await, Future}
 import slick.lifted.TableQuery
 import slick.jdbc.JdbcBackend.Database
-import slick.jdbc.MySQLProfile.api.*
+import slick.jdbc.PostgresProfile.api.*
 
 class SlickDAO extends DAOInterface {
   val fileIO = new fileIO()
@@ -23,11 +23,11 @@ class SlickDAO extends DAOInterface {
   val databasePassword: String = sys.env.getOrElse("MYSQL_PASSWORD", "root")
   val databasePort: String = sys.env.getOrElse("MYSQL_PORT", "3306")
   val databaseHost: String = sys.env.getOrElse("MYSQL_HOST", "localhost")
-  val databaseUrl = s"jdbc:mysql://$databaseHost:$databasePort/$databaseDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&autoReconnect=true"
+  val databaseUrl = s"jdbc:postgresql://$databaseHost:$databasePort/$databaseDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&autoReconnect=true"
   println(databaseUrl)
   val database = Database.forURL(
     url = databaseUrl,
-    driver = "com.mysql.cj.jdbc.Driver",
+    driver = "org.postgresql.Driver",
     user = databaseUser,
     password = databasePassword
   )
@@ -49,7 +49,7 @@ class SlickDAO extends DAOInterface {
 
   override def save(saveGame: gameInterface): Unit =
     Try {
-      println("saving game in MySQL")
+      println("saving game in postgres DB")
       val jsonGame = fileIO.gameToJson(saveGame)
       val player1Id =
         storePlayer(
@@ -85,7 +85,7 @@ class SlickDAO extends DAOInterface {
           (jsonGame \ "game" \ "cardstack").get.toString(),
           (jsonGame \ "game" \ "winner").get.toString().toInt,
         )
-      println(s"Game saved in MySQL with ID $gameId")
+      println(s"Game saved in postgres DB with ID $gameId")
     }
 
   override def load(id: Option[Int] = None): Try[gameInterface] =

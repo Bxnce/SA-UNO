@@ -1,6 +1,6 @@
 package fileIOComponent.database.sqlTables
 
-import slick.jdbc.MySQLProfile.api.*
+import slick.jdbc.PostgresProfile.api.*
 import slick.lifted.ForeignKeyQuery
 import spray.json.*
 

@@ -17,8 +17,8 @@ lazy val allDependencies = Seq(
   akkaStream,
   akkaActor,
   slf4jNop,
-  mysql,
-  slick
+  slick,
+  postgresql
 )
 
 lazy val persistence = (project in file("persistence"))
