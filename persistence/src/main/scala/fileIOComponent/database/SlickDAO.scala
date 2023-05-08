@@ -1,12 +1,10 @@
 package fileIOComponent.database
 /*Uno-Dependecies*/
 import model.gameComponent.gameInterface
+import model.gameComponent.gameBaseImpl.{Game, Player, UnoState}
 import fileIOComponent.JSONImpl.fileIO
 import fileIOComponent.database.sqlTables.{GameTable, PlayerTable}
-
-import model.gameComponent.gameBaseImpl.{Game, Player, UnoState}
 /*Libraries*/
-import com.mysql.cj.jdbc.exceptions.CommunicationsException
 import concurrent.duration.DurationInt
 import java.sql.SQLNonTransientException
 import play.api.libs.json.{JsObject, Json}
@@ -15,6 +13,9 @@ import scala.concurrent.{Await, Future}
 import slick.lifted.TableQuery
 import slick.jdbc.JdbcBackend.Database
 import slick.jdbc.PostgresProfile.api.*
+
+val WAIT_TIME = 5.seconds
+val WAIT_DB = 5000
 
 class SlickDAO extends DAOInterface {
   val fileIO = new fileIO()
@@ -38,12 +39,12 @@ class SlickDAO extends DAOInterface {
   val setup: DBIOAction[Unit, NoStream, Effect.Schema] = DBIO.seq(player.schema.createIfNotExists, gameTable.schema.createIfNotExists)
   println("create tables")
   try {
-    Await.result(database.run(setup), 5.seconds)
+    Await.result(database.run(setup), WAIT_TIME)
   } catch  {
     case e: SQLNonTransientException =>
       println("Waiting for DB connection")
-      Thread.sleep(5000)
-      Await.result(database.run(setup), 5.seconds)
+      Thread.sleep(WAIT_DB)
+      Await.result(database.run(setup), WAIT_TIME)
   }
   println("tables created")
 
@@ -93,7 +94,7 @@ class SlickDAO extends DAOInterface {
       val query = id.map(id => gameTable.filter(_.id === id))
         .getOrElse(gameTable.filter(_.id === gameTable.map(_.id).max))
 
-      val game = Await.result(database.run(query.result), 5.seconds)
+      val game = Await.result(database.run(query.result), WAIT_TIME)
       val player1 = queryPlayer(game.head._2)
       val player2 = queryPlayer(game.head._3)
       val midcard = queryPlayer(game.head._4)
@@ -116,11 +117,11 @@ class SlickDAO extends DAOInterface {
 
   override def storePlayer(name: String, cards: String, card_count: Int, placed: Boolean): Int =
     val playerS = (0, name, cards, card_count, placed)
-    Await.result(database.run(player returning player.map(_.id) += playerS), 2.seconds)
+    Await.result(database.run(player returning player.map(_.id) += playerS), WAIT_TIME)
 
   override def storeGame(player1: Int, player2: Int, midCard: Int, currentstate: String, error: Int, cardstack: String, winner: Int): Int =
     val game = (0, player1, player2, midCard, currentstate, error, cardstack, winner)
-    Await.result(database.run(gameTable returning gameTable.map(_.id) += game), 2.seconds)
+    Await.result(database.run(gameTable returning gameTable.map(_.id) += game), WAIT_TIME)
 
   override def updateGame(id: Int, player1: Option[Int], player2: Option[Int], midCard: Option[Int], currentstate: Option[String], error: Option[Int], cardstack: Option[String], winner: Option[Int]): Try[Boolean] =
     Try {
@@ -160,7 +161,7 @@ class SlickDAO extends DAOInterface {
           case None => DBIO.successful(0)
         }
       val query = p1Query andThen p2Query andThen midQuery andThen currentStateQuery andThen errorQuery andThen cardStackQuery andThen winnerQuery
-      Await.result(database.run(query), 5.seconds)
+      Await.result(database.run(query), WAIT_TIME)
       true
     }
 
@@ -194,19 +195,19 @@ class SlickDAO extends DAOInterface {
 
   override def deleteGame(id: Int): Try[Boolean] =
     Try{
-      Await.result(database.run(gameTable.filter(_.id === id).delete), 5.seconds)
+      Await.result(database.run(gameTable.filter(_.id === id).delete), WAIT_TIME)
       true
     }
 
   override def deletePlayer(id: Int): Try[Boolean] =
     Try{
-      Await.result(database.run(player.filter(_.id === id).delete), 5.seconds)
+      Await.result(database.run(player.filter(_.id === id).delete), WAIT_TIME)
       true
     }
 
   def queryPlayer(id: Int): String =
     val playerQuery = player.filter(_.id === id).result
-    val playerRes = Await.result(database.run(playerQuery), 5.seconds)
+    val playerRes = Await.result(database.run(playerQuery), WAIT_TIME)
     val name = playerRes.head._2
     val karten = playerRes.head._3
     val kartenzahl = playerRes.head._4
