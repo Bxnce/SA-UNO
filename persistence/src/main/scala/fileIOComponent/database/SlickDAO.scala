@@ -6,7 +6,6 @@ import fileIOComponent.database.sqlTables.{GameTable, PlayerTable}
 import model.gameComponent.gameInterface
 import model.gameComponent.gameBaseImpl.{Game, Player, UnoState}
 /*Libraries*/
-import com.mysql.cj.jdbc.exceptions.CommunicationsException
 import concurrent.duration.DurationInt
 import java.sql.SQLNonTransientException
 import play.api.libs.json.{JsObject, Json}
