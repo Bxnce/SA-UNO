@@ -1,7 +1,7 @@
 package fileIOComponent.database.sqlTables
 
 import spray.json._
-import slick.jdbc.MySQLProfile.api.*
+import slick.jdbc.PostgresProfile.api.*
 
 
 class PlayerTable(tag: Tag) extends Table[(Int, String, String, Int, Boolean)](tag, "PLAYER") :

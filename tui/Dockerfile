@@ -9,4 +9,4 @@
 #ADD . /core
 #
 #CMD sbt run
-FROM uno-core:1.0
+FROM uno-tui:1.0
