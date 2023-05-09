@@ -51,14 +51,35 @@ services:
       CORE_SERVICE_PORT: 8080
 
 
-  sa-uno:
-    image: uno:0.1.0-SNAPSHOT
+  uno-tui:
+    image: uno-tui:0.1.0-SNAPSHOT
     ports:
       - "8082:8082"
     stdin_open: true
     tty: true
     read_only: false
-    container_name: uno_service
+    container_name: uno_tui
+    depends_on:
+      - persistence
+      - core
+    environment:
+      UNO_SERVICE_HOST: uno
+      UNO_SERVICE_PORT: 8082
+      PERSISTENCE_SERVICE_HOST: uno-persistence-service
+      PERSISTENCE_SERVICE_PORT: 8081
+      PERSISTENCE_SERVE_PATH: /persistence/
+      CORE_SERVICE_HOST: uno-core-service
+      CORE_SERVICE_PORT: 8080
+      CORE_SERVICE_PATH: /controller/
+
+  uno-gui:
+    image: uno-gui:0.1.0-SNAPSHOT
+    ports:
+      - "8083:8083"
+    stdin_open: true
+    tty: true
+    read_only: false
+    container_name: uno_gui
     depends_on:
       - persistence
       - core

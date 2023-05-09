@@ -52,19 +52,29 @@ lazy val model = (project in file("model"))
     libraryDependencies ++= allDependencies
   )
 
-lazy val ui = (project in file("ui"))
+lazy val gui = (project in file("gui"))
   .dependsOn(core)
   .settings(
-    name := "UNO-Ui",
+    name := "UNO-Gui",
     version := "0.1.0-SNAPSHOT",
     scalaVersion := scala3Version,
     settings,
     libraryDependencies ++= allDependencies
-  )
+  ).enablePlugins(JavaAppPackaging, DockerPlugin)
+
+lazy val tui = (project in file("tui"))
+  .dependsOn(core)
+  .settings(
+    name := "UNO-Tui",
+    version := "0.1.0-SNAPSHOT",
+    scalaVersion := scala3Version,
+    settings,
+    libraryDependencies ++= allDependencies
+  ).enablePlugins(JavaAppPackaging, DockerPlugin)
 
 lazy val root = (project in file("."))
-  .dependsOn(core, model, ui, persistence)
-  .aggregate(core, model, ui, persistence)
+  .dependsOn(core, model, gui, tui, persistence)
+  .aggregate(core, model, gui, tui, persistence)
   .settings(
     name := "UNO",
     version := "0.1.0-SNAPSHOT",
