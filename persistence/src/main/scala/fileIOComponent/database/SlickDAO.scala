@@ -18,8 +18,6 @@ import slick.jdbc.PostgresProfile.api.*
 val WAIT_TIME = 5.seconds
 val WAIT_DB = 5000
 
-val WAIT_TIME = 5.seconds
-val WAIT_DB = 5000
 
 class SlickDAO extends DAOInterface {
   val fileIO = new fileIO()
