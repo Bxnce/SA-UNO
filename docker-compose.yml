@@ -15,7 +15,7 @@ services:
       - "5432:5432"
 
   persistence:
-    image: uno-persistence:0.1.0-SNAPSHOT
+    image: nu33/uno-persistence:1.0
     ports:
       - "8081:8081"
     stdin_open: true
@@ -38,7 +38,7 @@ services:
 
 
   core:
-    image: uno-core:0.1.0-SNAPSHOT
+    image: nu33/uno-core:1.0
     ports:
       - "8080:8080"
     stdin_open: true
@@ -52,7 +52,7 @@ services:
 
 
   uno-tui:
-    image: uno-tui:0.1.0-SNAPSHOT
+    image: nu33/uno-tui:1.0
     ports:
       - "8082:8082"
     stdin_open: true
@@ -73,25 +73,23 @@ services:
       CORE_SERVICE_PATH: /controller/
 
   uno-gui:
-    image: uno-gui:0.1.0-SNAPSHOT
+    image: nu33/uno-gui:1.0
     ports:
       - "8083:8083"
-    stdin_open: true
-    tty: true
-    read_only: false
     container_name: uno_gui
     depends_on:
       - persistence
       - core
+    network_mode: "host"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
-      DISPLAY: $DISPLAY
-      UNO_SERVICE_HOST: uno
-      UNO_SERVICE_PORT: 8082
-      PERSISTENCE_SERVICE_HOST: uno-persistence-service
-      PERSISTENCE_SERVICE_PORT: 8081
-      PERSISTENCE_SERVE_PATH: /persistence/
-      CORE_SERVICE_HOST: uno-core-service
-      CORE_SERVICE_PORT: 8080
-      CORE_SERVICE_PATH: /controller/
+    - DISPLAY=host.docker.internal:0.0
+    - UNO_SERVICE_HOST=uno
+    - UNO_SERVICE_PORT=8082
+    - PERSISTENCE_SERVICE_HOST=uno-persistence-service
+    - PERSISTENCE_SERVICE_PORT=8081
+    - PERSISTENCE_SERVE_PATH=/persistence/
+    - CORE_SERVICE_HOST=uno-core-service
+    - CORE_SERVICE_PORT=8080
+    - CORE_SERVICE_PATH=/controller/

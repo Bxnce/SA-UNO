@@ -69,7 +69,6 @@ class SlickDAO extends DAOInterface {
           (jsonGame \ "game" \ "player2" \ "placed").get.toString().toBoolean,
         )
 
-
       val midcardId =
         storePlayer(
           (jsonGame \ "game" \ "midCard" \ "name").get.toString(),
@@ -77,6 +76,7 @@ class SlickDAO extends DAOInterface {
           0,
           (jsonGame \ "game" \ "midCard" \ "placed").get.toString().toBoolean,
         )
+
       val gameId =
         storeGame(
           player1Id,
