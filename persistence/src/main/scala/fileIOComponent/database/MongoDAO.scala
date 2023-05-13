@@ -6,7 +6,7 @@ import model.gameComponent.gameInterface
 import org.mongodb.scala.bson.BsonDocument
 import org.mongodb.scala.model.*
 import org.mongodb.scala.model.Aggregates.*
-import org.mongodb.scala.model.Filters.*
+import org.mongodb.scala.model.Filters.{equal, *}
 import org.mongodb.scala.model.Sorts.*
 import org.mongodb.scala.result.{InsertOneResult, UpdateResult}
 import org.mongodb.scala.{Document, MongoClient, MongoCollection, MongoDatabase, Observable, Observer, SingleObservable, result}
@@ -170,7 +170,26 @@ class MongoDAO extends DAOInterface {
       true
     }
 
-  override def updatePlayer(id: Int, name: Option[String], cards: Option[String], card_count: Option[Int], placed: Option[Boolean]): Try[Boolean] = ???
+  override def updatePlayer(id: Int, name: Option[String], cards: Option[String], card_count: Option[Int], placed: Option[Boolean]): Try[Boolean] =
+    Try {
+      name match {
+        case Some(name) => updateOne(playerCollection.updateOne(equal("_id", id), Updates.set("name", name)))
+        case None =>
+      }
+      cards match {
+        case Some(cards) => updateOne(playerCollection.updateOne(equal("_id", id), Updates.set("cards", cards)))
+        case None =>
+      }
+      card_count match {
+        case Some(card_count) => updateOne(playerCollection.updateOne(equal("_id", id), Updates.set("card_count", card_count)))
+        case None =>
+      }
+      placed match {
+        case Some(placed) => updateOne(playerCollection.updateOne(equal("_id", id), Updates.set("placed", placed)))
+        case None =>
+      }
+      true
+    }
 
   override def deleteGame(id: Int): Try[Boolean] = ???
 
