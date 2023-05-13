@@ -2,6 +2,7 @@ package fileIOComponent.database
 
 /*Uno-Dependecies*/
 
+import com.google.inject.Inject
 import fileIOComponent.JSONImpl.fileIO
 import fileIOComponent.database.sqlTables.{GameTable, PlayerTable}
 import model.gameComponent.gameBaseImpl.{Game, Player, UnoState}
@@ -22,7 +23,7 @@ val WAIT_TIME = 5.seconds
 val WAIT_DB = 5000
 
 
-class SlickDAO extends DAOInterface {
+class SlickDAO @Inject() extends DAOInterface {
   val fileIO = new fileIO()
   val databaseDB: String = sys.env.getOrElse("MYSQL_DATABASE", "uno")
   val databaseUser: String = sys.env.getOrElse("MYSQL_USER", "postgres")

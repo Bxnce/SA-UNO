@@ -1,5 +1,6 @@
 package fileIOComponent.database
 
+import com.google.inject.Inject
 import fileIOComponent.JSONImpl.fileIO
 import fileIOComponent.database.{DAOInterface, WAIT_TIME}
 import model.gameComponent.gameInterface
@@ -16,7 +17,7 @@ import scala.concurrent.{Await, Future}
 import scala.util.Try
 
 
-class MongoDAO extends DAOInterface {
+class MongoDAO @Inject() extends DAOInterface {
   private val fio = new fileIO
   /* Init */
   private val database_pw = sys.env.getOrElse("MONGO_INITDB_ROOT_PASSWORD", "mongo")

@@ -3,7 +3,8 @@ package fileIOComponent
 /* Uno-Dependencies*/
 
 import fileIOComponent.JSONImpl.fileIO
-import fileIOComponent.database.{MongoDAO, SlickDAO}
+import fileIOComponent.PersistenceModule
+import fileIOComponent.database.DAOInterface
 import model.gameComponent.gameBaseImpl.{Game, UnoState}
 
 /*Libaries*/
@@ -16,19 +17,19 @@ import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.MethodDirectives.get
 import akka.protobufv3.internal.compiler.PluginProtos.CodeGeneratorResponse.File
 import akka.stream.ActorMaterializer
+import com.google.inject.{Guice, Inject, Injector}
 import play.api.libs.json.*
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.util.{Failure, Success}
 
 class RestAPIPersistence():
-
+  private val injector: Injector = Guice.createInjector(new PersistenceModule())
   implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "my-system")
   implicit val executionContext: ExecutionContextExecutor = system.executionContext
 
   val fileIO = new fileIO
-  val slick = new SlickDAO
-  val mongo = new MongoDAO
+  val database: DAOInterface = injector.getInstance(classOf[DAOInterface])
 
   val RestUIPort: Int = sys.env.getOrElse("PERSISTENCE_SERVICE_PORT", "8081").toInt
   val RestUIHost: String = sys.env.getOrElse("PERSISTENCE_SERVICE_HOST", "localhost")
@@ -49,13 +50,13 @@ class RestAPIPersistence():
       },
       get {
         path("persistence" / "dbload") {
-          parameter("id".?) { (id) =>
+          parameter("id".?) { id =>
             val id_updated =
               id match {
                 case Some(id) => Some(id.toInt)
                 case None => None
               }
-            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(slick.load(id_updated)
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(database.load(id_updated)
               .getOrElse(new Game("ERROR LOADING DATABASE", "ERROR LOADING DATABASE", UnoState.winState))).toString()))
           }
         }
@@ -74,7 +75,7 @@ class RestAPIPersistence():
         path("persistence" / "dbstore") {
           entity(as[String]) { data =>
             complete {
-              slick.save(fileIO.jsonToGame(data))
+              database.save(fileIO.jsonToGame(data))
               Future.successful(HttpEntity(ContentTypes.`text/html(UTF-8)`, "game successfully saved"))
             }
           }
@@ -95,7 +96,7 @@ class RestAPIPersistence():
                     case Some(placed) => Some(placed.toBoolean)
                     case None => None
                   }
-                val result = slick.updatePlayer(id = id.toInt, name = name, cards = cards, card_count = card_count_updated,
+                val result = database.updatePlayer(id = id.toInt, name = name, cards = cards, card_count = card_count_updated,
                   placed = placed_updated).getOrElse("ERROR")
                 Future.successful(HttpEntity(ContentTypes.`text/html(UTF-8)`, s"updated player database" +
                   s" $result"))
@@ -133,7 +134,7 @@ class RestAPIPersistence():
                     case Some(winner) => Some(winner.toInt)
                     case None => None
                   }
-                val result = slick.updateGame(id = id.toInt, player1 = player1_updated, player2 = player2_updated,
+                val result = database.updateGame(id = id.toInt, player1 = player1_updated, player2 = player2_updated,
                   midCard = midcard_updated, currentstate = currentstate, error = error_updated, cardstack = cardstack,
                   winner = winner_updated).getOrElse("ERROR")
                 Future.successful(HttpEntity(ContentTypes.`text/html(UTF-8)`, s"updated game database" +
@@ -145,9 +146,9 @@ class RestAPIPersistence():
       put {
         path("persistence" / "dbdeleteplayer") {
           parameter("id") {
-            (id) =>
+            id =>
               complete {
-                val result = slick.deletePlayer(id = id.toInt).getOrElse("ERROR")
+                val result = database.deletePlayer(id = id.toInt).getOrElse("ERROR")
                 Future.successful(HttpEntity(ContentTypes.`text/html(UTF-8)`, s"deleted player in player database" +
                   s" $result"))
               }
@@ -157,9 +158,9 @@ class RestAPIPersistence():
       put {
         path("persistence" / "dbdeletegame") {
           parameter("id") {
-            (id) =>
+            id =>
               complete {
-                val result = slick.deleteGame(id = id.toInt).getOrElse("ERROR")
+                val result = database.deleteGame(id = id.toInt).getOrElse("ERROR")
                 Future.successful(HttpEntity(ContentTypes.`text/html(UTF-8)`, s"deleted game in game database" +
                   s" $result"))
               }
@@ -172,11 +173,9 @@ class RestAPIPersistence():
     val binding = Http().newServerAt(RestUIHost, RestUIPort).bind(route)
 
     binding.onComplete {
-      case Success(binding) => {
+      case Success(_) =>
         println(s"UNO PersistenceAPI service online at http://$RestUIHost:$RestUIPort/")
-      }
-      case Failure(exception) => {
+      case Failure(exception) =>
         println(s"UNO PersistenceAPI service failed to start: ${exception.getMessage}")
-      }
     }
   }
