@@ -4,11 +4,11 @@ import fileIOComponent.JSONImpl.fileIO
 import fileIOComponent.database.{DAOInterface, WAIT_TIME}
 import model.gameComponent.gameInterface
 import org.mongodb.scala.bson.BsonDocument
+import org.mongodb.scala.model.*
 import org.mongodb.scala.model.Aggregates.*
 import org.mongodb.scala.model.Filters.*
 import org.mongodb.scala.model.Sorts.*
-import org.mongodb.scala.model.{Aggregates, FindOneAndUpdateOptions, ReturnDocument, Sorts}
-import org.mongodb.scala.result.InsertOneResult
+import org.mongodb.scala.result.{InsertOneResult, UpdateResult}
 import org.mongodb.scala.{Document, MongoClient, MongoCollection, MongoDatabase, Observable, Observer, SingleObservable, result}
 
 import scala.concurrent.duration.DurationInt
@@ -91,17 +91,18 @@ class MongoDAO extends DAOInterface {
       }
       val gameDocument = Await.result(gameCollection.find(equal("_id", updateId)).first().head(), WAIT_TIME)
 
-
       val player1 = queryPlayer(gameDocument.get("player1") match {
         case Some(player) => player.asDocument()
         case None => throw new Exception("Player1 not found")
       }
       )
+
       val player2 = queryPlayer(gameDocument.get("player2") match {
         case Some(player) => player.asDocument()
         case None => throw new Exception("Player2 not found")
       }
       )
+
       val midcard = queryPlayer(gameDocument.get("midCard") match {
         case Some(player) => player.asDocument()
         case None => throw new Exception("midCard not found")
@@ -123,7 +124,51 @@ class MongoDAO extends DAOInterface {
       fio.jsonToGame(resString)
     }
 
-  override def updateGame(id: Int, player1: Option[Int], player2: Option[Int], midCard: Option[Int], currentstate: Option[String], error: Option[Int], cardstack: Option[String], winner: Option[Int]): Try[Boolean] = ???
+  override def updateGame(id: Int, player1: Option[Int], player2: Option[Int], midCard: Option[Int], currentstate: Option[String], error: Option[Int], cardstack: Option[String], winner: Option[Int]): Try[Boolean] =
+    Try {
+      player1 match {
+        case Some(player1) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("player1",
+          Await.result(gameCollection.find(equal("_id", player1)).first().head(), WAIT_TIME).get("player1") match {
+            case Some(player) =>
+              player.asDocument()
+            case None => throw new Exception("Player1 not updated")
+          })))
+        case None =>
+      }
+      player2 match {
+        case Some(player2) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("player2",
+          Await.result(gameCollection.find(equal("_id", player2)).first().head(), WAIT_TIME).get("player2") match {
+            case Some(player) => player.asDocument()
+            case None => throw new Exception("Player2 not updated")
+          })))
+        case None =>
+      }
+      midCard match {
+        case Some(midCard) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("midCard",
+          Await.result(gameCollection.find(equal("_id", midCard)).first().head(), WAIT_TIME).get("midCard") match {
+            case Some(player) => player.asDocument()
+            case None => throw new Exception("midCard not updated")
+          })))
+        case None =>
+      }
+      currentstate match {
+        case Some(currentstate) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("currentstate", currentstate)))
+        case None =>
+      }
+      error match {
+        case Some(error) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("error", error)))
+        case None =>
+      }
+      cardstack match {
+        case Some(cardstack) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("cardstack", cardstack)))
+        case None =>
+      }
+      winner match {
+        case Some(winner) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("winner", winner)))
+        case None =>
+      }
+      true
+    }
 
   override def updatePlayer(id: Int, name: Option[String], cards: Option[String], card_count: Option[Int], placed: Option[Boolean]): Try[Boolean] = ???
 
@@ -157,12 +202,22 @@ class MongoDAO extends DAOInterface {
         println("Completed")
     })
 
+  private def updateOne(updateObs: SingleObservable[UpdateResult]): Unit =
+    updateObs.subscribe(new Observer[UpdateResult] {
+      override def onNext(result: UpdateResult): Unit =
+        println(s"Updated: $result")
+
+      override def onError(e: Throwable): Unit =
+        println(s"Failed: $e")
+
+      override def onComplete(): Unit =
+        println("Completed")
+    })
+
   def queryPlayer(playerDoc: BsonDocument): String =
     val name = playerDoc.get("name").asString().getValue
     val karten = playerDoc.get("cards").asString().getValue
     val kartenzahl = playerDoc.get("card_count").asInt32().getValue
     val placed = playerDoc.get("placed").asBoolean().getValue
     s"""{"name" : "$name", "karten" : $karten, "kartenzahl" : $kartenzahl, "placed" : $placed}"""
-
-
 }
