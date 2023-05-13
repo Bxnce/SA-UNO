@@ -6,9 +6,9 @@ import model.gameComponent.gameInterface
 import org.mongodb.scala.bson.BsonDocument
 import org.mongodb.scala.model.*
 import org.mongodb.scala.model.Aggregates.*
-import org.mongodb.scala.model.Filters.{equal, *}
+import org.mongodb.scala.model.Filters.*
 import org.mongodb.scala.model.Sorts.*
-import org.mongodb.scala.result.{InsertOneResult, UpdateResult}
+import org.mongodb.scala.result.{DeleteResult, InsertOneResult, UpdateResult}
 import org.mongodb.scala.{Document, MongoClient, MongoCollection, MongoDatabase, Observable, Observer, SingleObservable, result}
 
 import scala.concurrent.duration.DurationInt
@@ -191,9 +191,17 @@ class MongoDAO extends DAOInterface {
       true
     }
 
-  override def deleteGame(id: Int): Try[Boolean] = ???
+  override def deleteGame(id: Int): Try[Boolean] =
+    Try {
+      deleteOne(gameCollection.deleteOne(equal("_id", id)))
+      true
+    }
 
-  override def deletePlayer(id: Int): Try[Boolean] = ???
+  override def deletePlayer(id: Int): Try[Boolean] =
+    Try {
+      deleteOne(playerCollection.deleteOne(equal("_id", id)))
+      true
+    }
 
   private def getHighestId(coll: MongoCollection[Document]): Int =
     // Aggregations-Pipeline erstellen, um das höchste _id-Feld zurückzugeben
@@ -224,6 +232,18 @@ class MongoDAO extends DAOInterface {
   private def updateOne(updateObs: SingleObservable[UpdateResult]): Unit =
     updateObs.subscribe(new Observer[UpdateResult] {
       override def onNext(result: UpdateResult): Unit =
+        println(s"Updated: $result")
+
+      override def onError(e: Throwable): Unit =
+        println(s"Failed: $e")
+
+      override def onComplete(): Unit =
+        println("Completed")
+    })
+
+  private def deleteOne(updateObs: SingleObservable[DeleteResult]): Unit =
+    updateObs.subscribe(new Observer[DeleteResult] {
+      override def onNext(result: DeleteResult): Unit =
         println(s"Updated: $result")
 
       override def onError(e: Throwable): Unit =
