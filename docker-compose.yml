@@ -2,9 +2,10 @@ version: "3.9"
 
 services:
 
-  mongoDB:
+  mongo-uno:
     image: mongo
     restart: always
+    container_name: mongo-uno
     ports:
       - "27017:27017"
     environment:
@@ -41,10 +42,10 @@ services:
       MYSQL_DATABASE: uno
       MYSQL_USER: postgres
       MYSQL_PASSWORD: postgres
-      MONGODB_HOST: mongoDB
-      MONGODB_PORT: 27017
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: mongo
+      MONGO_HOST: mongo-uno
+      MONGO_PORT: 27017
+      MONGO_ROOT_USERNAME: root
+      MONGO__ROOT_PASSWORD: mongo
     working_dir: /fileio
     depends_on:
       - db

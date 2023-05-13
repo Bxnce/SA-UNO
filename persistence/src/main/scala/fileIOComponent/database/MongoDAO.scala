@@ -12,16 +12,16 @@ import org.mongodb.scala.model.Sorts.*
 import org.mongodb.scala.result.{DeleteResult, InsertOneResult, UpdateResult}
 import org.mongodb.scala.{Document, MongoClient, MongoCollection, MongoDatabase, Observable, Observer, SingleObservable, result}
 
+import scala.concurrent.duration.Duration.Inf
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, Future}
 import scala.util.Try
 
-
 class MongoDAO @Inject() extends DAOInterface {
   private val fio = new fileIO
   /* Init */
-  private val database_pw = sys.env.getOrElse("MONGO_INITDB_ROOT_PASSWORD", "mongo")
-  private val database_username = sys.env.getOrElse("MONGO_INITDB_ROOT_USERNAME", "root")
+  private val database_pw = sys.env.getOrElse("MONGO_ROOT_PASSWORD", "mongo")
+  private val database_username = sys.env.getOrElse("MONGO_ROOT_USERNAME", "root")
   private val host = sys.env.getOrElse("MONGO_HOST", "localhost")
   private val port = sys.env.getOrElse("MONGO_PORT", "27017")
 
@@ -78,6 +78,7 @@ class MongoDAO @Inject() extends DAOInterface {
       "cardstack" -> (gameJson \ "game" \ "cardstack").get.toString(),
       "winner" -> (gameJson \ "game" \ "winner").get.toString().toInt
     )
+
     insertOne(playerCollection.insertOne(player1Document))
     insertOne(playerCollection.insertOne(player2Document))
     insertOne(playerCollection.insertOne(midCardDocument))
@@ -215,7 +216,7 @@ class MongoDAO @Inject() extends DAOInterface {
     val observable: Observable[Document] = coll.aggregate(pipeline)
     val futureResult = observable.headOption()
     // Höchste ID extrahieren und zurückgeben
-    val result = Await.result(futureResult, WAIT_TIME)
+    val result = Await.result(futureResult, Inf)
     result.flatMap(_.get("_id").map(_.asInt32().getValue.toHexString)).getOrElse("0").toInt
 
   private def insertOne(insertObs: SingleObservable[InsertOneResult]): Unit =
