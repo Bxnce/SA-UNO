@@ -3,6 +3,7 @@ package fileIOComponent.database
 import fileIOComponent.JSONImpl.fileIO
 import fileIOComponent.database.{DAOInterface, WAIT_TIME}
 import model.gameComponent.gameInterface
+import org.mongodb.scala.bson.BsonDocument
 import org.mongodb.scala.model.Aggregates.*
 import org.mongodb.scala.model.Filters.*
 import org.mongodb.scala.model.Sorts.*
@@ -83,12 +84,44 @@ class MongoDAO extends DAOInterface {
     println(s"Inserted game in MongoDB with id $gameId")
 
   override def load(id: Option[Int]): Try[gameInterface] =
-    ???
+    Try {
+      val updateId = id match {
+        case Some(id) => id
+        case None => getHighestId(gameCollection)
+      }
+      val gameDocument = Await.result(gameCollection.find(equal("_id", updateId)).first().head(), WAIT_TIME)
 
 
-  override def storePlayer(name: String, cards: String, card_count: Int, placed: Boolean): Int = ???
+      val player1 = queryPlayer(gameDocument.get("player1") match {
+        case Some(player) => player.asDocument()
+        case None => throw new Exception("Player1 not found")
+      }
+      )
+      val player2 = queryPlayer(gameDocument.get("player2") match {
+        case Some(player) => player.asDocument()
+        case None => throw new Exception("Player2 not found")
+      }
+      )
+      val midcard = queryPlayer(gameDocument.get("midCard") match {
+        case Some(player) => player.asDocument()
+        case None => throw new Exception("midCard not found")
+      }
+      )
+      val currentstate = gameDocument.get("currentstate").toString
+      val ERROR = gameDocument.get("ERROR").toString
+      val cardstack = gameDocument.get("cardstack").toString
+      val winner = gameDocument.get("winner").toString
 
-  override def storeGame(player1: Int, player2: Int, midCard: Int, currentstate: String, error: Int, cardstack: String, winner: Int): Int = ???
+      val resString =
+        s"""{"game" : {"player1" : $player1,
+                   "player2" : $player2,
+                   "currentstate" : $currentstate,
+                   "ERROR" : $ERROR,
+                   "cardstack" : $cardstack,
+                   "midCard" : $midcard,
+                   "winner" : $winner}}"""
+      fio.jsonToGame(resString)
+    }
 
   override def updateGame(id: Int, player1: Option[Int], player2: Option[Int], midCard: Option[Int], currentstate: Option[String], error: Option[Int], cardstack: Option[String], winner: Option[Int]): Try[Boolean] = ???
 
@@ -123,5 +156,13 @@ class MongoDAO extends DAOInterface {
       override def onComplete(): Unit =
         println("Completed")
     })
+
+  def queryPlayer(playerDoc: BsonDocument): String =
+    val name = playerDoc.get("name").asString().getValue
+    val karten = playerDoc.get("cards").asString().getValue
+    val kartenzahl = playerDoc.get("card_count").asInt32().getValue
+    val placed = playerDoc.get("placed").asBoolean().getValue
+    s"""{"name" : "$name", "karten" : $karten, "kartenzahl" : $kartenzahl, "placed" : $placed}"""
+
 
 }

@@ -120,11 +120,11 @@ class SlickDAO extends DAOInterface {
     }
 
 
-  override def storePlayer(name: String, cards: String, card_count: Int, placed: Boolean): Int =
+  private def storePlayer(name: String, cards: String, card_count: Int, placed: Boolean): Int =
     val playerS = (0, name, cards, card_count, placed)
     Await.result(database.run(player returning player.map(_.id) += playerS), WAIT_TIME)
 
-  override def storeGame(player1: Int, player2: Int, midCard: Int, currentstate: String, error: Int, cardstack: String, winner: Int): Int =
+  private def storeGame(player1: Int, player2: Int, midCard: Int, currentstate: String, error: Int, cardstack: String, winner: Int): Int =
     val game = (0, player1, player2, midCard, currentstate, error, cardstack, winner)
     Await.result(database.run(gameTable returning gameTable.map(_.id) += game), WAIT_TIME)
 

@@ -29,6 +29,7 @@ class RestAPIPersistence():
   val fileIO = new fileIO
   val slick = new SlickDAO
   val mongo = new MongoDAO
+
   val RestUIPort: Int = sys.env.getOrElse("PERSISTENCE_SERVICE_PORT", "8081").toInt
   val RestUIHost: String = sys.env.getOrElse("PERSISTENCE_SERVICE_HOST", "localhost")
 
