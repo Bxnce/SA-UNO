@@ -1,5 +1,4 @@
-import sbt._
-import Keys._
+import sbt.*
 
 
 object dependencies {
@@ -19,4 +18,5 @@ object dependencies {
   val slf4jNop = "org.slf4j" % "slf4j-nop" % "2.0.5"
   val slick = ("com.typesafe.slick" %% "slick" % "3.5.0-M3").cross(CrossVersion.for3Use2_13)
   val postgresql = "org.postgresql" % "postgresql" % "42.5.4"
+  val mongodb = ("org.mongodb.scala" %% "mongo-scala-driver" % "4.6.0").cross(CrossVersion.for3Use2_13)
 }

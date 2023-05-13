@@ -27,7 +27,8 @@ lazy val allDependencies = Seq(
   akkaActor,
   slf4jNop,
   slick,
-  postgresql
+  postgresql,
+  mongodb
 )
 
 lazy val persistence = (project in file("persistence"))

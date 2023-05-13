@@ -1,6 +1,17 @@
 version: "3.9"
 
 services:
+
+  mongoDB:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+      MONGI_INITDB_DATABASE: uno
+
   db:
     image: postgres
     restart: always
@@ -15,7 +26,7 @@ services:
       - "5432:5432"
 
   persistence:
-    image: nu33/uno-persistence:1.0
+    image: uno-persistence:1.0
     ports:
       - "8081:8081"
     stdin_open: true
@@ -30,6 +41,10 @@ services:
       MYSQL_DATABASE: uno
       MYSQL_USER: postgres
       MYSQL_PASSWORD: postgres
+      MONGODB_HOST: mongoDB
+      MONGODB_PORT: 27017
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongo
     working_dir: /fileio
     depends_on:
       - db
@@ -38,7 +53,7 @@ services:
 
 
   core:
-    image: nu33/uno-core:1.0
+    image: uno-core:1.0
     ports:
       - "8080:8080"
     stdin_open: true
@@ -52,7 +67,7 @@ services:
 
 
   uno-tui:
-    image: nu33/uno-tui:1.0
+    image: uno-tui:1.0
     ports:
       - "8082:8082"
     stdin_open: true
@@ -73,7 +88,7 @@ services:
       CORE_SERVICE_PATH: /controller/
 
   uno-gui:
-    image: nu33/uno-gui:1.0
+    image: uno-gui:1.0
     ports:
       - "8083:8083"
     container_name: uno_gui
@@ -84,12 +99,12 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
     environment:
-    - DISPLAY=host.docker.internal:0.0
-    - UNO_SERVICE_HOST=uno
-    - UNO_SERVICE_PORT=8082
-    - PERSISTENCE_SERVICE_HOST=uno-persistence-service
-    - PERSISTENCE_SERVICE_PORT=8081
-    - PERSISTENCE_SERVE_PATH=/persistence/
-    - CORE_SERVICE_HOST=uno-core-service
-    - CORE_SERVICE_PORT=8080
-    - CORE_SERVICE_PATH=/controller/
+      - DISPLAY=host.docker.internal:0.0
+      - UNO_SERVICE_HOST=uno
+      - UNO_SERVICE_PORT=8082
+      - PERSISTENCE_SERVICE_HOST=uno-persistence-service
+      - PERSISTENCE_SERVICE_PORT=8081
+      - PERSISTENCE_SERVE_PATH=/persistence/
+      - CORE_SERVICE_HOST=uno-core-service
+      - CORE_SERVICE_PORT=8080
+      - CORE_SERVICE_PATH=/controller/

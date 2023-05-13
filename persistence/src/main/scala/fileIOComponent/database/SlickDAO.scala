@@ -1,19 +1,22 @@
 package fileIOComponent.database
+
 /*Uno-Dependecies*/
-import model.gameComponent.gameInterface
+
 import fileIOComponent.JSONImpl.fileIO
 import fileIOComponent.database.sqlTables.{GameTable, PlayerTable}
-import model.gameComponent.gameInterface
 import model.gameComponent.gameBaseImpl.{Game, Player, UnoState}
+import model.gameComponent.gameInterface
+
 /*Libraries*/
-import concurrent.duration.DurationInt
-import java.sql.SQLNonTransientException
 import play.api.libs.json.{JsObject, Json}
-import scala.util.{Failure, Success, Try}
-import scala.concurrent.{Await, Future}
-import slick.lifted.TableQuery
 import slick.jdbc.JdbcBackend.Database
 import slick.jdbc.PostgresProfile.api.*
+import slick.lifted.TableQuery
+
+import java.sql.SQLNonTransientException
+import scala.concurrent.duration.DurationInt
+import scala.concurrent.{Await, Future}
+import scala.util.{Failure, Success, Try}
 
 val WAIT_TIME = 5.seconds
 val WAIT_DB = 5000
@@ -22,9 +25,9 @@ val WAIT_DB = 5000
 class SlickDAO extends DAOInterface {
   val fileIO = new fileIO()
   val databaseDB: String = sys.env.getOrElse("MYSQL_DATABASE", "uno")
-  val databaseUser: String = sys.env.getOrElse("MYSQL_USER", "nue")
-  val databasePassword: String = sys.env.getOrElse("MYSQL_PASSWORD", "root")
-  val databasePort: String = sys.env.getOrElse("MYSQL_PORT", "3306")
+  val databaseUser: String = sys.env.getOrElse("MYSQL_USER", "postgres")
+  val databasePassword: String = sys.env.getOrElse("MYSQL_PASSWORD", "postgres")
+  val databasePort: String = sys.env.getOrElse("MYSQL_PORT", "5432")
   val databaseHost: String = sys.env.getOrElse("MYSQL_HOST", "localhost")
   val databaseUrl = s"jdbc:postgresql://$databaseHost:$databasePort/$databaseDB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&autoReconnect=true"
   println(databaseUrl)
@@ -42,7 +45,7 @@ class SlickDAO extends DAOInterface {
   println("create tables")
   try {
     Await.result(database.run(setup), WAIT_TIME)
-  } catch  {
+  } catch {
     case e: SQLNonTransientException =>
       println("Waiting for DB connection")
       Thread.sleep(WAIT_DB)
@@ -196,13 +199,13 @@ class SlickDAO extends DAOInterface {
     }
 
   override def deleteGame(id: Int): Try[Boolean] =
-    Try{
+    Try {
       Await.result(database.run(gameTable.filter(_.id === id).delete), WAIT_TIME)
       true
     }
 
   override def deletePlayer(id: Int): Try[Boolean] =
-    Try{
+    Try {
       Await.result(database.run(player.filter(_.id === id).delete), WAIT_TIME)
       true
     }
