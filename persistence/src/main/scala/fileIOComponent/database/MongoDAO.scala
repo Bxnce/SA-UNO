@@ -28,10 +28,11 @@ class MongoDAO @Inject() extends DAOInterface {
   val uri: String = s"mongodb://$database_username:$database_pw@$host:$port/?authSource=admin"
   private val client: MongoClient = MongoClient(uri)
   println(uri)
-  val db: MongoDatabase = client.getDatabase("uno")
 
+  val db: MongoDatabase = client.getDatabase("uno")
   private val gameCollection: MongoCollection[Document] = db.getCollection("game")
   private val playerCollection: MongoCollection[Document] = db.getCollection("player")
+
   println("Connected to MongoDB")
 
   override def save(game: gameInterface): Unit =
@@ -130,7 +131,7 @@ class MongoDAO @Inject() extends DAOInterface {
     Try {
       player1 match {
         case Some(player1) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("player1",
-          Await.result(gameCollection.find(equal("_id", player1)).first().head(), WAIT_TIME).get("player1") match {
+          Await.result(playerCollection.find(equal("_id", player1)).first().head(), WAIT_TIME).get("player1") match {
             case Some(player) =>
               player.asDocument()
             case None => throw new Exception("Player1 not updated")
@@ -139,7 +140,7 @@ class MongoDAO @Inject() extends DAOInterface {
       }
       player2 match {
         case Some(player2) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("player2",
-          Await.result(gameCollection.find(equal("_id", player2)).first().head(), WAIT_TIME).get("player2") match {
+          Await.result(playerCollection.find(equal("_id", player2)).first().head(), WAIT_TIME).get("player2") match {
             case Some(player) => player.asDocument()
             case None => throw new Exception("Player2 not updated")
           })))
@@ -147,7 +148,7 @@ class MongoDAO @Inject() extends DAOInterface {
       }
       midCard match {
         case Some(midCard) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("midCard",
-          Await.result(gameCollection.find(equal("_id", midCard)).first().head(), WAIT_TIME).get("midCard") match {
+          Await.result(playerCollection.find(equal("_id", midCard)).first().head(), WAIT_TIME).get("midCard") match {
             case Some(player) => player.asDocument()
             case None => throw new Exception("midCard not updated")
           })))
