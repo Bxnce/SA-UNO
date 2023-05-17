@@ -47,8 +47,10 @@ class SimpleMongoDAO @Inject() extends DAOInterface {
 
   override def load(id: Option[Int]): Try[gameInterface] =
     Try {
-      fio.jsonToGame(Await.result(gameCollection.find(equal("_id",
-        id.getOrElse(getHighestId(gameCollection)))).first().head(), WAIT_TIME).toString())
+      Await.result(gameCollection.find(equal("_id", id.getOrElse(getHighestId(gameCollection)))).first().head(), WAIT_TIME).get("game") match {
+        case Some(value) => fio.jsonToGame(value.asString().getValue)
+        case None => throw new Exception("Game not found")
+      }
     }
 
   override def updateGame(id: Int, player1: Option[Int], player2: Option[Int], midCard: Option[Int], currentstate: Option[String], error: Option[Int], cardstack: Option[String], winner: Option[Int]): Try[Boolean] =
