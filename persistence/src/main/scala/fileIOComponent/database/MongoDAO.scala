@@ -196,13 +196,13 @@ class MongoDAO @Inject() extends DAOInterface {
 
   override def deleteGame(id: Int): Try[Boolean] =
     Try {
-      handleResult(gameCollection.deleteOne(equal("_id", id)));
+      handleResult(gameCollection.deleteOne(equal("_id", id)))
       true
     }
 
   override def deletePlayer(id: Int): Try[Boolean] =
     Try {
-      handleResult(playerCollection.deleteOne(equal("_id", id)));
+      handleResult(playerCollection.deleteOne(equal("_id", id)))
       true
     }
 
