@@ -1,7 +1,8 @@
 package fileIOComponent
 
 import com.google.inject.AbstractModule
-import fileIOComponent.database.{DAOInterface, MongoDAO, SimpleMongoDAO, SlickDAO}
+import fileIOComponent.database.mongodb.{MongoDAO, SimpleMongoDAO}
+import fileIOComponent.database.{DAOInterface, SlickDAO}
 import net.codingwell.scalaguice.ScalaModule
 
 

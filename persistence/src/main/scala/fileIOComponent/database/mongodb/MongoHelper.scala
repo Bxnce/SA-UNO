@@ -1,5 +1,6 @@
-package fileIOComponent.database
+package fileIOComponent.database.mongodb
 
+import fileIOComponent.database.WAIT_TIME
 import org.mongodb.scala.model.{Aggregates, Sorts}
 import org.mongodb.scala.{Document, MongoCollection, SingleObservable}
 

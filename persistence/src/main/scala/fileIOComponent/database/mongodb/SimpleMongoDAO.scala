@@ -1,8 +1,9 @@
-package fileIOComponent.database
+package fileIOComponent.database.mongodb
 
 import com.google.inject.Inject
 import fileIOComponent.JSONImpl.fileIO
-import fileIOComponent.database.{DAOInterface, WAIT_TIME, getHighestId, handleResult}
+import fileIOComponent.database.mongodb.{getHighestId, handleResult}
+import fileIOComponent.database.{DAOInterface, WAIT_TIME}
 import model.gameComponent.gameInterface
 import org.mongodb.scala.bson.BsonDocument
 import org.mongodb.scala.model.*
