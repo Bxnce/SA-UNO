@@ -1,7 +1,8 @@
-package fileIOComponent.database
+package fileIOComponent.database.mongodb
 
 import com.google.inject.Inject
 import fileIOComponent.JSONImpl.fileIO
+import fileIOComponent.database.mongodb.{getHighestId, handleResult}
 import fileIOComponent.database.{DAOInterface, WAIT_TIME}
 import model.gameComponent.gameInterface
 import org.mongodb.scala.bson.BsonDocument
@@ -28,10 +29,11 @@ class MongoDAO @Inject() extends DAOInterface {
   val uri: String = s"mongodb://$database_username:$database_pw@$host:$port/?authSource=admin"
   private val client: MongoClient = MongoClient(uri)
   println(uri)
-  val db: MongoDatabase = client.getDatabase("uno")
 
+  val db: MongoDatabase = client.getDatabase("uno")
   private val gameCollection: MongoCollection[Document] = db.getCollection("game")
   private val playerCollection: MongoCollection[Document] = db.getCollection("player")
+
   println("Connected to MongoDB")
 
   override def save(game: gameInterface): Unit =
@@ -79,10 +81,10 @@ class MongoDAO @Inject() extends DAOInterface {
       "winner" -> (gameJson \ "game" \ "winner").get.toString().toInt
     )
 
-    insertOne(playerCollection.insertOne(player1Document))
-    insertOne(playerCollection.insertOne(player2Document))
-    insertOne(playerCollection.insertOne(midCardDocument))
-    insertOne(gameCollection.insertOne(gameDocument))
+    handleResult(playerCollection.insertOne(player1Document))
+    handleResult(playerCollection.insertOne(player2Document))
+    handleResult(playerCollection.insertOne(midCardDocument))
+    handleResult(gameCollection.insertOne(gameDocument))
     println(s"Inserted game in MongoDB with id $gameId")
 
   override def load(id: Option[Int]): Try[gameInterface] =
@@ -129,8 +131,8 @@ class MongoDAO @Inject() extends DAOInterface {
   override def updateGame(id: Int, player1: Option[Int], player2: Option[Int], midCard: Option[Int], currentstate: Option[String], error: Option[Int], cardstack: Option[String], winner: Option[Int]): Try[Boolean] =
     Try {
       player1 match {
-        case Some(player1) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("player1",
-          Await.result(gameCollection.find(equal("_id", player1)).first().head(), WAIT_TIME).get("player1") match {
+        case Some(player1) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("player1",
+          Await.result(playerCollection.find(equal("_id", player1)).first().head(), WAIT_TIME).get("player1") match {
             case Some(player) =>
               player.asDocument()
             case None => throw new Exception("Player1 not updated")
@@ -138,35 +140,35 @@ class MongoDAO @Inject() extends DAOInterface {
         case None =>
       }
       player2 match {
-        case Some(player2) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("player2",
-          Await.result(gameCollection.find(equal("_id", player2)).first().head(), WAIT_TIME).get("player2") match {
+        case Some(player2) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("player2",
+          Await.result(playerCollection.find(equal("_id", player2)).first().head(), WAIT_TIME).get("player2") match {
             case Some(player) => player.asDocument()
             case None => throw new Exception("Player2 not updated")
           })))
         case None =>
       }
       midCard match {
-        case Some(midCard) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("midCard",
-          Await.result(gameCollection.find(equal("_id", midCard)).first().head(), WAIT_TIME).get("midCard") match {
+        case Some(midCard) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("midCard",
+          Await.result(playerCollection.find(equal("_id", midCard)).first().head(), WAIT_TIME).get("midCard") match {
             case Some(player) => player.asDocument()
             case None => throw new Exception("midCard not updated")
           })))
         case None =>
       }
       currentstate match {
-        case Some(currentstate) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("currentstate", currentstate)))
+        case Some(currentstate) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("currentstate", currentstate)))
         case None =>
       }
       error match {
-        case Some(error) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("error", error)))
+        case Some(error) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("error", error)))
         case None =>
       }
       cardstack match {
-        case Some(cardstack) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("cardstack", cardstack)))
+        case Some(cardstack) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("cardstack", cardstack)))
         case None =>
       }
       winner match {
-        case Some(winner) => updateOne(gameCollection.updateOne(equal("_id", id), Updates.set("winner", winner)))
+        case Some(winner) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("winner", winner)))
         case None =>
       }
       true
@@ -175,19 +177,19 @@ class MongoDAO @Inject() extends DAOInterface {
   override def updatePlayer(id: Int, name: Option[String], cards: Option[String], card_count: Option[Int], placed: Option[Boolean]): Try[Boolean] =
     Try {
       name match {
-        case Some(name) => updateOne(playerCollection.updateOne(equal("_id", id), Updates.set("name", name)))
+        case Some(name) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("name", name)))
         case None =>
       }
       cards match {
-        case Some(cards) => updateOne(playerCollection.updateOne(equal("_id", id), Updates.set("cards", cards)))
+        case Some(cards) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("cards", cards)))
         case None =>
       }
       card_count match {
-        case Some(card_count) => updateOne(playerCollection.updateOne(equal("_id", id), Updates.set("card_count", card_count)))
+        case Some(card_count) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("card_count", card_count)))
         case None =>
       }
       placed match {
-        case Some(placed) => updateOne(playerCollection.updateOne(equal("_id", id), Updates.set("placed", placed)))
+        case Some(placed) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("placed", placed)))
         case None =>
       }
       true
@@ -195,65 +197,15 @@ class MongoDAO @Inject() extends DAOInterface {
 
   override def deleteGame(id: Int): Try[Boolean] =
     Try {
-      deleteOne(gameCollection.deleteOne(equal("_id", id)))
+      handleResult(gameCollection.deleteOne(equal("_id", id)))
       true
     }
 
   override def deletePlayer(id: Int): Try[Boolean] =
     Try {
-      deleteOne(playerCollection.deleteOne(equal("_id", id)))
+      handleResult(playerCollection.deleteOne(equal("_id", id)))
       true
     }
-
-  private def getHighestId(coll: MongoCollection[Document]): Int =
-    // Aggregations-Pipeline erstellen, um das höchste _id-Feld zurückzugeben
-    val pipeline = Seq(
-      Aggregates.sort(Sorts.descending("_id")),
-      Aggregates.limit(1),
-      Aggregates.project(Document("_id" -> 1))
-    )
-    // Aggregations-Pipeline ausführen
-    val observable: Observable[Document] = coll.aggregate(pipeline)
-    val futureResult = observable.headOption()
-    // Höchste ID extrahieren und zurückgeben
-    val result = Await.result(futureResult, Inf)
-    result.flatMap(_.get("_id").map(_.asInt32().getValue.toHexString)).getOrElse("0").toInt
-
-  private def insertOne(insertObs: SingleObservable[InsertOneResult]): Unit =
-    insertObs.subscribe(new Observer[InsertOneResult] {
-      override def onNext(result: InsertOneResult): Unit =
-        println(s"Inserted: $result")
-
-      override def onError(e: Throwable): Unit =
-        println(s"Failed: $e")
-
-      override def onComplete(): Unit =
-        println("Completed")
-    })
-
-  private def updateOne(updateObs: SingleObservable[UpdateResult]): Unit =
-    updateObs.subscribe(new Observer[UpdateResult] {
-      override def onNext(result: UpdateResult): Unit =
-        println(s"Updated: $result")
-
-      override def onError(e: Throwable): Unit =
-        println(s"Failed: $e")
-
-      override def onComplete(): Unit =
-        println("Completed")
-    })
-
-  private def deleteOne(updateObs: SingleObservable[DeleteResult]): Unit =
-    updateObs.subscribe(new Observer[DeleteResult] {
-      override def onNext(result: DeleteResult): Unit =
-        println(s"Updated: $result")
-
-      override def onError(e: Throwable): Unit =
-        println(s"Failed: $e")
-
-      override def onComplete(): Unit =
-        println("Completed")
-    })
 
   def queryPlayer(playerDoc: BsonDocument): String =
     val name = playerDoc.get("name").asString().getValue
@@ -261,4 +213,6 @@ class MongoDAO @Inject() extends DAOInterface {
     val kartenzahl = playerDoc.get("card_count").asInt32().getValue
     val placed = playerDoc.get("placed").asBoolean().getValue
     s"""{"name" : "$name", "karten" : $karten, "kartenzahl" : $kartenzahl, "placed" : $placed}"""
+
 }
+
