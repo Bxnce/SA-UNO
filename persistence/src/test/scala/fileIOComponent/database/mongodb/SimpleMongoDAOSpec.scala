@@ -22,7 +22,7 @@ import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, Future}
 import scala.util.Try
 
-class MongoDAOSpec extends AnyWordSpec with Matchers with BeforeAndAfter {
+class SimpleMongoDAOSpec extends AnyWordSpec with Matchers with BeforeAndAfter {
   private val database_pw = sys.env.getOrElse("MONGO_ROOT_PASSWORD", "mongo")
   private val database_username = sys.env.getOrElse("MONGO_ROOT_USERNAME", "root")
   private val host = sys.env.getOrElse("MONGO_HOST", "localhost")
