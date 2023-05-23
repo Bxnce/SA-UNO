@@ -14,7 +14,7 @@ protected def getHighestId(coll: MongoCollection[Document]): Int =
     Aggregates.limit(1),
     Aggregates.project(Document("_id" -> 1))
   )).headOption(), Inf)
-  result.flatMap(_.get("_id").map(_.asInt32().getValue.toHexString)).getOrElse("0").toInt
+  result.flatMap(_.get("_id").map(_.asInt32().getValue.toString)).getOrElse("0").toInt
 
 protected def handleResult[T](obs: SingleObservable[T]): Unit =
   Await.result(obs.asInstanceOf[SingleObservable[Unit]].head(), WAIT_TIME)
