@@ -50,10 +50,6 @@ class ControllerAPI(using controller: controllerInterface):
             controller.undo()
             complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
           },
-          path("controller" / "redo") {
-            controller.redo()
-            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
-          },
           path("controller" / "save") {
             controller.save()
             complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
