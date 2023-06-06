@@ -39,12 +39,10 @@ class SimpleMongoDAO @Inject() extends DAOInterface {
   println("Connected to MongoDB")
 
   override def save(game: gameInterface): Unit =
-    println("Saving game to MongoDB")
     handleResult(gameCollection.insertOne(Document(
       "_id" -> (getHighestId(gameCollection) + 1),
       "game" -> fio.gameToJson(game).toString()
     )))
-    println(s"Inserted game in MongoDB with id ${getHighestId(gameCollection)}")
 
   override def load(id: Option[Int] = None): Try[gameInterface] =
     Try {
@@ -91,5 +89,4 @@ class SimpleMongoDAO @Inject() extends DAOInterface {
 
   private def handleResult[T](obs: SingleObservable[T]): Unit =
     Await.result(obs.asInstanceOf[SingleObservable[Unit]].head(), WAIT_TIME)
-    println("db operation successful")
 }
