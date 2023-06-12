@@ -3,7 +3,7 @@ package fileIOComponent.database.mongodb
 import com.google.inject.Inject
 import fileIOComponent.JSONImpl.fileIO
 import fileIOComponent.database.mongodb.{getHighestId, handleResult}
-import fileIOComponent.database.{DAOInterface, WAIT_TIME}
+import fileIOComponent.database.{DAOInterface, FutureHandler, WAIT_TIME}
 import model.gameComponent.gameInterface
 import org.mongodb.scala.bson.BsonDocument
 import org.mongodb.scala.model.*
@@ -17,6 +17,7 @@ import play.api.libs.json.{JsObject, Json}
 import scala.concurrent.duration.Duration.Inf
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.Try
 
 /*
@@ -24,6 +25,7 @@ Simple implementation of a MongoDB DAO - makes more sense, as everything in the 
 */
 class SimpleMongoDAO @Inject() extends DAOInterface {
   private val fio = new fileIO
+  private val future_handler = new FutureHandler()
   /* Init */
   private val database_pw = sys.env.getOrElse("MONGO_ROOT_PASSWORD", "mongo")
   private val database_username = sys.env.getOrElse("MONGO_ROOT_USERNAME", "root")
@@ -38,58 +40,68 @@ class SimpleMongoDAO @Inject() extends DAOInterface {
   var gameCollection: MongoCollection[Document] = db.getCollection("game")
   println("Connected to MongoDB")
 
-  override def save(game: gameInterface): Unit =
-    println("Saving game to MongoDB")
-    handleResult(gameCollection.insertOne(Document(
-      "_id" -> (getHighestId(gameCollection) + 1),
-      "game" -> fio.gameToJson(game).toString()
-    )))
-    println(s"Inserted game in MongoDB with id ${getHighestId(gameCollection)}")
+  override def save(game: gameInterface): Future[Unit] =
+    val future = Future {
+      handleResult(gameCollection.insertOne(Document(
+        "_id" -> (getHighestId(gameCollection) + 1),
+        "game" -> fio.gameToJson(game).toString()
+      )))
+    }
+    future_handler.resolveNonBlockingOnFuture(future)
 
-  override def load(id: Option[Int] = None): Try[gameInterface] =
-    Try {
-      Await.result(gameCollection.find(equal("_id", id.getOrElse(getHighestId(gameCollection)))).first().head(), WAIT_TIME).get("game") match {
-        case Some(value) => fio.jsonToGame(value.asString().getValue)
-        case None => throw new Exception("Game not found")
+
+  override def load(id: Option[Int] = None): Future[Try[gameInterface]] =
+    val future = Future {
+      Try {
+        Await.result(gameCollection.find(equal("_id", id.getOrElse(getHighestId(gameCollection)))).first().head(), WAIT_TIME).get("game") match {
+          case Some(value) => fio.jsonToGame(value.asString().getValue)
+          case None => throw new Exception("Game not found")
+        }
       }
     }
+    future_handler.resolveNonBlockingOnFuture(future)
 
-  override def updateGame(id: Int, player1: Option[Int] = None, player2: Option[Int] = None, midCard: Option[Int] = None, currentstate: Option[String] = None, error: Option[Int] = None, cardstack: Option[String] = None, winner: Option[Int] = None): Try[Boolean] =
-    Try {
-      var gameJson = Json.parse(Await.result(gameCollection.find(equal("_id", id)).first().head(), WAIT_TIME)("game").asString().getValue)
-      currentstate match {
-        case Some(value) => gameJson = gameJson.as[JsObject] ++ Json.obj("currentstate" -> value)
-        case None =>
+  override def updateGame(id: Int, player1: Option[Int] = None, player2: Option[Int] = None, midCard: Option[Int] = None, currentstate: Option[String] = None, error: Option[Int] = None, cardstack: Option[String] = None, winner: Option[Int] = None): Future[Try[Boolean]] =
+    val future = Future {
+      Try {
+        var gameJson = Json.parse(Await.result(gameCollection.find(equal("_id", id)).first().head(), WAIT_TIME)("game").asString().getValue)
+        currentstate match {
+          case Some(value) => gameJson = gameJson.as[JsObject] ++ Json.obj("currentstate" -> value)
+          case None =>
+        }
+        error match {
+          case Some(value) => gameJson = gameJson.as[JsObject] ++ Json.obj("ERROR" -> value)
+          case None =>
+        }
+        cardstack match {
+          case Some(value) => gameJson = gameJson.as[JsObject] ++ Json.obj("cardstack" -> value)
+          case None =>
+        }
+        winner match {
+          case Some(value) => gameJson = gameJson.as[JsObject] ++ Json.obj("winner" -> value)
+          case None =>
+        }
+        handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("game", gameJson)))
+        true
       }
-      error match {
-        case Some(value) => gameJson = gameJson.as[JsObject] ++ Json.obj("ERROR" -> value)
-        case None =>
-      }
-      cardstack match {
-        case Some(value) => gameJson = gameJson.as[JsObject] ++ Json.obj("cardstack" -> value)
-        case None =>
-      }
-      winner match {
-        case Some(value) => gameJson = gameJson.as[JsObject] ++ Json.obj("winner" -> value)
-        case None =>
-      }
-      handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("game", gameJson)))
-      true
     }
+    future_handler.resolveNonBlockingOnFuture(future)
 
-  override def deleteGame(id: Int): Try[Boolean] =
-    Try {
-      handleResult(gameCollection.deleteOne(equal("_id", id)))
-      true
+  override def deleteGame(id: Int): Future[Try[Boolean]] =
+    val future = Future {
+      Try {
+        handleResult(gameCollection.deleteOne(equal("_id", id)))
+        true
+      }
     }
+    future_handler.resolveNonBlockingOnFuture(future)
 
-  override def updatePlayer(id: Int, name: Option[String], cards: Option[String], card_count: Option[Int], placed: Option[Boolean]): Try[Boolean] =
-    throw new Exception("Not implemented")
+  override def updatePlayer(id: Int, name: Option[String], cards: Option[String], card_count: Option[Int], placed: Option[Boolean]): Future[Try[Boolean]] =
+    ???
 
-  override def deletePlayer(id: Int): Try[Boolean] =
-    throw new Exception("Not implemented")
+  override def deletePlayer(id: Int): Future[Try[Boolean]] =
+    ???
 
   private def handleResult[T](obs: SingleObservable[T]): Unit =
     Await.result(obs.asInstanceOf[SingleObservable[Unit]].head(), WAIT_TIME)
-    println("db operation successful")
 }
