@@ -18,7 +18,6 @@ import scala.concurrent.duration.Duration.Inf
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{Await, Future}
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.util.Try
 
 /*
 Simple implementation of a MongoDB DAO - makes more sense, as everything in the database is a JSON anyway
@@ -50,20 +49,17 @@ class SimpleMongoDAO @Inject() extends DAOInterface {
     future_handler.resolveNonBlockingOnFuture(future)
 
 
-  override def load(id: Option[Int] = None): Future[Try[gameInterface]] =
+  override def load(id: Option[Int] = None): Future[gameInterface] =
     val future = Future {
-      Try {
         Await.result(gameCollection.find(equal("_id", id.getOrElse(getHighestId(gameCollection)))).first().head(), WAIT_TIME).get("game") match {
           case Some(value) => fio.jsonToGame(value.asString().getValue)
           case None => throw new Exception("Game not found")
         }
-      }
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
-  override def updateGame(id: Int, player1: Option[Int] = None, player2: Option[Int] = None, midCard: Option[Int] = None, currentstate: Option[String] = None, error: Option[Int] = None, cardstack: Option[String] = None, winner: Option[Int] = None): Future[Try[Boolean]] =
+  override def updateGame(id: Int, player1: Option[Int] = None, player2: Option[Int] = None, midCard: Option[Int] = None, currentstate: Option[String] = None, error: Option[Int] = None, cardstack: Option[String] = None, winner: Option[Int] = None): Future[Boolean] =
     val future = Future {
-      Try {
         var gameJson = Json.parse(Await.result(gameCollection.find(equal("_id", id)).first().head(), WAIT_TIME)("game").asString().getValue)
         currentstate match {
           case Some(value) => gameJson = gameJson.as[JsObject] ++ Json.obj("currentstate" -> value)
@@ -83,23 +79,20 @@ class SimpleMongoDAO @Inject() extends DAOInterface {
         }
         handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("game", gameJson)))
         true
-      }
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
-  override def deleteGame(id: Int): Future[Try[Boolean]] =
+  override def deleteGame(id: Int): Future[Boolean] =
     val future = Future {
-      Try {
         handleResult(gameCollection.deleteOne(equal("_id", id)))
         true
-      }
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
-  override def updatePlayer(id: Int, name: Option[String], cards: Option[String], card_count: Option[Int], placed: Option[Boolean]): Future[Try[Boolean]] =
+  override def updatePlayer(id: Int, name: Option[String], cards: Option[String], card_count: Option[Int], placed: Option[Boolean]): Future[Boolean] =
     ???
 
-  override def deletePlayer(id: Int): Future[Try[Boolean]] =
+  override def deletePlayer(id: Int): Future[Boolean] =
     ???
 
   private def handleResult[T](obs: SingleObservable[T]): Unit =

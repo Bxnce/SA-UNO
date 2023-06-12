@@ -93,138 +93,128 @@ class MongoDAO @Inject() extends DAOInterface {
     future_handler.resolveNonBlockingOnFuture(future)
   }
 
-  override def load(id: Option[Int]): Future[Try[gameInterface]] =
+  override def load(id: Option[Int]): Future[gameInterface] =
     val future = Future {
-      Try {
-        val updateId = id match {
-          case Some(id) => id
-          case None => getHighestId(gameCollection)
-        }
-        val gameDocument = Await.result(gameCollection.find(equal("_id", updateId)).first().head(), WAIT_TIME)
+      val updateId = id match {
+        case Some(id) => id
+        case None => getHighestId(gameCollection)
+      }
+      val gameDocument = Await.result(gameCollection.find(equal("_id", updateId)).first().head(), WAIT_TIME)
 
-        val player1 = queryPlayer(gameDocument.get("player1") match {
-          case Some(player) => player.asDocument()
-          case None => throw new Exception("Player1 not found")
-        }
-        )
+      val player1 = queryPlayer(gameDocument.get("player1") match {
+        case Some(player) => player.asDocument()
+        case None => throw new Exception("Player1 not found")
+      }
+      )
 
-        val player2 = queryPlayer(gameDocument.get("player2") match {
-          case Some(player) => player.asDocument()
-          case None => throw new Exception("Player2 not found")
-        }
-        )
+      val player2 = queryPlayer(gameDocument.get("player2") match {
+        case Some(player) => player.asDocument()
+        case None => throw new Exception("Player2 not found")
+      }
+      )
 
-        val midcard = queryPlayer(gameDocument.get("midCard") match {
-          case Some(player) => player.asDocument()
-          case None => throw new Exception("midCard not found")
-        }
-        )
-        val currentstate = gameDocument.getString("currentstate")
-        val ERROR = gameDocument.getInteger("ERROR")
-        val cardstack = gameDocument.getString("cardstack").toString
-        val winner = gameDocument.getInteger("winner")
+      val midcard = queryPlayer(gameDocument.get("midCard") match {
+        case Some(player) => player.asDocument()
+        case None => throw new Exception("midCard not found")
+      }
+      )
+      val currentstate = gameDocument.getString("currentstate")
+      val ERROR = gameDocument.getInteger("ERROR")
+      val cardstack = gameDocument.getString("cardstack").toString
+      val winner = gameDocument.getInteger("winner")
 
-        val resString =
-          s"""{"game" : {"player1" : $player1,
+      val resString =
+        s"""{"game" : {"player1" : $player1,
                    "player2" : $player2,
                    "currentstate" : "$currentstate",
                    "ERROR" : ${ERROR.toInt},
                    "cardstack" : $cardstack,
                    "midCard" : $midcard,
                    "winner" : $winner}}"""
-        fio.jsonToGame(resString)
-      }
+      fio.jsonToGame(resString)
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
-  override def updateGame(id: Int, player1: Option[Int] = None, player2: Option[Int] = None, midCard: Option[Int] = None, currentstate: Option[String] = None, error: Option[Int] = None, cardstack: Option[String] = None, winner: Option[Int] = None): Future[Try[Boolean]] =
+  override def updateGame(id: Int, player1: Option[Int] = None, player2: Option[Int] = None, midCard: Option[Int] = None, currentstate: Option[String] = None, error: Option[Int] = None, cardstack: Option[String] = None, winner: Option[Int] = None): Future[Boolean] =
     val future = Future {
-      Try {
-        player1 match {
-          case Some(player1) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("player1",
-            Await.result(playerCollection.find(equal("_id", player1)).first().head(), WAIT_TIME).get("player1") match {
-              case Some(player) =>
-                player.asDocument()
-              case None => throw new Exception("Player1 not updated")
-            })))
-          case None =>
-        }
-        player2 match {
-          case Some(player2) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("player2",
-            Await.result(playerCollection.find(equal("_id", player2)).first().head(), WAIT_TIME).get("player2") match {
-              case Some(player) => player.asDocument()
-              case None => throw new Exception("Player2 not updated")
-            })))
-          case None =>
-        }
-        midCard match {
-          case Some(midCard) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("midCard",
-            Await.result(playerCollection.find(equal("_id", midCard)).first().head(), WAIT_TIME).get("midCard") match {
-              case Some(player) => player.asDocument()
-              case None => throw new Exception("midCard not updated")
-            })))
-          case None =>
-        }
-        currentstate match {
-          case Some(currentstate) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("currentstate", currentstate)))
-          case None =>
-        }
-        error match {
-          case Some(error) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("error", error)))
-          case None =>
-        }
-        cardstack match {
-          case Some(cardstack) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("cardstack", cardstack)))
-          case None =>
-        }
-        winner match {
-          case Some(winner) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("winner", winner)))
-          case None =>
-        }
-        true
+      player1 match {
+        case Some(player1) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("player1",
+          Await.result(playerCollection.find(equal("_id", player1)).first().head(), WAIT_TIME).get("player1") match {
+            case Some(player) =>
+              player.asDocument()
+            case None => throw new Exception("Player1 not updated")
+          })))
+        case None =>
       }
+      player2 match {
+        case Some(player2) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("player2",
+          Await.result(playerCollection.find(equal("_id", player2)).first().head(), WAIT_TIME).get("player2") match {
+            case Some(player) => player.asDocument()
+            case None => throw new Exception("Player2 not updated")
+          })))
+        case None =>
+      }
+      midCard match {
+        case Some(midCard) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("midCard",
+          Await.result(playerCollection.find(equal("_id", midCard)).first().head(), WAIT_TIME).get("midCard") match {
+            case Some(player) => player.asDocument()
+            case None => throw new Exception("midCard not updated")
+          })))
+        case None =>
+      }
+      currentstate match {
+        case Some(currentstate) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("currentstate", currentstate)))
+        case None =>
+      }
+      error match {
+        case Some(error) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("error", error)))
+        case None =>
+      }
+      cardstack match {
+        case Some(cardstack) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("cardstack", cardstack)))
+        case None =>
+      }
+      winner match {
+        case Some(winner) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("winner", winner)))
+        case None =>
+      }
+      true
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
-  override def updatePlayer(id: Int, name: Option[String] = None, cards: Option[String] = None, card_count: Option[Int] = None, placed: Option[Boolean] = None): Future[Try[Boolean]] =
+  override def updatePlayer(id: Int, name: Option[String] = None, cards: Option[String] = None, card_count: Option[Int] = None, placed: Option[Boolean] = None): Future[Boolean] =
     val future = Future {
-      Try {
-        name match {
-          case Some(name) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("name", name)))
-          case None =>
-        }
-        cards match {
-          case Some(cards) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("cards", cards)))
-          case None =>
-        }
-        card_count match {
-          case Some(card_count) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("card_count", card_count)))
-          case None =>
-        }
-        placed match {
-          case Some(placed) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("placed", placed)))
-          case None =>
-        }
-        true
+      name match {
+        case Some(name) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("name", name)))
+        case None =>
       }
+      cards match {
+        case Some(cards) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("cards", cards)))
+        case None =>
+      }
+      card_count match {
+        case Some(card_count) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("card_count", card_count)))
+        case None =>
+      }
+      placed match {
+        case Some(placed) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("placed", placed)))
+        case None =>
+      }
+      true
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
-  override def deleteGame(id: Int): Future[Try[Boolean]] =
+  override def deleteGame(id: Int): Future[Boolean] =
     val future = Future {
-      Try {
-        handleResult(gameCollection.deleteOne(equal("_id", id)))
-        true
-      }
+      handleResult(gameCollection.deleteOne(equal("_id", id)))
+      true
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
-  override def deletePlayer(id: Int): Future[Try[Boolean]] =
+  override def deletePlayer(id: Int): Future[Boolean] =
     val future = Future {
-      Try {
-        handleResult(playerCollection.deleteOne(equal("_id", id)))
-        true
-      }
+      handleResult(playerCollection.deleteOne(equal("_id", id)))
+      true
     }
     future_handler.resolveNonBlockingOnFuture(future)
 

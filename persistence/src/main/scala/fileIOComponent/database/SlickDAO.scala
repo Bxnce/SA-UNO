@@ -99,9 +99,8 @@ class SlickDAO @Inject() extends DAOInterface {
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
-  override def load(id: Option[Int] = None): Future[Try[gameInterface]] =
+  override def load(id: Option[Int] = None): Future[gameInterface] =
     val future = Future {
-      Try {
         val query = id.map(id => gameTable.filter(_.id === id))
           .getOrElse(gameTable.filter(_.id === gameTable.map(_.id).max))
 
@@ -123,7 +122,6 @@ class SlickDAO @Inject() extends DAOInterface {
                      "midCard" : $midcard,
                      "winner" : $winner}}"""
         fileIO.jsonToGame(resString)
-      }
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
@@ -136,9 +134,8 @@ class SlickDAO @Inject() extends DAOInterface {
     val game = (0, player1, player2, midCard, currentstate, error, cardstack, winner)
     Await.result(database.run(gameTable returning gameTable.map(_.id) += game), WAIT_TIME)
 
-  override def updateGame(id: Int, player1: Option[Int], player2: Option[Int], midCard: Option[Int], currentstate: Option[String], error: Option[Int], cardstack: Option[String], winner: Option[Int]): Future[Try[Boolean]] =
+  override def updateGame(id: Int, player1: Option[Int], player2: Option[Int], midCard: Option[Int], currentstate: Option[String], error: Option[Int], cardstack: Option[String], winner: Option[Int]): Future[Boolean] =
     val future = Future {
-      Try {
         val p1Query =
           player1 match {
             case Some(player1) => gameTable.filter(_.id === id).map(_.player1Id).update(player1)
@@ -177,14 +174,12 @@ class SlickDAO @Inject() extends DAOInterface {
         val query = p1Query andThen p2Query andThen midQuery andThen currentStateQuery andThen errorQuery andThen cardStackQuery andThen winnerQuery
         Await.result(database.run(query), WAIT_TIME)
         true
-      }
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
 
-  override def updatePlayer(id: Int, name: Option[String], cards: Option[String], card_count: Option[Int], placed: Option[Boolean]): Future[Try[Boolean]] =
+  override def updatePlayer(id: Int, name: Option[String], cards: Option[String], card_count: Option[Int], placed: Option[Boolean]): Future[Boolean] =
     val future = Future {
-      Try {
         val nameQuery =
           name match {
             case Some(name) => player.filter(_.id === id).map(_.name).update(name)
@@ -208,25 +203,20 @@ class SlickDAO @Inject() extends DAOInterface {
         val query = nameQuery andThen cardsQuery andThen cardCountQuery andThen placedQuery
         Await.result(database.run(query), WAIT_TIME)
         true
-      }
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
-  override def deleteGame(id: Int): Future[Try[Boolean]] =
+  override def deleteGame(id: Int): Future[Boolean] =
     val future = Future {
-      Try {
         Await.result(database.run(gameTable.filter(_.id === id).delete), WAIT_TIME)
         true
-      }
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
-  override def deletePlayer(id: Int): Future[Try[Boolean]] =
+  override def deletePlayer(id: Int): Future[Boolean] =
     val future = Future {
-      Try {
         Await.result(database.run(player.filter(_.id === id).delete), WAIT_TIME)
         true
-      }
     }
     future_handler.resolveNonBlockingOnFuture(future)
 

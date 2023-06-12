@@ -6,6 +6,7 @@ import fileIOComponent.JSONImpl.fileIO
 import fileIOComponent.PersistenceModule
 import fileIOComponent.database.DAOInterface
 import model.gameComponent.gameBaseImpl.{Game, UnoState}
+import model.gameComponent.gameInterface
 
 /*Libaries*/
 import akka.actor.typed.ActorSystem
@@ -21,6 +22,7 @@ import com.google.inject.{Guice, Inject, Injector}
 import play.api.libs.json.*
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
+import concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 
 class RestAPIPersistence():
@@ -54,14 +56,12 @@ class RestAPIPersistence():
             val idUpdated = id.map(_.toInt)
 
             val future = database.load(idUpdated)
-            val responseFuture = future.map {
-              case Success(game) =>
-                HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(game).toString())
+            onComplete(future) {
+              case Success(game: gameInterface) =>
+                complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(game).toString()))
               case Failure(_) =>
-                HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(new Game("ERROR LOADING DATABASE", "ERROR LOADING DATABASE", UnoState.winState)).toString())
+                complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(new Game("ERROR LOADING DATABASE", "ERROR LOADING DATABASE", UnoState.winState)).toString()))
             }
-
-            complete(responseFuture)
           }
         }
       },
