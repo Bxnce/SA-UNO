@@ -34,82 +34,69 @@ class ControllerAPI(using controller: controllerInterface):
 
   val route: Route =
     concat(
-      pathSingleSlash {
-        complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, routes))
-      },
       get {
-        path("controller" / "get") {
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
-        }
-      },
-      get {
-        path("controller" / "redo") {
-          controller.redo()
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
-        }
-      },
-      get {
-        controller.undo()
-        path("controller" / "undo") {
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
-        }
-      },
-      get {
-        path("controller" / "load") {
-          controller.load()
-          complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
-        }
-      },
-      post {
-        path("controller" / "save") {
-          controller.save()
-          complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
-        }
-      },
-      post {
-        path("controller" / "newg") {
-          parameter("name1", "name2") { (name1, name2) =>
-            controller.newG(name1, name2)
-            complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
-          }
-        }
-      },
-      post {
-        path("controller" / "take") {
-          controller.take()
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
-        }
-      },
-      post {
-        path("controller" / "place") {
-          parameter("ind") { (ind) =>
-            controller.place(ind.toInt)
+        concat(
+          pathSingleSlash {
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, routes))
+          },
+          path("controller" / "get") {
             complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
+          },
+            path("controller" / "redo") {
+            controller.undo()
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
+          },
+          path("controller" / "undo") {
+            controller.undo()
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
+          },
+          path("controller" / "save") {
+            controller.save()
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
+          },
+          path("controller" / "load") {
+            controller.load()
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
+          },
+        )
+      },
+
+      post{
+        concat(
+          path("controller" / "newg") {
+            parameter("name1", "name2") { (name1, name2) =>
+              controller.newG(name1, name2)
+              complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
+            }
+          },
+          path("controller" / "take") {
+            controller.take()
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
+          },
+          path("controller" / "place") {
+            parameter("ind") { (ind) =>
+              controller.place(ind.toInt)
+              complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
+            }
+          },
+          path("controller" / "next") {
+            controller.next()
+            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
+          },
+          path("controller" / "wing") {
+            parameter("name1", "name2") { (name1, name2) =>
+              controller.WinG(name1, name2)
+              complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
+            }
+          },
+          path("controller" / "color") {
+            parameter("color") { (color) =>
+              controller.colorChoose(color)
+              complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
+            }
           }
-        }
-      },
-      post {
-        path("controller" / "next") {
-          controller.next()
-          complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, fileIO.gameToJson(controller.game).toString()))
-        }
-      },
-      post {
-        path("controller" / "wing") {
-          parameter("name1", "name2") { (name1, name2) =>
-            controller.WinG(name1, name2)
-            complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
-          }
-        }
-      },
-      post {
-        path("controller" / "color") {
-          parameter("color") { (color) =>
-            controller.colorChoose(color)
-            complete(HttpEntity(ContentTypes.`application/json`, fileIO.gameToJson(controller.game).toString()))
-          }
-        }
-      },
+        )
+      }
     )
 
   def start(): Unit = {

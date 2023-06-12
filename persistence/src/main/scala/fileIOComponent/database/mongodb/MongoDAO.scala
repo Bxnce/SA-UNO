@@ -38,7 +38,6 @@ class MongoDAO @Inject() extends DAOInterface {
   println("Connected to MongoDB")
 
   override def save(game: gameInterface): Unit = {
-    println("Saving game to MongoDB")
     val gameJson = fio.gameToJson(game)
     val highestCurrentPlayerId = getHighestId(playerCollection)
     val highestCurrentGameId = getHighestId(gameCollection)
@@ -86,7 +85,6 @@ class MongoDAO @Inject() extends DAOInterface {
     handleResult(playerCollection.insertOne(player2Document))
     handleResult(playerCollection.insertOne(midCardDocument))
     handleResult(gameCollection.insertOne(gameDocument))
-    println(s"Inserted game in MongoDB with id $gameId")
   }
 
   override def load(id: Option[Int]): Try[gameInterface] =
