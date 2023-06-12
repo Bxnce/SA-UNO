@@ -12,6 +12,7 @@ import org.mongodb.scala.model.Filters.*
 import org.mongodb.scala.model.Sorts.*
 import org.mongodb.scala.result.{DeleteResult, InsertOneResult, UpdateResult}
 import org.mongodb.scala.{Document, MongoClient, MongoCollection, MongoDatabase, Observable, Observer, SingleObservable, result}
+import org.mongodb.scala.documentToUntypedDocument
 
 import scala.concurrent.duration.Duration.Inf
 import scala.concurrent.duration.DurationInt
@@ -31,12 +32,12 @@ class MongoDAO @Inject() extends DAOInterface {
   println(uri)
 
   val db: MongoDatabase = client.getDatabase("uno")
-  private val gameCollection: MongoCollection[Document] = db.getCollection("game")
-  private val playerCollection: MongoCollection[Document] = db.getCollection("player")
+  var gameCollection: MongoCollection[Document] = db.getCollection("game")
+  var playerCollection: MongoCollection[Document] = db.getCollection("player")
 
   println("Connected to MongoDB")
 
-  override def save(game: gameInterface): Unit =
+  override def save(game: gameInterface): Unit = {
     println("Saving game to MongoDB")
     val gameJson = fio.gameToJson(game)
     val highestCurrentPlayerId = getHighestId(playerCollection)
@@ -45,7 +46,7 @@ class MongoDAO @Inject() extends DAOInterface {
     val player1Id = highestCurrentPlayerId + 1
     val player1Document = Document(
       "_id" -> player1Id,
-      "name" -> (gameJson \ "game" \ "player1" \ "name").get.toString(),
+      "name" -> (gameJson \ "game" \ "player1" \ "name").get.toString.replaceAll("\"", ""),
       "cards" -> (gameJson \ "game" \ "player1" \ "karten").get.toString(),
       "card_count" -> (gameJson \ "game" \ "player1" \ "kartenzahl").get.toString().toInt,
       "placed" -> (gameJson \ "game" \ "player1" \ "placed").get.toString().toBoolean
@@ -54,7 +55,7 @@ class MongoDAO @Inject() extends DAOInterface {
     val player2Id = highestCurrentPlayerId + 2
     val player2Document = Document(
       "_id" -> player2Id,
-      "name" -> (gameJson \ "game" \ "player2" \ "name").get.toString(),
+      "name" -> (gameJson \ "game" \ "player2" \ "name").get.toString.replaceAll("\"", ""),
       "cards" -> (gameJson \ "game" \ "player2" \ "karten").get.toString(),
       "card_count" -> (gameJson \ "game" \ "player2" \ "kartenzahl").get.toString().toInt,
       "placed" -> (gameJson \ "game" \ "player2" \ "placed").get.toString().toBoolean
@@ -63,7 +64,7 @@ class MongoDAO @Inject() extends DAOInterface {
     val midCardId = highestCurrentPlayerId + 3
     val midCardDocument = Document(
       "_id" -> midCardId,
-      "name" -> (gameJson \ "game" \ "midCard" \ "name").get.toString(),
+      "name" -> (gameJson \ "game" \ "midCard" \ "name").get.toString.replaceAll("\"", ""),
       "cards" -> (gameJson \ "game" \ "midCard" \ "karten").get.toString(),
       "card_count" -> 0,
       "placed" -> (gameJson \ "game" \ "midCard" \ "placed").get.toString().toBoolean
@@ -75,7 +76,7 @@ class MongoDAO @Inject() extends DAOInterface {
       "player1" -> player1Document,
       "player2" -> player2Document,
       "midCard" -> midCardDocument,
-      "currentstate" -> (gameJson \ "game" \ "currentstate").get.toString(),
+      "currentstate" -> (gameJson \ "game" \ "currentstate").get.toString().replaceAll("\"", ""),
       "error" -> (gameJson \ "game" \ "ERROR").get.toString().toInt,
       "cardstack" -> (gameJson \ "game" \ "cardstack").get.toString(),
       "winner" -> (gameJson \ "game" \ "winner").get.toString().toInt
@@ -86,6 +87,7 @@ class MongoDAO @Inject() extends DAOInterface {
     handleResult(playerCollection.insertOne(midCardDocument))
     handleResult(gameCollection.insertOne(gameDocument))
     println(s"Inserted game in MongoDB with id $gameId")
+  }
 
   override def load(id: Option[Int]): Try[gameInterface] =
     Try {
@@ -112,23 +114,23 @@ class MongoDAO @Inject() extends DAOInterface {
         case None => throw new Exception("midCard not found")
       }
       )
-      val currentstate = gameDocument.get("currentstate").toString
-      val ERROR = gameDocument.get("ERROR").toString
-      val cardstack = gameDocument.get("cardstack").toString
-      val winner = gameDocument.get("winner").toString
+      val currentstate = gameDocument.getString("currentstate")
+      val ERROR = gameDocument.getInteger("ERROR")
+      val cardstack = gameDocument.getString("cardstack").toString
+      val winner = gameDocument.getInteger("winner")
 
       val resString =
         s"""{"game" : {"player1" : $player1,
                    "player2" : $player2,
-                   "currentstate" : $currentstate,
-                   "ERROR" : $ERROR,
+                   "currentstate" : "$currentstate",
+                   "ERROR" : ${ERROR.toInt},
                    "cardstack" : $cardstack,
                    "midCard" : $midcard,
                    "winner" : $winner}}"""
       fio.jsonToGame(resString)
     }
 
-  override def updateGame(id: Int, player1: Option[Int], player2: Option[Int], midCard: Option[Int], currentstate: Option[String], error: Option[Int], cardstack: Option[String], winner: Option[Int]): Try[Boolean] =
+  override def updateGame(id: Int, player1: Option[Int] = None, player2: Option[Int] = None, midCard: Option[Int] = None, currentstate: Option[String] = None, error: Option[Int] = None, cardstack: Option[String] = None, winner: Option[Int] = None): Try[Boolean] =
     Try {
       player1 match {
         case Some(player1) => handleResult(gameCollection.updateOne(equal("_id", id), Updates.set("player1",
@@ -174,7 +176,7 @@ class MongoDAO @Inject() extends DAOInterface {
       true
     }
 
-  override def updatePlayer(id: Int, name: Option[String], cards: Option[String], card_count: Option[Int], placed: Option[Boolean]): Try[Boolean] =
+  override def updatePlayer(id: Int, name: Option[String] = None, cards: Option[String] = None, card_count: Option[Int] = None, placed: Option[Boolean] = None): Try[Boolean] =
     Try {
       name match {
         case Some(name) => handleResult(playerCollection.updateOne(equal("_id", id), Updates.set("name", name)))

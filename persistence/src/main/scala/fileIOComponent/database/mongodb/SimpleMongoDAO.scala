@@ -35,7 +35,7 @@ class SimpleMongoDAO @Inject() extends DAOInterface {
   println(uri)
 
   val db: MongoDatabase = client.getDatabase("uno")
-  private val gameCollection: MongoCollection[Document] = db.getCollection("game")
+  var gameCollection: MongoCollection[Document] = db.getCollection("game")
   println("Connected to MongoDB")
 
   override def save(game: gameInterface): Unit =
@@ -46,7 +46,7 @@ class SimpleMongoDAO @Inject() extends DAOInterface {
     )))
     println(s"Inserted game in MongoDB with id ${getHighestId(gameCollection)}")
 
-  override def load(id: Option[Int]): Try[gameInterface] =
+  override def load(id: Option[Int] = None): Try[gameInterface] =
     Try {
       Await.result(gameCollection.find(equal("_id", id.getOrElse(getHighestId(gameCollection)))).first().head(), WAIT_TIME).get("game") match {
         case Some(value) => fio.jsonToGame(value.asString().getValue)
@@ -54,9 +54,9 @@ class SimpleMongoDAO @Inject() extends DAOInterface {
       }
     }
 
-  override def updateGame(id: Int, player1: Option[Int], player2: Option[Int], midCard: Option[Int], currentstate: Option[String], error: Option[Int], cardstack: Option[String], winner: Option[Int]): Try[Boolean] =
+  override def updateGame(id: Int, player1: Option[Int] = None, player2: Option[Int] = None, midCard: Option[Int] = None, currentstate: Option[String] = None, error: Option[Int] = None, cardstack: Option[String] = None, winner: Option[Int] = None): Try[Boolean] =
     Try {
-      var gameJson = Json.parse(Await.result(gameCollection.find(equal("_id", id)).first().head(), WAIT_TIME).toString())
+      var gameJson = Json.parse(Await.result(gameCollection.find(equal("_id", id)).first().head(), WAIT_TIME)("game").asString().getValue)
       currentstate match {
         case Some(value) => gameJson = gameJson.as[JsObject] ++ Json.obj("currentstate" -> value)
         case None =>
