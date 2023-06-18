@@ -48,7 +48,6 @@ class SimpleMongoDAO @Inject() extends DAOInterface {
     }
     future_handler.resolveNonBlockingOnFuture(future)
 
-
   override def load(id: Option[Int] = None): Future[gameInterface] =
     val future = Future {
         Await.result(gameCollection.find(equal("_id", id.getOrElse(getHighestId(gameCollection)))).first().head(), WAIT_TIME).get("game") match {

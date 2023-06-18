@@ -91,6 +91,7 @@ class MongoDAO @Inject() extends DAOInterface {
       handleResult(gameCollection.insertOne(gameDocument))
     }
     future_handler.resolveNonBlockingOnFuture(future)
+
   }
 
   override def load(id: Option[Int]): Future[gameInterface] =
