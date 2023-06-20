@@ -2,7 +2,7 @@
 Only playable on one computer.<br/>
 TUI and GUI are both working and running synchron.
  
-
+## TO START THE PROJECT, CLONE THE MASTER, START SBT AND EXECUTE 'Docker/publishLocal' AFTERWARDS EXECUTE THE DOCKER COMPOSE!
 
 Program  | Badge
 --------|--------
